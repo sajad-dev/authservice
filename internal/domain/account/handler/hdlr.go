@@ -18,6 +18,9 @@ func (a *AccountHandler) CreateGRPC(ctx context.Context, req *accountproto.Creat
 
 	reqValidation := request.ToRequestCreate(*req)
 
+	var err error
+	reqValidation.Password, err = crypto.SumSHA256([]byte(req.Password))
+
 	res, err := a.Service.CreateService(*reqValidation)
 	if err = apperrors.CreateServiceErr(err); err != nil {
 		return nil, err
