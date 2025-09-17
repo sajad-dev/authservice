@@ -2,28 +2,16 @@ package service
 
 import (
 	"github.com/sajad-dev/authservice/internal/domain/account"
-	"github.com/sajad-dev/hamsokhan/auth/internal/app/account/request/createreq"
-	"github.com/sajad-dev/hamsokhan/auth/internal/app/account/request/deletereq"
-	"github.com/sajad-dev/hamsokhan/auth/internal/app/account/request/readreq"
-	"github.com/sajad-dev/hamsokhan/auth/internal/app/account/request/updatereq"
-	"github.com/sajad-dev/hamsokhan/auth/internal/app/account/response/createres"
-	"github.com/sajad-dev/hamsokhan/auth/internal/app/account/response/deleteres"
-	"github.com/sajad-dev/hamsokhan/auth/internal/app/account/response/getallres"
-	"github.com/sajad-dev/hamsokhan/auth/internal/app/account/response/readres"
-	"github.com/sajad-dev/hamsokhan/auth/internal/app/account/response/updateres"
-	"github.com/sajad-dev/hamsokhan/auth/internal/constants/messages"
-	"github.com/sajad-dev/hamsokhan/auth/internal/db/models"
-	"github.com/sajad-dev/hamsokhan/auth/internal/errs"
-	"github.com/sajad-dev/hamsokhan/auth/internal/pkg/adaptor"
-	"github.com/sajad-dev/hamsokhan/auth/internal/pkg/crypto"
+
 )
 
 type AccountService struct {
-	Repo repository.AccountCURDRepo
+	Repo account.AccountCURDRepositories
 }
 
-type AccountServiceOption func(*AccountService)
-
+func NewAccountService(repo account.AccountCURDRepositories) *AccountService {
+	return &AccountService{Repo: repo}
+}
 
 func (s *AccountService) CreateService(req createreq.CreateRequest) (createres.CreateResponse, error) {
 	var err error

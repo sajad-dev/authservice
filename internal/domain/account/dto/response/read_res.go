@@ -1,21 +1,14 @@
 package response
 
-import "github.com/sajad-dev/authservice/internal/domain/account/accountproto"
-
-type User struct {
-	FirstName    string
-	LastName     string
-	Email        string
-	SMS          string
-	Username     string
-	EmailConfirm bool
-	SMSConfirm   bool
-}
+import (
+	"github.com/sajad-dev/authservice/internal/domain/account/accountproto"
+	"github.com/sajad-dev/authservice/internal/domain/account/dto/modeldto"
+)
 
 type ReadResponse struct {
 	Code    int
 	Message string
-	Data    User
+	Data    modeldto.AccountFiltered
 }
 
 type ReadResponseOption func(*ReadResponse)
@@ -85,16 +78,13 @@ func ReadWithSMSConfirm(confirm bool) ReadResponseOption {
 func (r *ReadResponse) ToProto() *accountproto.ReadReply {
 	return &accountproto.ReadReply{
 		Code:    int32(r.Code),
-		Message: r.Message,
+		Msg: r.Message,
 		Data: &accountproto.User{
-			FirstName:    r.Data.FirstName,
-			LastName:     r.Data.LastName,
-			Email:        r.Data.Email,
-			Sms:          r.Data.SMS,
-			Username:     r.Data.Username,
-			EmailConfirm: r.Data.EmailConfirm,
-			SmsConfirm:   r.Data.SMSConfirm,
+			FirstName: r.Data.FirstName,
+			LastName:  r.Data.LastName,
+			Email:     r.Data.Email,
+			SMS:       r.Data.SMS,
+			Username:  r.Data.Username,
 		},
 	}
 }
-
