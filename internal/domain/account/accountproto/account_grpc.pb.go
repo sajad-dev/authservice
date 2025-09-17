@@ -23,7 +23,6 @@ const (
 	Account_UpdateGRPC_FullMethodName = "/accountproto.Account/UpdateGRPC"
 	Account_DeleteGRPC_FullMethodName = "/accountproto.Account/DeleteGRPC"
 	Account_ReadGRPC_FullMethodName   = "/accountproto.Account/ReadGRPC"
-	Account_GetAllGRPC_FullMethodName = "/accountproto.Account/GetAllGRPC"
 )
 
 // AccountClient is the client API for Account service.
@@ -34,7 +33,6 @@ type AccountClient interface {
 	UpdateGRPC(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateReply, error)
 	DeleteGRPC(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteReply, error)
 	ReadGRPC(ctx context.Context, in *ReadRequest, opts ...grpc.CallOption) (*ReadReply, error)
-	GetAllGRPC(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllReply, error)
 }
 
 type accountClient struct {
@@ -85,16 +83,6 @@ func (c *accountClient) ReadGRPC(ctx context.Context, in *ReadRequest, opts ...g
 	return out, nil
 }
 
-func (c *accountClient) GetAllGRPC(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllReply, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetAllReply)
-	err := c.cc.Invoke(ctx, Account_GetAllGRPC_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // AccountServer is the server API for Account service.
 // All implementations must embed UnimplementedAccountServer
 // for forward compatibility.
@@ -103,7 +91,6 @@ type AccountServer interface {
 	UpdateGRPC(context.Context, *UpdateRequest) (*UpdateReply, error)
 	DeleteGRPC(context.Context, *DeleteRequest) (*DeleteReply, error)
 	ReadGRPC(context.Context, *ReadRequest) (*ReadReply, error)
-	GetAllGRPC(context.Context, *GetAllRequest) (*GetAllReply, error)
 	mustEmbedUnimplementedAccountServer()
 }
 
@@ -125,9 +112,6 @@ func (UnimplementedAccountServer) DeleteGRPC(context.Context, *DeleteRequest) (*
 }
 func (UnimplementedAccountServer) ReadGRPC(context.Context, *ReadRequest) (*ReadReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReadGRPC not implemented")
-}
-func (UnimplementedAccountServer) GetAllGRPC(context.Context, *GetAllRequest) (*GetAllReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAllGRPC not implemented")
 }
 func (UnimplementedAccountServer) mustEmbedUnimplementedAccountServer() {}
 func (UnimplementedAccountServer) testEmbeddedByValue()                 {}
@@ -222,24 +206,6 @@ func _Account_ReadGRPC_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Account_GetAllGRPC_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAllRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AccountServer).GetAllGRPC(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Account_GetAllGRPC_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServer).GetAllGRPC(ctx, req.(*GetAllRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Account_ServiceDesc is the grpc.ServiceDesc for Account service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -262,10 +228,6 @@ var Account_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ReadGRPC",
 			Handler:    _Account_ReadGRPC_Handler,
-		},
-		{
-			MethodName: "GetAllGRPC",
-			Handler:    _Account_GetAllGRPC_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
