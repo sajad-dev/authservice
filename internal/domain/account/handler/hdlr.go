@@ -5,6 +5,7 @@ import (
 
 	"github.com/sajad-dev/authservice/internal/domain/account"
 	"github.com/sajad-dev/authservice/internal/domain/account/accountproto"
+	"github.com/sajad-dev/authservice/internal/domain/account/dto/request"
 )
 
 type AccountHandler struct {
@@ -15,22 +16,7 @@ type AccountHandler struct {
 
 func (a *AccountHandler) CreateGRPC(ctx context.Context, req *accountproto.CreateRequest) (*accountproto.CreateReply, error) {
 
-	reqValidation := createreq.NewCreateRequest(
-		createreq.WithEmail(req.Email),
-		createreq.WithFirstName(req.FirstName),
-		createreq.WithLastName(req.LastName),
-		createreq.WithTwoFactor(req.TwoFactor),
-		createreq.WithUsername(req.Username),
-		createreq.WithSMS(req.SMS),
-		createreq.WithPassword(req.Password),
-	)
-
-	var err error
-	reqValidation.Password, err = crypto.SumSHA256([]byte(req.Password))
-
-	if err := globalerr.ValidationErr(a.ValidationInstance.ValidationStruct(reqValidation)); err != nil {
-		return nil, err
-	}
+	reqValidation := request.ToRequestCreate(*req)
 
 	res, err := a.Service.CreateService(*reqValidation)
 	if err = apperrors.CreateServiceErr(err); err != nil {

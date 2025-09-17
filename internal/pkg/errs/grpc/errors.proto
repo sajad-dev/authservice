@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package errorsproto;
+
+option go_package = "/internal/pkg/errs/grpc/errorsproto;errorsproto";
+
+message ErrorDetail {
+    string message = 1;
+}
+
