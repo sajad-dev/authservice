@@ -2,7 +2,7 @@ package response
 
 import (
 	"github.com/sajad-dev/authservice/internal/domain/account/accountproto"
-	"github.com/sajad-dev/authservice/internal/domain/account/dto/modeldto"
+	"github.com/sajad-dev/authservice/internal/shered/account/modeldto"
 )
 
 type ReadResponse struct {
@@ -63,22 +63,10 @@ func ReadWithUsername(username string) ReadResponseOption {
 	}
 }
 
-func ReadWithEmailConfirm(confirm bool) ReadResponseOption {
-	return func(r *ReadResponse) {
-		r.Data.EmailConfirm = confirm
-	}
-}
-
-func ReadWithSMSConfirm(confirm bool) ReadResponseOption {
-	return func(r *ReadResponse) {
-		r.Data.SMSConfirm = confirm
-	}
-}
-
 func (r *ReadResponse) ToProto() *accountproto.ReadReply {
 	return &accountproto.ReadReply{
-		Code:    int32(r.Code),
-		Msg: r.Message,
+		Code: int32(r.Code),
+		Msg:  r.Message,
 		Data: &accountproto.User{
 			FirstName: r.Data.FirstName,
 			LastName:  r.Data.LastName,

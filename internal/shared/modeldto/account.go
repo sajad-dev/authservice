@@ -4,7 +4,7 @@ import (
 	"reflect"
 
 	"github.com/lib/pq"
-	"github.com/sajad-dev/authservice/internal/domain/account/models"
+	"github.com/sajad-dev/authservice/internal/shared/models"
 )
 
 type AccountFiltered struct {
