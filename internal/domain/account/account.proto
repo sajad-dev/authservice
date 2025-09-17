@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package accountproto;
+
+option go_package = "/internal/domain/account/accountproto;accountproto";
+
+service Account {
+  rpc CreateGRPC (CreateRequest) returns (CreateReply);
+  rpc UpdateGRPC (UpdateRequest) returns (UpdateReply);
+  rpc DeleteGRPC (DeleteRequest) returns (DeleteReply);
+  rpc ReadGRPC (ReadRequest) returns (ReadReply);
+  rpc GetAllGRPC (GetAllRequest) returns (GetAllReply);
+}
+
+
+message CreateReply {
+  int32 code = 1;
+  string message = 2;
+}
+message CreateRequest {
+  string username = 1;
+  string email = 2;
+  string SMS = 3;
+  string first_name = 4;
+  string last_name =5;
+  repeated string two_factor = 6;
+  string password = 7;
+}
+
+
+message UpdateReply {
+  int32 code = 1;
+  string message = 2;
+}
+message UpdateRequest {
+  string username = 1;
+  string email = 2;
+  string SMS = 3;
+  string first_name = 4;
+  string last_name =5;
+  repeated string two_factor = 6;
+  int32 ID =7;
+  string password = 8;
+}
+
+message DeleteReply {
+  int32 code = 1;
+  string message = 2;
+}
+message DeleteRequest {
+  int32 ID =8;
+}
+
+message ReadReply {
+  string username = 1;
+  string email = 2;
+  string SMS = 3;
+  string first_name = 4;
+  string last_name =5;
+  repeated string two_factor = 6;
+}
+
+message ReadRequest {
+    int32 ID =8;
+}
+
+message GetAllReply {
+}
+
+message GetAllRequest {
+}
+
