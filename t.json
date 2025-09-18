@@ -1,0 +1,18 @@
+{
+  "Package": "request",
+  "FuncName": "ToRequestCreate",
+  "StructName": "CreateRequest",
+  "ProtoPackage": "accountproto",
+  "ProtoImportPath": "github.com/sajad-dev/authservice/internal/domain/account/accountproto",
+  "ProtoStruct": "CreateRequest",
+  "Fields": [
+    { "To": "FirstName", "From": "FirstName" },
+    { "To": "LastName", "From": "LastName" },
+    { "To": "Email", "From": "Email" },
+    { "To": "SMS", "From": "SMS" },
+    { "To": "Username", "From": "Username" },
+    { "To": "TwoFactor", "From": "TwoFactor" },
+    { "To": "Password", "From": "Password" }
+  ]
+}
+
