@@ -3,7 +3,7 @@ package request
 import "github.com/sajad-dev/authservice/internal/domain/account/accountproto"
 
 type CreateRequest struct {
-	FirstName string
+	FirstName string ‍‍`json:"first_name" validate:""`
 	LastName  string
 	Email     string
 	SMS       string
