@@ -1,6 +1,10 @@
-package {{ .Package }}
+package request
 
-import "{{ .ProtoImportPath }}"
+import (
+	{{- range .ImportPath}}
+	"{{ . }}"
+	{{- end}}
+)
 
 type {{ .StructName }} struct {
 	{{- range .Fields}}
@@ -15,4 +19,5 @@ func {{ .FuncName }}(pd {{ .ProtoPackage }}.{{ .ProtoStruct }}) *{{ .StructName 
 		{{- end }}
 	}
 }
+
 

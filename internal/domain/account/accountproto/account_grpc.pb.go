@@ -19,20 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Account_CreateGRPC_FullMethodName = "/accountproto.Account/CreateGRPC"
-	Account_UpdateGRPC_FullMethodName = "/accountproto.Account/UpdateGRPC"
-	Account_DeleteGRPC_FullMethodName = "/accountproto.Account/DeleteGRPC"
-	Account_ReadGRPC_FullMethodName   = "/accountproto.Account/ReadGRPC"
+	Account_Create_FullMethodName = "/accountproto.Account/Create"
+	Account_Update_FullMethodName = "/accountproto.Account/Update"
+	Account_Delete_FullMethodName = "/accountproto.Account/Delete"
+	Account_Read_FullMethodName   = "/accountproto.Account/Read"
 )
 
 // AccountClient is the client API for Account service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AccountClient interface {
-	CreateGRPC(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateReply, error)
-	UpdateGRPC(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateReply, error)
-	DeleteGRPC(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteReply, error)
-	ReadGRPC(ctx context.Context, in *ReadRequest, opts ...grpc.CallOption) (*ReadReply, error)
+	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
+	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
+	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
+	Read(ctx context.Context, in *ReadRequest, opts ...grpc.CallOption) (*ReadResponse, error)
 }
 
 type accountClient struct {
@@ -43,40 +43,40 @@ func NewAccountClient(cc grpc.ClientConnInterface) AccountClient {
 	return &accountClient{cc}
 }
 
-func (c *accountClient) CreateGRPC(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateReply, error) {
+func (c *accountClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateReply)
-	err := c.cc.Invoke(ctx, Account_CreateGRPC_FullMethodName, in, out, cOpts...)
+	out := new(CreateResponse)
+	err := c.cc.Invoke(ctx, Account_Create_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *accountClient) UpdateGRPC(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateReply, error) {
+func (c *accountClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateReply)
-	err := c.cc.Invoke(ctx, Account_UpdateGRPC_FullMethodName, in, out, cOpts...)
+	out := new(UpdateResponse)
+	err := c.cc.Invoke(ctx, Account_Update_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *accountClient) DeleteGRPC(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteReply, error) {
+func (c *accountClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeleteReply)
-	err := c.cc.Invoke(ctx, Account_DeleteGRPC_FullMethodName, in, out, cOpts...)
+	out := new(DeleteResponse)
+	err := c.cc.Invoke(ctx, Account_Delete_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *accountClient) ReadGRPC(ctx context.Context, in *ReadRequest, opts ...grpc.CallOption) (*ReadReply, error) {
+func (c *accountClient) Read(ctx context.Context, in *ReadRequest, opts ...grpc.CallOption) (*ReadResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ReadReply)
-	err := c.cc.Invoke(ctx, Account_ReadGRPC_FullMethodName, in, out, cOpts...)
+	out := new(ReadResponse)
+	err := c.cc.Invoke(ctx, Account_Read_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -87,10 +87,10 @@ func (c *accountClient) ReadGRPC(ctx context.Context, in *ReadRequest, opts ...g
 // All implementations must embed UnimplementedAccountServer
 // for forward compatibility.
 type AccountServer interface {
-	CreateGRPC(context.Context, *CreateRequest) (*CreateReply, error)
-	UpdateGRPC(context.Context, *UpdateRequest) (*UpdateReply, error)
-	DeleteGRPC(context.Context, *DeleteRequest) (*DeleteReply, error)
-	ReadGRPC(context.Context, *ReadRequest) (*ReadReply, error)
+	Create(context.Context, *CreateRequest) (*CreateResponse, error)
+	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
+	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
+	Read(context.Context, *ReadRequest) (*ReadResponse, error)
 	mustEmbedUnimplementedAccountServer()
 }
 
@@ -101,17 +101,17 @@ type AccountServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAccountServer struct{}
 
-func (UnimplementedAccountServer) CreateGRPC(context.Context, *CreateRequest) (*CreateReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateGRPC not implemented")
+func (UnimplementedAccountServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedAccountServer) UpdateGRPC(context.Context, *UpdateRequest) (*UpdateReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateGRPC not implemented")
+func (UnimplementedAccountServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedAccountServer) DeleteGRPC(context.Context, *DeleteRequest) (*DeleteReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteGRPC not implemented")
+func (UnimplementedAccountServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedAccountServer) ReadGRPC(context.Context, *ReadRequest) (*ReadReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ReadGRPC not implemented")
+func (UnimplementedAccountServer) Read(context.Context, *ReadRequest) (*ReadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Read not implemented")
 }
 func (UnimplementedAccountServer) mustEmbedUnimplementedAccountServer() {}
 func (UnimplementedAccountServer) testEmbeddedByValue()                 {}
@@ -134,74 +134,74 @@ func RegisterAccountServer(s grpc.ServiceRegistrar, srv AccountServer) {
 	s.RegisterService(&Account_ServiceDesc, srv)
 }
 
-func _Account_CreateGRPC_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Account_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServer).CreateGRPC(ctx, in)
+		return srv.(AccountServer).Create(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Account_CreateGRPC_FullMethodName,
+		FullMethod: Account_Create_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServer).CreateGRPC(ctx, req.(*CreateRequest))
+		return srv.(AccountServer).Create(ctx, req.(*CreateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Account_UpdateGRPC_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Account_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServer).UpdateGRPC(ctx, in)
+		return srv.(AccountServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Account_UpdateGRPC_FullMethodName,
+		FullMethod: Account_Update_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServer).UpdateGRPC(ctx, req.(*UpdateRequest))
+		return srv.(AccountServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Account_DeleteGRPC_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Account_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServer).DeleteGRPC(ctx, in)
+		return srv.(AccountServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Account_DeleteGRPC_FullMethodName,
+		FullMethod: Account_Delete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServer).DeleteGRPC(ctx, req.(*DeleteRequest))
+		return srv.(AccountServer).Delete(ctx, req.(*DeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Account_ReadGRPC_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Account_Read_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ReadRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServer).ReadGRPC(ctx, in)
+		return srv.(AccountServer).Read(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Account_ReadGRPC_FullMethodName,
+		FullMethod: Account_Read_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServer).ReadGRPC(ctx, req.(*ReadRequest))
+		return srv.(AccountServer).Read(ctx, req.(*ReadRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -214,20 +214,20 @@ var Account_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AccountServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateGRPC",
-			Handler:    _Account_CreateGRPC_Handler,
+			MethodName: "Create",
+			Handler:    _Account_Create_Handler,
 		},
 		{
-			MethodName: "UpdateGRPC",
-			Handler:    _Account_UpdateGRPC_Handler,
+			MethodName: "Update",
+			Handler:    _Account_Update_Handler,
 		},
 		{
-			MethodName: "DeleteGRPC",
-			Handler:    _Account_DeleteGRPC_Handler,
+			MethodName: "Delete",
+			Handler:    _Account_Delete_Handler,
 		},
 		{
-			MethodName: "ReadGRPC",
-			Handler:    _Account_ReadGRPC_Handler,
+			MethodName: "Read",
+			Handler:    _Account_Read_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

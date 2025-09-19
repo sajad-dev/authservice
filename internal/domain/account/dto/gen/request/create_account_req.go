@@ -1,6 +1,8 @@
 package request
 
-import "github.com/sajad-dev/authservice/internal/domain/account/accountproto"
+import (
+	"github.com/sajad-dev/authservice/internal/domain/account/accountproto"
+)
 
 type CreateRequest struct {
 	FirstName string `json:"first_name" validate:""`
@@ -23,4 +25,5 @@ func ToRequestCreate(pd accountproto.CreateRequest) *CreateRequest {
 		Password: pd.Password,
 	}
 }
+
 

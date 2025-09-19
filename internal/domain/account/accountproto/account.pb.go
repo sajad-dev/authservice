@@ -21,7 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type CreateReply struct {
+type CreateResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
 	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
@@ -29,20 +29,20 @@ type CreateReply struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateReply) Reset() {
-	*x = CreateReply{}
+func (x *CreateResponse) Reset() {
+	*x = CreateResponse{}
 	mi := &file_internal_domain_account_account_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateReply) String() string {
+func (x *CreateResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateReply) ProtoMessage() {}
+func (*CreateResponse) ProtoMessage() {}
 
-func (x *CreateReply) ProtoReflect() protoreflect.Message {
+func (x *CreateResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_internal_domain_account_account_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -54,19 +54,19 @@ func (x *CreateReply) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateReply.ProtoReflect.Descriptor instead.
-func (*CreateReply) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateResponse.ProtoReflect.Descriptor instead.
+func (*CreateResponse) Descriptor() ([]byte, []int) {
 	return file_internal_domain_account_account_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *CreateReply) GetCode() int32 {
+func (x *CreateResponse) GetCode() int32 {
 	if x != nil {
 		return x.Code
 	}
 	return 0
 }
 
-func (x *CreateReply) GetMessage() string {
+func (x *CreateResponse) GetMessage() string {
 	if x != nil {
 		return x.Message
 	}
@@ -165,7 +165,7 @@ func (x *CreateRequest) GetPassword() string {
 	return ""
 }
 
-type UpdateReply struct {
+type UpdateResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
 	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
@@ -173,20 +173,20 @@ type UpdateReply struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *UpdateReply) Reset() {
-	*x = UpdateReply{}
+func (x *UpdateResponse) Reset() {
+	*x = UpdateResponse{}
 	mi := &file_internal_domain_account_account_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *UpdateReply) String() string {
+func (x *UpdateResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UpdateReply) ProtoMessage() {}
+func (*UpdateResponse) ProtoMessage() {}
 
-func (x *UpdateReply) ProtoReflect() protoreflect.Message {
+func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_internal_domain_account_account_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -198,19 +198,19 @@ func (x *UpdateReply) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UpdateReply.ProtoReflect.Descriptor instead.
-func (*UpdateReply) Descriptor() ([]byte, []int) {
+// Deprecated: Use UpdateResponse.ProtoReflect.Descriptor instead.
+func (*UpdateResponse) Descriptor() ([]byte, []int) {
 	return file_internal_domain_account_account_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *UpdateReply) GetCode() int32 {
+func (x *UpdateResponse) GetCode() int32 {
 	if x != nil {
 		return x.Code
 	}
 	return 0
 }
 
-func (x *UpdateReply) GetMessage() string {
+func (x *UpdateResponse) GetMessage() string {
 	if x != nil {
 		return x.Message
 	}
@@ -317,7 +317,7 @@ func (x *UpdateRequest) GetPassword() string {
 	return ""
 }
 
-type DeleteReply struct {
+type DeleteResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
 	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
@@ -325,20 +325,20 @@ type DeleteReply struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DeleteReply) Reset() {
-	*x = DeleteReply{}
+func (x *DeleteResponse) Reset() {
+	*x = DeleteResponse{}
 	mi := &file_internal_domain_account_account_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DeleteReply) String() string {
+func (x *DeleteResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeleteReply) ProtoMessage() {}
+func (*DeleteResponse) ProtoMessage() {}
 
-func (x *DeleteReply) ProtoReflect() protoreflect.Message {
+func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_internal_domain_account_account_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -350,19 +350,19 @@ func (x *DeleteReply) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeleteReply.ProtoReflect.Descriptor instead.
-func (*DeleteReply) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeleteResponse.ProtoReflect.Descriptor instead.
+func (*DeleteResponse) Descriptor() ([]byte, []int) {
 	return file_internal_domain_account_account_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *DeleteReply) GetCode() int32 {
+func (x *DeleteResponse) GetCode() int32 {
 	if x != nil {
 		return x.Code
 	}
 	return 0
 }
 
-func (x *DeleteReply) GetMessage() string {
+func (x *DeleteResponse) GetMessage() string {
 	if x != nil {
 		return x.Message
 	}
@@ -497,29 +497,29 @@ func (x *User) GetTwoFactor() []string {
 	return nil
 }
 
-type ReadReply struct {
+type ReadResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Msg           string                 `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	Data          *User                  `protobuf:"bytes,3,opt,name=Data,proto3" json:"Data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ReadReply) Reset() {
-	*x = ReadReply{}
+func (x *ReadResponse) Reset() {
+	*x = ReadResponse{}
 	mi := &file_internal_domain_account_account_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ReadReply) String() string {
+func (x *ReadResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ReadReply) ProtoMessage() {}
+func (*ReadResponse) ProtoMessage() {}
 
-func (x *ReadReply) ProtoReflect() protoreflect.Message {
+func (x *ReadResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_internal_domain_account_account_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -531,26 +531,26 @@ func (x *ReadReply) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ReadReply.ProtoReflect.Descriptor instead.
-func (*ReadReply) Descriptor() ([]byte, []int) {
+// Deprecated: Use ReadResponse.ProtoReflect.Descriptor instead.
+func (*ReadResponse) Descriptor() ([]byte, []int) {
 	return file_internal_domain_account_account_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *ReadReply) GetCode() int32 {
+func (x *ReadResponse) GetCode() int32 {
 	if x != nil {
 		return x.Code
 	}
 	return 0
 }
 
-func (x *ReadReply) GetMsg() string {
+func (x *ReadResponse) GetMessage() string {
 	if x != nil {
-		return x.Msg
+		return x.Message
 	}
 	return ""
 }
 
-func (x *ReadReply) GetData() *User {
+func (x *ReadResponse) GetData() *User {
 	if x != nil {
 		return x.Data
 	}
@@ -605,8 +605,8 @@ var File_internal_domain_account_account_proto protoreflect.FileDescriptor
 
 const file_internal_domain_account_account_proto_rawDesc = "" +
 	"\n" +
-	"%internal/domain/account/account.proto\x12\faccountproto\";\n" +
-	"\vCreateReply\x12\x12\n" +
+	"%internal/domain/account/account.proto\x12\faccountproto\">\n" +
+	"\x0eCreateResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\"\xca\x01\n" +
 	"\rCreateRequest\x12\x1a\n" +
@@ -618,8 +618,8 @@ const file_internal_domain_account_account_proto_rawDesc = "" +
 	"\tlast_name\x18\x05 \x01(\tR\blastName\x12\x1d\n" +
 	"\n" +
 	"two_factor\x18\x06 \x03(\tR\ttwoFactor\x12\x1a\n" +
-	"\bpassword\x18\a \x01(\tR\bpassword\";\n" +
-	"\vUpdateReply\x12\x12\n" +
+	"\bpassword\x18\a \x01(\tR\bpassword\">\n" +
+	"\x0eUpdateResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\"\xda\x01\n" +
 	"\rUpdateRequest\x12\x1a\n" +
@@ -632,8 +632,8 @@ const file_internal_domain_account_account_proto_rawDesc = "" +
 	"\n" +
 	"two_factor\x18\x06 \x03(\tR\ttwoFactor\x12\x0e\n" +
 	"\x02ID\x18\a \x01(\x05R\x02ID\x12\x1a\n" +
-	"\bpassword\x18\b \x01(\tR\bpassword\";\n" +
-	"\vDeleteReply\x12\x12\n" +
+	"\bpassword\x18\b \x01(\tR\bpassword\">\n" +
+	"\x0eDeleteResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\"\x1f\n" +
 	"\rDeleteRequest\x12\x0e\n" +
@@ -646,21 +646,18 @@ const file_internal_domain_account_account_proto_rawDesc = "" +
 	"first_name\x18\x04 \x01(\tR\tfirstName\x12\x1b\n" +
 	"\tlast_name\x18\x05 \x01(\tR\blastName\x12\x1d\n" +
 	"\n" +
-	"two_factor\x18\x06 \x03(\tR\ttwoFactor\"Y\n" +
-	"\tReadReply\x12\x12\n" +
-	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
-	"\x03msg\x18\x02 \x01(\tR\x03msg\x12&\n" +
+	"two_factor\x18\x06 \x03(\tR\ttwoFactor\"d\n" +
+	"\fReadResponse\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12&\n" +
 	"\x04Data\x18\x03 \x01(\v2\x12.accountproto.UserR\x04Data\"\x1d\n" +
 	"\vReadRequest\x12\x0e\n" +
-	"\x02ID\x18\b \x01(\x05R\x02ID2\x9b\x02\n" +
-	"\aAccount\x12D\n" +
-	"\n" +
-	"CreateGRPC\x12\x1b.accountproto.CreateRequest\x1a\x19.accountproto.CreateReply\x12D\n" +
-	"\n" +
-	"UpdateGRPC\x12\x1b.accountproto.UpdateRequest\x1a\x19.accountproto.UpdateReply\x12D\n" +
-	"\n" +
-	"DeleteGRPC\x12\x1b.accountproto.DeleteRequest\x1a\x19.accountproto.DeleteReply\x12>\n" +
-	"\bReadGRPC\x12\x19.accountproto.ReadRequest\x1a\x17.accountproto.ReadReplyB4Z2/internal/domain/account/accountproto;accountprotob\x06proto3"
+	"\x02ID\x18\b \x01(\x05R\x02ID2\x97\x02\n" +
+	"\aAccount\x12C\n" +
+	"\x06Create\x12\x1b.accountproto.CreateRequest\x1a\x1c.accountproto.CreateResponse\x12C\n" +
+	"\x06Update\x12\x1b.accountproto.UpdateRequest\x1a\x1c.accountproto.UpdateResponse\x12C\n" +
+	"\x06Delete\x12\x1b.accountproto.DeleteRequest\x1a\x1c.accountproto.DeleteResponse\x12=\n" +
+	"\x04Read\x12\x19.accountproto.ReadRequest\x1a\x1a.accountproto.ReadResponseB4Z2/internal/domain/account/accountproto;accountprotob\x06proto3"
 
 var (
 	file_internal_domain_account_account_proto_rawDescOnce sync.Once
@@ -676,26 +673,26 @@ func file_internal_domain_account_account_proto_rawDescGZIP() []byte {
 
 var file_internal_domain_account_account_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_internal_domain_account_account_proto_goTypes = []any{
-	(*CreateReply)(nil),   // 0: accountproto.CreateReply
-	(*CreateRequest)(nil), // 1: accountproto.CreateRequest
-	(*UpdateReply)(nil),   // 2: accountproto.UpdateReply
-	(*UpdateRequest)(nil), // 3: accountproto.UpdateRequest
-	(*DeleteReply)(nil),   // 4: accountproto.DeleteReply
-	(*DeleteRequest)(nil), // 5: accountproto.DeleteRequest
-	(*User)(nil),          // 6: accountproto.User
-	(*ReadReply)(nil),     // 7: accountproto.ReadReply
-	(*ReadRequest)(nil),   // 8: accountproto.ReadRequest
+	(*CreateResponse)(nil), // 0: accountproto.CreateResponse
+	(*CreateRequest)(nil),  // 1: accountproto.CreateRequest
+	(*UpdateResponse)(nil), // 2: accountproto.UpdateResponse
+	(*UpdateRequest)(nil),  // 3: accountproto.UpdateRequest
+	(*DeleteResponse)(nil), // 4: accountproto.DeleteResponse
+	(*DeleteRequest)(nil),  // 5: accountproto.DeleteRequest
+	(*User)(nil),           // 6: accountproto.User
+	(*ReadResponse)(nil),   // 7: accountproto.ReadResponse
+	(*ReadRequest)(nil),    // 8: accountproto.ReadRequest
 }
 var file_internal_domain_account_account_proto_depIdxs = []int32{
-	6, // 0: accountproto.ReadReply.Data:type_name -> accountproto.User
-	1, // 1: accountproto.Account.CreateGRPC:input_type -> accountproto.CreateRequest
-	3, // 2: accountproto.Account.UpdateGRPC:input_type -> accountproto.UpdateRequest
-	5, // 3: accountproto.Account.DeleteGRPC:input_type -> accountproto.DeleteRequest
-	8, // 4: accountproto.Account.ReadGRPC:input_type -> accountproto.ReadRequest
-	0, // 5: accountproto.Account.CreateGRPC:output_type -> accountproto.CreateReply
-	2, // 6: accountproto.Account.UpdateGRPC:output_type -> accountproto.UpdateReply
-	4, // 7: accountproto.Account.DeleteGRPC:output_type -> accountproto.DeleteReply
-	7, // 8: accountproto.Account.ReadGRPC:output_type -> accountproto.ReadReply
+	6, // 0: accountproto.ReadResponse.Data:type_name -> accountproto.User
+	1, // 1: accountproto.Account.Create:input_type -> accountproto.CreateRequest
+	3, // 2: accountproto.Account.Update:input_type -> accountproto.UpdateRequest
+	5, // 3: accountproto.Account.Delete:input_type -> accountproto.DeleteRequest
+	8, // 4: accountproto.Account.Read:input_type -> accountproto.ReadRequest
+	0, // 5: accountproto.Account.Create:output_type -> accountproto.CreateResponse
+	2, // 6: accountproto.Account.Update:output_type -> accountproto.UpdateResponse
+	4, // 7: accountproto.Account.Delete:output_type -> accountproto.DeleteResponse
+	7, // 8: accountproto.Account.Read:output_type -> accountproto.ReadResponse
 	5, // [5:9] is the sub-list for method output_type
 	1, // [1:5] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

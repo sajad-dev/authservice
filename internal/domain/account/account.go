@@ -10,10 +10,10 @@ import (
 )
 
 type AccountCURDHandler interface {
-	CreateGRPC(ctx context.Context, req *accountproto.CreateRequest) (*accountproto.CreateReply, error)
-	UpdateGRPC(ctx context.Context, req *accountproto.UpdateRequest) (*accountproto.UpdateReply, error)
-	DeleteGRPC(ctx context.Context, req *accountproto.DeleteRequest) (*accountproto.DeleteReply, error)
-	ReadGRPC(ctx context.Context, req *accountproto.ReadRequest) (*accountproto.ReadReply, error)
+	CreateGRPC(ctx context.Context, req *accountproto.CreateRequest) (*accountproto.CreateResponse, error)
+	UpdateGRPC(ctx context.Context, req *accountproto.UpdateRequest) (*accountproto.UpdateResponse, error)
+	DeleteGRPC(ctx context.Context, req *accountproto.DeleteRequest) (*accountproto.DeleteResponse, error)
+	ReadGRPC(ctx context.Context, req *accountproto.ReadRequest) (*accountproto.ReadResponse, error)
 }
 
 type AccountCURDService interface {

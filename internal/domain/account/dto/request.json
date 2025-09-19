@@ -1,8 +1,8 @@
 {
   "ProtoPackage": "accountproto",
-  "ProtoImportPath": "github.com/sajad-dev/authservice/internal/domain/account/accountproto",
-  "Package": "request",
-  "OptionalFunc": false,
+  "ImportPath": [
+    "github.com/sajad-dev/authservice/internal/domain/account/accountproto"
+  ],
   "Data": [
     {
       "Name": "create",

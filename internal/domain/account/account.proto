@@ -5,15 +5,15 @@ package accountproto;
 option go_package = "/internal/domain/account/accountproto;accountproto";
 
 service Account {
-  rpc CreateGRPC (CreateRequest) returns (CreateReply);
-  rpc UpdateGRPC (UpdateRequest) returns (UpdateReply);
-  rpc DeleteGRPC (DeleteRequest) returns (DeleteReply);
-  rpc ReadGRPC (ReadRequest) returns (ReadReply);
-  // rpc GetAllGRPC (GetAllRequest) returns (GetAllReply);
+  rpc Create (CreateRequest) returns (CreateResponse);
+  rpc Update (UpdateRequest) returns (UpdateResponse);
+  rpc Delete (DeleteRequest) returns (DeleteResponse);
+  rpc Read (ReadRequest) returns (ReadResponse);
+  // rpc GetAllGRPC (GetAllRequest) returns (GetAllResponse);
 }
 
 
-message CreateReply {
+message CreateResponse {
   int32 code = 1;
   string message = 2;
 }
@@ -28,7 +28,7 @@ message CreateRequest {
 }
 
 
-message UpdateReply {
+message UpdateResponse {
   int32 code = 1;
   string message = 2;
 }
@@ -43,7 +43,7 @@ message UpdateRequest {
   string password = 8;
 }
 
-message DeleteReply {
+message DeleteResponse {
   int32 code = 1;
   string message = 2;
 }
@@ -60,9 +60,9 @@ message User {
     repeated string two_factor = 6;
 }
 
-message ReadReply {
+message ReadResponse {
   int32 code = 1;
-  string msg = 2;
+  string message = 2;
   User Data = 3;
 }
 

@@ -20,7 +20,7 @@ func NewAccountHandler(svc account.AccountCURDService, vld *validation.Validatio
 	return &AccountHandler{Service: svc, ValidationInstance: vld}
 }
 
-func (a *AccountHandler) CreateGRPC(ctx context.Context, req *accountproto.CreateRequest) (*accountproto.CreateReply, error) {
+func (a *AccountHandler) CreateGRPC(ctx context.Context, req *accountproto.CreateRequest) (*accountproto.CreateResponse, error) {
 
 	reqValidation := request.ToRequestCreate(*req)
 
@@ -32,7 +32,7 @@ func (a *AccountHandler) CreateGRPC(ctx context.Context, req *accountproto.Creat
 	return res.ToProto(), nil
 }
 
-func (a *AccountHandler) UpdateGRPC(ctx context.Context, req *accountproto.UpdateRequest) (*accountproto.UpdateReply, error) {
+func (a *AccountHandler) UpdateGRPC(ctx context.Context, req *accountproto.UpdateRequest) (*accountproto.UpdateResponse, error) {
 	reqValidation := request.ToRequestUpdate(*req)
 
 	res, err := a.Service.UpdateService(*reqValidation)
@@ -43,7 +43,7 @@ func (a *AccountHandler) UpdateGRPC(ctx context.Context, req *accountproto.Updat
 	return res.ToProto(), nil
 }
 
-func (a *AccountHandler) DeleteGRPC(ctx context.Context, req *accountproto.DeleteRequest) (*accountproto.DeleteReply, error) {
+func (a *AccountHandler) DeleteGRPC(ctx context.Context, req *accountproto.DeleteRequest) (*accountproto.DeleteResponse, error) {
 	reqValidation := request.ToRequestDelete(*req)
 
 	res, err := a.Service.DeleteService(*reqValidation)
@@ -51,10 +51,10 @@ func (a *AccountHandler) DeleteGRPC(ctx context.Context, req *accountproto.Delet
 		return nil, err
 	}
 
-	return &accountproto.DeleteReply{Message: res.Message, Code: int32(res.Code)}, nil
+	return &accountproto.DeleteResponse{Message: res.Message, Code: int32(res.Code)}, nil
 }
 
-func (a *AccountHandler) ReadGRPC(ctx context.Context, req *accountproto.ReadRequest) (*accountproto.ReadReply, error) {
+func (a *AccountHandler) ReadGRPC(ctx context.Context, req *accountproto.ReadRequest) (*accountproto.ReadResponse, error) {
 	reqValidation := request.ToRequestRead(*req)
 
 	res, err := a.Service.ReadService(*reqValidation)

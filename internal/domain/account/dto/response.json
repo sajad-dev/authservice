@@ -1,0 +1,121 @@
+{
+  "ProtoPackage": "accountproto",
+  "ImportPath": [
+    "github.com/sajad-dev/authservice/internal/domain/account/accountproto"
+  ],
+  "Data": [
+    {
+      "Name": "create",
+      "Data": {
+        "FuncName": "ToProto",
+        "StructName": "CreateResponse",
+        "ProtoStruct": "CreateResponse",
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Message",
+            "Type": "string",
+            "From": "Message",
+            "Json": "message"
+          }
+        ]
+      }
+    },
+    {
+      "Name": "delete",
+      "Data": {
+        "FuncName": "ToProto",
+        "StructName": "DeleteResponse",
+        "ProtoStruct": "DeleteResponse",
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Message",
+            "Type": "string",
+            "From": "Message",
+            "Json": "message"
+          }
+        ]
+      }
+    },
+    {
+      "Name": "read",
+      "Data": {
+        "ImportPath": [
+          "github.com/sajad-dev/authservice/internal/shared/modeldto"
+        ],
+        "FuncName": "ToProto",
+        "StructName": "ReadResponse",
+        "ProtoStruct": "ReadResponse",
+        "AdaptorField": [
+          {
+            "FuncName": "AdaptorDataUser",
+            "ProtoPackage": "accountproto",
+            "ProtoStruct": "User",
+            "Data": "modeldto.AccountFiltered",
+            "Fields": [
+              {
+                "To": "FirstName",
+                "From": "LastName"
+              }
+            ]
+          }
+        ],
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Data",
+            "Type": "modeldto.AccountFiltered",
+            "From": "Data",
+            "Json": "data",
+            "HaveFunction": true,
+            "Function": "AdaptorDataUser"
+          },
+          {
+            "To": "Message",
+            "Type": "string",
+            "From": "Message",
+            "Json": "message"
+          }
+        ]
+      }
+    },
+    {
+      "Name": "update",
+      "Data": {
+        "FuncName": "ToProto",
+        "StructName": "UpdateResponse",
+        "ProtoStruct": "UpdateResponse",
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Message",
+            "Type": "string",
+            "From": "Message",
+            "Json": "message"
+          }
+        ]
+      }
+    }
+  ]
+}
