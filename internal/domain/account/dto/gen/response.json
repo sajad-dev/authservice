@@ -1,0 +1,137 @@
+{
+  "ProtoPackage": "accountproto",
+  "ImportPath": [
+    "github.com/sajad-dev/authservice/internal/domain/account/accountproto"
+  ],
+  "Data": [
+    {
+      "Name": "create",
+      "Data": {
+        "FuncName": "ToProto",
+        "StructName": "CreateResponse",
+        "ProtoStruct": "CreateResponse",
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Msg",
+            "Type": "string",
+            "From": "Msg",
+            "Json": "msg"
+          }
+        ]
+      }
+    },
+    {
+      "Name": "delete",
+      "Data": {
+        "FuncName": "ToProto",
+        "StructName": "DeleteResponse",
+        "ProtoStruct": "DeleteResponse",
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Msg",
+            "Type": "string",
+            "From": "Msg",
+            "Json": "msg"
+          }
+        ]
+      }
+    },
+    {
+      "Name": "read",
+      "Data": {
+        "ImportPath": [
+          "github.com/sajad-dev/authservice/internal/shared/models"
+        ],
+        "FuncName": "ToProto",
+        "StructName": "ReadResponse",
+        "ProtoStruct": "ReadResponse",
+        "AdaptorField": [
+          {
+            "FuncName": "AdaptorDataUser",
+            "ProtoPackage": "accountproto",
+            "ProtoStruct": "User",
+            "Data": "models.AccountFiltered",
+            "Fields": [
+              {
+                "To": "FirstName",
+                "From": "FirstName"
+              },
+              {
+                "To": "LastName",
+                "From": "LastName"
+              },
+              {
+                "To": "Username",
+                "From": "Username"
+              },
+              {
+                "To": "Email",
+                "From": "Email"
+              },
+              {
+                "To": "TwoFactor",
+                "From": "TwoFactor"
+              }
+            ]
+          }
+        ],
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Data",
+            "Type": "models.AccountFiltered",
+            "From": "Data",
+            "Json": "data",
+            "HaveFunction": true,
+            "Function": "AdaptorDataUser"
+          },
+          {
+            "To": "Msg",
+            "Type": "string",
+            "From": "Msg",
+            "Json": "msg"
+          }
+        ]
+      }
+    },
+    {
+      "Name": "update",
+      "Data": {
+        "FuncName": "ToProto",
+        "StructName": "UpdateResponse",
+        "ProtoStruct": "UpdateResponse",
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Msg",
+            "Type": "string",
+            "From": "Msg",
+            "Json": "msg"
+          }
+        ]
+      }
+    }
+  ]
+}

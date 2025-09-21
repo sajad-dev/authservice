@@ -24,7 +24,7 @@ const (
 type CreateResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Msg           string                 `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -66,9 +66,9 @@ func (x *CreateResponse) GetCode() int32 {
 	return 0
 }
 
-func (x *CreateResponse) GetMessage() string {
+func (x *CreateResponse) GetMsg() string {
 	if x != nil {
-		return x.Message
+		return x.Msg
 	}
 	return ""
 }
@@ -77,7 +77,6 @@ type CreateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
 	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
-	SMS           string                 `protobuf:"bytes,3,opt,name=SMS,proto3" json:"SMS,omitempty"`
 	FirstName     string                 `protobuf:"bytes,4,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
 	LastName      string                 `protobuf:"bytes,5,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
 	TwoFactor     []string               `protobuf:"bytes,6,rep,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
@@ -130,13 +129,6 @@ func (x *CreateRequest) GetEmail() string {
 	return ""
 }
 
-func (x *CreateRequest) GetSMS() string {
-	if x != nil {
-		return x.SMS
-	}
-	return ""
-}
-
 func (x *CreateRequest) GetFirstName() string {
 	if x != nil {
 		return x.FirstName
@@ -168,7 +160,7 @@ func (x *CreateRequest) GetPassword() string {
 type UpdateResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Msg           string                 `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -210,9 +202,9 @@ func (x *UpdateResponse) GetCode() int32 {
 	return 0
 }
 
-func (x *UpdateResponse) GetMessage() string {
+func (x *UpdateResponse) GetMsg() string {
 	if x != nil {
-		return x.Message
+		return x.Msg
 	}
 	return ""
 }
@@ -221,11 +213,10 @@ type UpdateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
 	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
-	SMS           string                 `protobuf:"bytes,3,opt,name=SMS,proto3" json:"SMS,omitempty"`
 	FirstName     string                 `protobuf:"bytes,4,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
 	LastName      string                 `protobuf:"bytes,5,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
 	TwoFactor     []string               `protobuf:"bytes,6,rep,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
-	ID            int32                  `protobuf:"varint,7,opt,name=ID,proto3" json:"ID,omitempty"`
+	Id            int32                  `protobuf:"varint,7,opt,name=id,proto3" json:"id,omitempty"`
 	Password      string                 `protobuf:"bytes,8,opt,name=password,proto3" json:"password,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -275,13 +266,6 @@ func (x *UpdateRequest) GetEmail() string {
 	return ""
 }
 
-func (x *UpdateRequest) GetSMS() string {
-	if x != nil {
-		return x.SMS
-	}
-	return ""
-}
-
 func (x *UpdateRequest) GetFirstName() string {
 	if x != nil {
 		return x.FirstName
@@ -303,9 +287,9 @@ func (x *UpdateRequest) GetTwoFactor() []string {
 	return nil
 }
 
-func (x *UpdateRequest) GetID() int32 {
+func (x *UpdateRequest) GetId() int32 {
 	if x != nil {
-		return x.ID
+		return x.Id
 	}
 	return 0
 }
@@ -320,7 +304,7 @@ func (x *UpdateRequest) GetPassword() string {
 type DeleteResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Msg           string                 `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -362,16 +346,16 @@ func (x *DeleteResponse) GetCode() int32 {
 	return 0
 }
 
-func (x *DeleteResponse) GetMessage() string {
+func (x *DeleteResponse) GetMsg() string {
 	if x != nil {
-		return x.Message
+		return x.Msg
 	}
 	return ""
 }
 
 type DeleteRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ID            int32                  `protobuf:"varint,8,opt,name=ID,proto3" json:"ID,omitempty"`
+	Id            int32                  `protobuf:"varint,8,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -406,9 +390,9 @@ func (*DeleteRequest) Descriptor() ([]byte, []int) {
 	return file_internal_domain_account_account_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *DeleteRequest) GetID() int32 {
+func (x *DeleteRequest) GetId() int32 {
 	if x != nil {
-		return x.ID
+		return x.Id
 	}
 	return 0
 }
@@ -417,7 +401,6 @@ type User struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
 	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
-	SMS           string                 `protobuf:"bytes,3,opt,name=SMS,proto3" json:"SMS,omitempty"`
 	FirstName     string                 `protobuf:"bytes,4,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
 	LastName      string                 `protobuf:"bytes,5,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
 	TwoFactor     []string               `protobuf:"bytes,6,rep,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
@@ -469,13 +452,6 @@ func (x *User) GetEmail() string {
 	return ""
 }
 
-func (x *User) GetSMS() string {
-	if x != nil {
-		return x.SMS
-	}
-	return ""
-}
-
 func (x *User) GetFirstName() string {
 	if x != nil {
 		return x.FirstName
@@ -500,7 +476,7 @@ func (x *User) GetTwoFactor() []string {
 type ReadResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Msg           string                 `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
 	Data          *User                  `protobuf:"bytes,3,opt,name=Data,proto3" json:"Data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -543,9 +519,9 @@ func (x *ReadResponse) GetCode() int32 {
 	return 0
 }
 
-func (x *ReadResponse) GetMessage() string {
+func (x *ReadResponse) GetMsg() string {
 	if x != nil {
-		return x.Message
+		return x.Msg
 	}
 	return ""
 }
@@ -559,7 +535,7 @@ func (x *ReadResponse) GetData() *User {
 
 type ReadRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ID            int32                  `protobuf:"varint,8,opt,name=ID,proto3" json:"ID,omitempty"`
+	Id            int32                  `protobuf:"varint,8,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -594,9 +570,9 @@ func (*ReadRequest) Descriptor() ([]byte, []int) {
 	return file_internal_domain_account_account_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *ReadRequest) GetID() int32 {
+func (x *ReadRequest) GetId() int32 {
 	if x != nil {
-		return x.ID
+		return x.Id
 	}
 	return 0
 }
@@ -605,54 +581,51 @@ var File_internal_domain_account_account_proto protoreflect.FileDescriptor
 
 const file_internal_domain_account_account_proto_rawDesc = "" +
 	"\n" +
-	"%internal/domain/account/account.proto\x12\faccountproto\">\n" +
+	"%internal/domain/account/account.proto\x12\faccountproto\"6\n" +
 	"\x0eCreateResponse\x12\x12\n" +
-	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"\xca\x01\n" +
+	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
+	"\x03msg\x18\x02 \x01(\tR\x03msg\"\xb8\x01\n" +
 	"\rCreateRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
-	"\x05email\x18\x02 \x01(\tR\x05email\x12\x10\n" +
-	"\x03SMS\x18\x03 \x01(\tR\x03SMS\x12\x1d\n" +
+	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1d\n" +
 	"\n" +
 	"first_name\x18\x04 \x01(\tR\tfirstName\x12\x1b\n" +
 	"\tlast_name\x18\x05 \x01(\tR\blastName\x12\x1d\n" +
 	"\n" +
 	"two_factor\x18\x06 \x03(\tR\ttwoFactor\x12\x1a\n" +
-	"\bpassword\x18\a \x01(\tR\bpassword\">\n" +
+	"\bpassword\x18\a \x01(\tR\bpassword\"6\n" +
 	"\x0eUpdateResponse\x12\x12\n" +
-	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"\xda\x01\n" +
+	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
+	"\x03msg\x18\x02 \x01(\tR\x03msg\"\xc8\x01\n" +
 	"\rUpdateRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
-	"\x05email\x18\x02 \x01(\tR\x05email\x12\x10\n" +
-	"\x03SMS\x18\x03 \x01(\tR\x03SMS\x12\x1d\n" +
+	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1d\n" +
 	"\n" +
 	"first_name\x18\x04 \x01(\tR\tfirstName\x12\x1b\n" +
 	"\tlast_name\x18\x05 \x01(\tR\blastName\x12\x1d\n" +
 	"\n" +
 	"two_factor\x18\x06 \x03(\tR\ttwoFactor\x12\x0e\n" +
-	"\x02ID\x18\a \x01(\x05R\x02ID\x12\x1a\n" +
-	"\bpassword\x18\b \x01(\tR\bpassword\">\n" +
+	"\x02id\x18\a \x01(\x05R\x02id\x12\x1a\n" +
+	"\bpassword\x18\b \x01(\tR\bpassword\"6\n" +
 	"\x0eDeleteResponse\x12\x12\n" +
-	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"\x1f\n" +
+	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
+	"\x03msg\x18\x02 \x01(\tR\x03msg\"\x1f\n" +
 	"\rDeleteRequest\x12\x0e\n" +
-	"\x02ID\x18\b \x01(\x05R\x02ID\"\xa5\x01\n" +
+	"\x02id\x18\b \x01(\x05R\x02id\"\x93\x01\n" +
 	"\x04User\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
-	"\x05email\x18\x02 \x01(\tR\x05email\x12\x10\n" +
-	"\x03SMS\x18\x03 \x01(\tR\x03SMS\x12\x1d\n" +
+	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1d\n" +
 	"\n" +
 	"first_name\x18\x04 \x01(\tR\tfirstName\x12\x1b\n" +
 	"\tlast_name\x18\x05 \x01(\tR\blastName\x12\x1d\n" +
 	"\n" +
-	"two_factor\x18\x06 \x03(\tR\ttwoFactor\"d\n" +
+	"two_factor\x18\x06 \x03(\tR\ttwoFactor\"\\\n" +
 	"\fReadResponse\x12\x12\n" +
-	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\x12&\n" +
+	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
+	"\x03msg\x18\x02 \x01(\tR\x03msg\x12&\n" +
 	"\x04Data\x18\x03 \x01(\v2\x12.accountproto.UserR\x04Data\"\x1d\n" +
 	"\vReadRequest\x12\x0e\n" +
-	"\x02ID\x18\b \x01(\x05R\x02ID2\x97\x02\n" +
+	"\x02id\x18\b \x01(\x05R\x02id2\x97\x02\n" +
 	"\aAccount\x12C\n" +
 	"\x06Create\x12\x1b.accountproto.CreateRequest\x1a\x1c.accountproto.CreateResponse\x12C\n" +
 	"\x06Update\x12\x1b.accountproto.UpdateRequest\x1a\x1c.accountproto.UpdateResponse\x12C\n" +

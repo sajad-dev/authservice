@@ -1,6 +1,7 @@
 package models
 
 import (
+	"reflect"
 	"time"
 
 	"github.com/lib/pq"
@@ -12,14 +13,19 @@ type Accounts struct {
 	FirstName           string
 	LastName            string
 	Email               string         `gorm:"unique;not null"`
-	SMS                 *string        `gorm:"uniqueIndex"`
 	Username            string         `gorm:"unique;not null"`
 	TwoFactor           pq.StringArray `gorm:"type:text[]"`
 	Password            string         `gorm:"not null"`
-	EmailConfirm        bool           `gorm:"default:false"`
-	SMSConfirm          bool           `gorm:"default:false"`
 	GoogleAuthScreatKey string
 	LastForgetPassword  time.Time
+}
+
+type AccountFiltered struct {
+	FirstName string
+	LastName  string
+	Email     string
+	Username  string
+	TwoFactor []string
 }
 
 type AccountOption func(*Accounts)
@@ -36,10 +42,6 @@ func WithEmail(email string) AccountOption {
 	return func(a *Accounts) { a.Email = email }
 }
 
-func WithSMS(sms string) AccountOption {
-	return func(a *Accounts) { a.SMS = &sms }
-}
-
 func WithUsername(username string) AccountOption {
 	return func(a *Accounts) { a.Username = username }
 }
@@ -52,14 +54,6 @@ func WithPassword(password string) AccountOption {
 	return func(a *Accounts) { a.Password = password }
 }
 
-func WithEmailConfirm(emailConfirm bool) AccountOption {
-	return func(a *Accounts) { a.EmailConfirm = emailConfirm }
-}
-
-func WithSMSConfirm(smsConfirm bool) AccountOption {
-	return func(a *Accounts) { a.SMSConfirm = smsConfirm }
-}
-
 func WithLastForgetPassword(t time.Time) AccountOption {
 	return func(a *Accounts) { a.LastForgetPassword = t }
 }
@@ -68,12 +62,37 @@ func WithGoogleAuthScreatKey(screatKey string) AccountOption {
 	return func(a *Accounts) { a.GoogleAuthScreatKey = screatKey }
 }
 func NewAccounts(opts ...AccountOption) *Accounts {
-	account := &Accounts{
-		EmailConfirm: false,
-		SMSConfirm:   false,
-	}
+	account := &Accounts{}
 	for _, opt := range opts {
 		opt(account)
 	}
 	return account
+}
+
+func AccountInput(inp any) (*Accounts, bool) {
+	val := reflect.ValueOf(inp)
+
+	twofactor, ok := val.FieldByName("TwoFactor").Interface().(pq.StringArray)
+	if !ok {
+		return nil, false
+	}
+
+	return &Accounts{
+		FirstName: val.FieldByName("FirstName").String(),
+		LastName:  val.FieldByName("LastName").String(),
+		Email:     val.FieldByName("Email").String(),
+		Password:  val.FieldByName("Password").String(),
+		Username:  val.FieldByName("Username").String(),
+		TwoFactor: twofactor,
+	}, true
+}
+
+func AccountOutput(row *Accounts) AccountFiltered {
+	return AccountFiltered{
+		FirstName: row.FirstName,
+		LastName:  row.LastName,
+		Email:     row.Email,
+		Username:  row.Username,
+		TwoFactor: row.TwoFactor,
+	}
 }

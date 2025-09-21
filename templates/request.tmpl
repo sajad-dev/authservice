@@ -1,0 +1,23 @@
+package request
+
+import (
+	{{- range .ImportPath}}
+	"{{ . }}"
+	{{- end}}
+)
+
+type {{ .StructName }} struct {
+	{{- range .Fields}}
+	{{ .From }} {{ .Type }} `json:"{{ .Json }}" validate:"{{ .Validations }}"`
+	{{- end }}
+} 
+
+func {{ .FuncName }}(pd *{{ .ProtoPackage }}.{{ .ProtoStruct }}) *{{ .StructName }} {
+	return &{{ .StructName }}{
+		{{- range .Fields }}
+		{{ .To }}: pd.{{ .From }},
+		{{- end }}
+	}
+}
+
+

@@ -2,108 +2,103 @@ package service
 
 import (
 	"github.com/sajad-dev/authservice/internal/domain/account"
-
+	"github.com/sajad-dev/authservice/internal/domain/account/dto/gen/request"
+	"github.com/sajad-dev/authservice/internal/domain/account/dto/gen/response"
+	"github.com/sajad-dev/authservice/internal/shared/adaptor/hashing"
+	"github.com/sajad-dev/authservice/internal/shared/constants/messages"
+	"github.com/sajad-dev/authservice/internal/shared/constants/statuscode"
+	"github.com/sajad-dev/authservice/internal/shared/errors/errs"
+	"github.com/sajad-dev/authservice/internal/shared/models"
 )
 
-type AccountService struct {
-	Repo account.AccountCURDRepositories
+type AccountSvc struct {
+	Repo    account.AccountCURDRepositories
+	Hashing hashing.Hashing
 }
 
-func NewAccountService(repo account.AccountCURDRepositories) *AccountService {
-	return &AccountService{Repo: repo}
+func NewAccountSvc(repo account.AccountCURDRepositories, hashing hashing.Hashing) *AccountSvc {
+	return &AccountSvc{
+		Repo:    repo,
+		Hashing: hashing,
+	}
 }
 
-func (s *AccountService) CreateService(req createreq.CreateRequest) (createres.CreateResponse, error) {
+func (s *AccountSvc) Create(req request.CreateRequest) (response.CreateResponse, error) {
+
 	var err error
-	var account = models.NewAccounts(
-		models.WithEmail(req.Email),
-		models.WithFirstName(req.FirstName),
-		models.WithLastName(req.LastName),
-		models.WithSMS(req.SMS),
-		models.WithUsername(req.Username),
-		models.WithTwoFactor(req.TwoFactor),
-	)
+	account, ok := models.AccountInput(req)
+	if !ok {
+		return response.CreateResponse{
+			Msg:  messages.NOT_VALID_FIELDS_ERR,
+			Code: statuscode.VALIDATION_ERR,
+		}, nil
+	}
 
-	account.Password, err = crypto.SumSHA256([]byte(req.Password))
+	account.Password, err = s.Hashing.Sum([]byte(req.Password))
 	if err != nil {
-		return *createres.NewCreateResponse(), errs.Err(err)
+		return response.CreateResponse{}, errs.Err(err)
 	}
 
 	err = s.Repo.Create(account)
 	if err != nil {
-		return *createres.NewCreateResponse(), errs.Err(err)
+		return response.CreateResponse{}, errs.Err(err)
 	}
 
-	return *createres.NewCreateResponse(
-		createres.WithMessage(messages.CREATE_ACCOUNT_SUCCESSFUL),
-		createres.WithCode(200),
-	), nil
+	return response.CreateResponse{
+		Msg:  messages.CREATE_ACCOUNT_SUCCESSFUL,
+		Code: statuscode.SUCCESSFUL,
+	}, nil
 
 }
 
-func (s *AccountService) UpdateService(req updatereq.UpdateRequest) (updateres.UpdateResponse, error) {
+func (s *AccountSvc) UpdateService(req request.UpdateRequest) (response.UpdateResponse, error) {
 	var err error
-	var account = models.NewAccounts(
-		models.WithEmail(req.Email),
-		models.WithFirstName(req.FirstName),
-		models.WithLastName(req.LastName),
-		models.WithSMS(req.SMS),
-		models.WithUsername(req.Username),
-		models.WithTwoFactor(req.TwoFactor),
-	)
+	account, ok := models.AccountInput(req)
+	if !ok {
+		return response.UpdateResponse{
+			Msg:  messages.NOT_VALID_FIELDS_ERR,
+			Code: statuscode.VALIDATION_ERR,
+		}, nil
+	}
 
-	account.Password, err = crypto.SumSHA256([]byte(req.Password))
+	account.Password, err = s.Hashing.Sum([]byte(req.Password))
 	if err != nil {
-		return *updateres.NewUpdateResponse(), errs.Err(err)
+		return response.UpdateResponse{}, errs.Err(err)
 	}
 
 	err = s.Repo.Update(account)
 	if err != nil {
-		return *updateres.NewUpdateResponse(), errs.Err(err)
+		return response.UpdateResponse{}, errs.Err(err)
 	}
 
-	return *updateres.NewUpdateResponse(
-		updateres.WithMessage(messages.UPDATE_ACCOUNT_SUCCESSFUL),
-		updateres.WithCode(200),
-	), nil
+	return response.UpdateResponse{
+		Msg:  messages.UPDATE_ACCOUNT_SUCCESSFUL,
+		Code: statuscode.SUCCESSFUL,
+	}, nil
 
 }
 
-func (s *AccountService) DeleteService(req deletereq.DeleteRequest) (deleteres.DeleteResponse, error) {
-	err := s.Repo.Delete(req.ID)
+func (s *AccountSvc) DeleteService(req request.DeleteRequest) (response.DeleteResponse, error) {
+	err := s.Repo.Delete(int(req.Id))
 	if err != nil {
-		return *deleteres.NewDeleteResponse(), errs.Err(err)
+		return response.DeleteResponse{}, errs.Err(err)
 	}
 
-	return *deleteres.NewDeleteResponse(
-		deleteres.WithMessage(messages.DELETE_ACCOUNT_SUCCESSFUL),
-		deleteres.WithCode(200),
-	), nil
+	return response.DeleteResponse{
+		Msg:  messages.DELETE_ACCOUNT_SUCCESSFUL,
+		Code: statuscode.SUCCESSFUL,
+	}, nil
 }
 
-func (s *AccountService) ReadService(req readreq.ReadRequest) (readres.ReadResponse, error) {
-	account, err := s.Repo.Read(req.ID)
+func (s *AccountSvc) ReadService(req request.ReadRequest) (response.ReadResponse, error) {
+	account, err := s.Repo.Read(int(req.Id))
 	if err != nil {
-		return *readres.NewReadResponse(), errs.Err(err)
+		return response.ReadResponse{}, errs.Err(err)
 	}
-	var res = readres.NewReadResponse()
-	if err := adaptor.Adaptor(res, account); err != nil {
-		return *readres.NewReadResponse(), errs.Err(err)
-	}
-	return *res, nil
+
+	return response.ReadResponse{
+		Msg:  messages.READ_ACCOUNT_SUCCESSFUL,
+		Code: statuscode.SUCCESSFUL,
+		Data: models.AccountOutput(account),
+	}, nil
 }
-
-func (s *AccountService) GetAllService() (getallres.GetAllResponse, error) {
-	accounts, err := s.Repo.GetAll()
-	if err != nil {
-		return *getallres.NewGetAllResponse(), errs.Err(err)
-	}
-	var res = getallres.NewGetAllResponse()
-	if err := adaptor.Adaptor(res, accounts); err != nil {
-		return *getallres.NewGetAllResponse(), errs.Err(err)
-	}
-	return *res, nil
-}
-
-var _ account.AccountCURDService = &AccountService{}
-

@@ -5,12 +5,12 @@ import (
 )
 
 type ReadRequest struct {
-	ID int32 `json:"id" validate:""`
+	Id int32 `json:"id" validate:""`
 } 
 
-func ToRequestRead(pd accountproto.ReadRequest) *ReadRequest {
+func ToRequestRead(pd *accountproto.ReadRequest) *ReadRequest {
 	return &ReadRequest{
-		ID: pd.ID,
+		Id: pd.Id,
 	}
 }
 

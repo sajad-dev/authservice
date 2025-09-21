@@ -6,12 +6,12 @@ import (
 
 type CreateResponse struct {
 	Code int32 `json:"code"`
-	Message string `json:"message"`
+	Msg string `json:"msg"`
 } 
 
 func (a *CreateResponse) ToProto () *accountproto.CreateResponse {
 	return &accountproto.CreateResponse{
 		Code: a.Code,
-		Message: a.Message,
+		Msg: a.Msg,
 	}
 }

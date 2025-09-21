@@ -5,12 +5,12 @@ import (
 )
 
 type DeleteRequest struct {
-	ID int32 `json:"id" validate:""`
+	Id int32 `json:"id" validate:""`
 } 
 
-func ToRequestDelete(pd accountproto.DeleteRequest) *DeleteRequest {
+func ToRequestDelete(pd *accountproto.DeleteRequest) *DeleteRequest {
 	return &DeleteRequest{
-		ID: pd.ID,
+		Id: pd.Id,
 	}
 }
 

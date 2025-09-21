@@ -1,30 +1,32 @@
 package handler
 
 import (
-	"context"
-
 	"github.com/sajad-dev/authservice/internal/domain/account"
 	"github.com/sajad-dev/authservice/internal/domain/account/accountproto"
-	"github.com/sajad-dev/authservice/internal/domain/account/dto/request"
-	"github.com/sajad-dev/authservice/internal/pkg/errs/grpc/globalerr"
-	"github.com/sajad-dev/authservice/internal/validation"
+	"github.com/sajad-dev/authservice/internal/domain/account/dto/gen/request"
+	"github.com/sajad-dev/authservice/internal/shared/adaptor/validation"
+	"github.com/sajad-dev/authservice/internal/shared/errors/errs/globalerr"
 )
 
-type AccountHandler struct {
+type AccountHndlr struct {
 	accountproto.UnimplementedAccountServer
-	Service            account.AccountCURDService
-	ValidationInstance *validation.ValidationRequest
+	Service    account.AccountCURDService
+	Validation validation.Validation
 }
 
-func NewAccountHandler(svc account.AccountCURDService, vld *validation.ValidationRequest) *AccountHandler {
-	return &AccountHandler{Service: svc, ValidationInstance: vld}
+func NewAccountHandler(svc account.AccountCURDService, vld validation.Validation) *AccountHndlr {
+	return &AccountHndlr{Service: svc, Validation: vld}
 }
 
-func (a *AccountHandler) CreateGRPC(ctx context.Context, req *accountproto.CreateRequest) (*accountproto.CreateResponse, error) {
+func (a *AccountHndlr) Create(req *accountproto.CreateRequest) (*accountproto.CreateResponse, error) {
 
-	reqValidation := request.ToRequestCreate(*req)
+	reqValidation := request.ToRequestCreate(req)
 
-	res, err := a.Service.CreateService(*reqValidation)
+	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+		return nil, err
+	}
+
+	res, err := a.Service.Create(*reqValidation)
 	if err = globalerr.ServerErr(err); err != nil {
 		return nil, err
 	}
@@ -32,10 +34,14 @@ func (a *AccountHandler) CreateGRPC(ctx context.Context, req *accountproto.Creat
 	return res.ToProto(), nil
 }
 
-func (a *AccountHandler) UpdateGRPC(ctx context.Context, req *accountproto.UpdateRequest) (*accountproto.UpdateResponse, error) {
-	reqValidation := request.ToRequestUpdate(*req)
+func (a *AccountHndlr) Update(req *accountproto.UpdateRequest) (*accountproto.UpdateResponse, error) {
+	reqValidation := request.ToRequestUpdate(req)
 
-	res, err := a.Service.UpdateService(*reqValidation)
+	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+		return nil, err
+	}
+
+	res, err := a.Service.Update(*reqValidation)
 	if err = globalerr.ServerErr(err); err != nil {
 		return nil, err
 	}
@@ -43,21 +49,14 @@ func (a *AccountHandler) UpdateGRPC(ctx context.Context, req *accountproto.Updat
 	return res.ToProto(), nil
 }
 
-func (a *AccountHandler) DeleteGRPC(ctx context.Context, req *accountproto.DeleteRequest) (*accountproto.DeleteResponse, error) {
-	reqValidation := request.ToRequestDelete(*req)
+func (a *AccountHndlr) Delete(req *accountproto.DeleteRequest) (*accountproto.DeleteResponse, error) {
+	reqValidation := request.ToRequestDelete(req)
 
-	res, err := a.Service.DeleteService(*reqValidation)
-	if err = globalerr.ServerErr(err); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
 		return nil, err
 	}
 
-	return &accountproto.DeleteResponse{Message: res.Message, Code: int32(res.Code)}, nil
-}
-
-func (a *AccountHandler) ReadGRPC(ctx context.Context, req *accountproto.ReadRequest) (*accountproto.ReadResponse, error) {
-	reqValidation := request.ToRequestRead(*req)
-
-	res, err := a.Service.ReadService(*reqValidation)
+	res, err := a.Service.Delete(*reqValidation)
 	if err = globalerr.ServerErr(err); err != nil {
 		return nil, err
 	}
@@ -65,6 +64,19 @@ func (a *AccountHandler) ReadGRPC(ctx context.Context, req *accountproto.ReadReq
 	return res.ToProto(), nil
 }
 
+func (a *AccountHndlr) Read(req *accountproto.ReadRequest) (*accountproto.ReadResponse, error) {
+	reqValidation := request.ToRequestRead(req)
 
+	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+		return nil, err
+	}
 
-var _ account.AccountCURDHandler = &AccountHandler{}
+	res, err := a.Service.Read(*reqValidation)
+	if err = globalerr.ServerErr(err); err != nil {
+		return nil, err
+	}
+
+	return res.ToProto(), nil
+}
+
+var _ account.AccountCURDHandler = &AccountHndlr{}
