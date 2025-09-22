@@ -1,0 +1,49 @@
+{
+  "ProtoPackage": "twofactorproto",
+  "ImportPath": [
+    "github.com/sajad-dev/authservice/internal/domain/twofactor/twofactorproto"
+  ],
+  "Data": [
+    {
+      "Name": "email",
+      "Data": {
+        "FuncName": "ToRequestEmail",
+        "StructName": "EmailRequest",
+        "ProtoStruct": "EmailRequest",
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Validations": "",
+            "Json": "code"
+          }
+        ]
+      }
+    },
+    {
+      "Name": "google",
+      "Data": {
+        "FuncName": "ToRequestGoogle",
+        "StructName": "GoogleRequest",
+        "ProtoStruct": "GoogleRequest",
+        "Fields": [
+          {
+            "To": "Token",
+            "Type": "string",
+            "From": "Token",
+            "Validations": "",
+            "Json": "token"
+          },
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Validations": "",
+            "Json": "code"
+          }
+        ]
+      }
+    }
+  ]
+}

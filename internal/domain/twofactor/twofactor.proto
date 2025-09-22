@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package twofactorproto;
+
+option go_package = "/internal/domain/twofactor/twofactorproto";
+
+service Twofactory {
+  rpc Email (EmailRequest) returns (TwoFactorResponse);
+  rpc Google (GoogleRequest) returns (TwoFactorResponse);
+}
+
+message User {
+  string username = 1;
+  string email = 2;
+  string first_name = 4;
+  string last_name =5;
+  repeated string two_factor = 6;
+}
+
+message TwoFactorResponse {
+  int32 code = 1;
+  string msg = 2;
+  User data = 3;
+  string token = 4;
+
+}
+
+message EmailRequest {
+      int32 code = 1;
+}
+
+message GoogleRequest {
+      string token =1;
+      int32 code = 2;
+}
