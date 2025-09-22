@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package accountproto;
 
-option go_package = "/internal/domain/account/accountproto;accountproto";
+option go_package = "/internal/domain/account/accountproto";
 
 service Account {
   rpc Create (CreateRequest) returns (CreateResponse);

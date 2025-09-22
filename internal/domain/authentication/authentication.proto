@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package authenticationproto;
 
-option go_package = "/internal/domain/authentication/authenticationproto;authenticationproto";
+option go_package = "/internal/domain/authentication/authenticationproto";
 
 service Authtication {
   rpc Login (LoginRequest) returns (LoginResponse);

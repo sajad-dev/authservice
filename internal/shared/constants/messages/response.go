@@ -6,6 +6,7 @@ const (
 	VALIDATION_ERR_TITLE          = "Not valid fields"
 	SERVER_ERR                    = "Server error"
 	USERNAME_OR_PASSWORD_IS_WORNG = "user name or password is worng"
+	TOKEN_NOT_VALID = "token not valid"
 )
 
 // Message response

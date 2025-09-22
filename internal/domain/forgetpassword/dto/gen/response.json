@@ -1,0 +1,58 @@
+{
+  "ProtoPackage": "forgetpasswordproto",
+  "ImportPath": [
+    "github.com/sajad-dev/authservice/internal/domain/forgetpassword/forgetpasswordproto"
+  ],
+  "Data": [
+    {
+      "Name": "forget",
+      "Data": {
+        "FuncName": "ToProto",
+        "StructName": "ForgetResponse",
+        "ProtoStruct": "ForgetResponse",
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Msg",
+            "Type": "string",
+            "From": "Msg",
+            "Json": "msg"
+          },
+          {
+            "To": "Token",
+            "Type": "string",
+            "From": "Token",
+            "Json": "token"
+          }
+        ]
+      }
+    },
+    {
+      "Name": "reset",
+      "Data": {
+        "FuncName": "ToProto",
+        "StructName": "ResetResponse",
+        "ProtoStruct": "ResetResponse",
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Msg",
+            "Type": "string",
+            "From": "Msg",
+            "Json": "msg"
+          }
+        ]
+      }
+    }
+  ]
+}
