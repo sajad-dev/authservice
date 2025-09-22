@@ -17,6 +17,6 @@ type AuthenticatorService interface {
 }
 
 type AuthenticatorRepo interface {
-	FindWithField(params *models.Accounts) ([]*models.Accounts, error)
-	Create(row *models.Accounts) (models.Accounts, error)
+	Find(clm string, value string) (*models.Accounts, error)
+	Create(row *models.Accounts) error
 }

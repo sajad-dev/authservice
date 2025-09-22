@@ -14,12 +14,12 @@ func NewAuthenticationRepo(db sqldb.SqlDB[*models.Accounts]) *AuthenticationRepo
 	return &AuthenticationRepo{DB: db}
 }
 
-func (a AuthenticationRepo) Create(req *models.Accounts) error {
-	return a.DB.Create(req)
+func (a AuthenticationRepo) Create(row *models.Accounts) error {
+	return a.DB.Create(row)
 }
 
-func (s AuthenticationRepo) FindWithField(params *models.Accounts) ([]*models.Accounts, error) {
-	return s.DB.FindWithField(s)
+func (s AuthenticationRepo) Find(clm string, value string) (*models.Accounts, error) {
+	return s.DB.WhereField(clm, value)
 }
 
 var _ authentication.AuthenticatorRepo = &AuthenticationRepo{}

@@ -1,7 +1,10 @@
 package postgres
 
 import (
+	"fmt"
+
 	"github.com/sajad-dev/authservice/internal/shared/adaptor/sqldb"
+	"github.com/sajad-dev/authservice/internal/shared/errors/errs"
 	"gorm.io/gorm"
 )
 
@@ -13,10 +16,16 @@ func (p *Postgres[M]) Create(params M) error {
 	return p.DB.Create(params).Error
 }
 
-func (p *Postgres[M]) FindWithField(params M) ([]M, error) {
+func (p *Postgres[M]) Where(params M) ([]M, error) {
 	var rows []M
 	err := p.DB.Where(params).Find(rows).Error
 	return rows, err
+}
+
+func (p *Postgres[M]) WhereField(column string, value string) (M, error) {
+	var table M
+	err := p.DB.Where(fmt.Sprintf("%s = ?", column), value).First(&table).Error
+	return table, errs.Err(err)
 }
 
 func (p *Postgres[M]) Save(params M) error {

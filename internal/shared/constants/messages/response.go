@@ -2,9 +2,10 @@ package messages
 
 // Error response
 const (
-	NOT_VALID_FIELDS_ERR = "Not valid fields"
-	VALIDATION_ERR_TITLE = "Not valid fields"
-	SERVER_ERR           = "Server error"
+	NOT_VALID_FIELDS_ERR          = "Not valid fields"
+	VALIDATION_ERR_TITLE          = "Not valid fields"
+	SERVER_ERR                    = "Server error"
+	USERNAME_OR_PASSWORD_IS_WORNG = "user name or password is worng"
 )
 
 // Message response

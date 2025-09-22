@@ -1,35 +1,36 @@
 package handler
 
 import (
-	"github.com/sajad-dev/authservice/internal/domain/account"
-	"github.com/sajad-dev/authservice/internal/domain/account/accountproto"
-	"github.com/sajad-dev/authservice/internal/domain/account/dto/gen/request"
+	"github.com/sajad-dev/authservice/internal/domain/authentication"
+	"github.com/sajad-dev/authservice/internal/domain/authentication/authenticationproto"
+	"github.com/sajad-dev/authservice/internal/domain/authentication/dto/gen/request"
 	"github.com/sajad-dev/authservice/internal/shared/adaptor/validation"
 	"github.com/sajad-dev/authservice/internal/shared/errors/errs/globalerr"
 )
 
 type AuthenticationHndlr struct {
 	authenticationproto.UnimplementedAuthticationServer
-	Service            service.AuthenticatorService
-	ValidationInstance *validation.ValidationRequest
+	Service    authentication.AuthenticatorService
+	Validation validation.Validation
 }
 
-func NewAuthenticationHandler(svc service.AuthenticatorService , vld *validation.ValidationRequest) *AuthenticationHndlr {
+func NewAuthenticationHandler(svc authentication.AuthenticatorService, vld validation.Validation) *AuthenticationHndlr {
 
-	return at
+	return &AuthenticationHndlr{
+		Service:    svc,
+		Validation: vld,
+	}
 }
 
+func (a *AuthenticationHndlr) Login(req *authenticationproto.LoginRequest) (*authenticationproto.LoginResponse, error) {
 
-
-func (a *AccountHndlr) Create(req *accountproto.CreateRequest) (*accountproto.CreateResponse, error) {
-
-	reqValidation := request.ToRequestCreate(req)
+	reqValidation := request.ToRequestLogin(req)
 
 	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
 		return nil, err
 	}
 
-	res, err := a.Service.Create(*reqValidation)
+	res, err := a.Service.Login(*reqValidation)
 	if err = globalerr.ServerErr(err); err != nil {
 		return nil, err
 	}
@@ -37,14 +38,15 @@ func (a *AccountHndlr) Create(req *accountproto.CreateRequest) (*accountproto.Cr
 	return res.ToProto(), nil
 }
 
-func (a *AccountHndlr) Update(req *accountproto.UpdateRequest) (*accountproto.UpdateResponse, error) {
-	reqValidation := request.ToRequestUpdate(req)
+func (a *AuthenticationHndlr) Register(req *authenticationproto.RegisterRequest) (*authenticationproto.RegisterResponse, error) {
+
+	reqValidation := request.ToRequestRegister(req)
 
 	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
 		return nil, err
 	}
 
-	res, err := a.Service.Update(*reqValidation)
+	res, err := a.Service.Register(*reqValidation)
 	if err = globalerr.ServerErr(err); err != nil {
 		return nil, err
 	}
@@ -52,34 +54,4 @@ func (a *AccountHndlr) Update(req *accountproto.UpdateRequest) (*accountproto.Up
 	return res.ToProto(), nil
 }
 
-func (a *AccountHndlr) Delete(req *accountproto.DeleteRequest) (*accountproto.DeleteResponse, error) {
-	reqValidation := request.ToRequestDelete(req)
-
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
-		return nil, err
-	}
-
-	res, err := a.Service.Delete(*reqValidation)
-	if err = globalerr.ServerErr(err); err != nil {
-		return nil, err
-	}
-
-	return res.ToProto(), nil
-}
-
-func (a *AccountHndlr) Read(req *accountproto.ReadRequest) (*accountproto.ReadResponse, error) {
-	reqValidation := request.ToRequestRead(req)
-
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
-		return nil, err
-	}
-
-	res, err := a.Service.Read(*reqValidation)
-	if err = globalerr.ServerErr(err); err != nil {
-		return nil, err
-	}
-
-	return res.ToProto(), nil
-}
-
-var _ AuthenticatorHandler = &AuthenticationHandler{}
+var _ authentication.AuthenticatorHandler = &AuthenticationHndlr{}

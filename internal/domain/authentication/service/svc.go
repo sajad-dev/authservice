@@ -1,104 +1,161 @@
 package service
 
 import (
-	"github.com/sajad-dev/authservice/internal/domain/account"
-	"github.com/sajad-dev/authservice/internal/domain/account/dto/gen/request"
-	"github.com/sajad-dev/authservice/internal/domain/account/dto/gen/response"
+	"encoding/json"
+	"regexp"
+	"strconv"
+
+	"github.com/sajad-dev/authservice/internal/domain/authentication"
+	"github.com/sajad-dev/authservice/internal/domain/authentication/dto/gen/request"
+	"github.com/sajad-dev/authservice/internal/domain/authentication/dto/gen/response"
+	"github.com/sajad-dev/authservice/internal/shared/adaptor/crypto"
 	"github.com/sajad-dev/authservice/internal/shared/adaptor/hashing"
 	"github.com/sajad-dev/authservice/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/internal/shared/constants/statuscode"
 	"github.com/sajad-dev/authservice/internal/shared/errors/errs"
+	"github.com/sajad-dev/authservice/internal/shared/errors/errvar"
+	"github.com/sajad-dev/authservice/internal/shared/helpers/timeutil"
 	"github.com/sajad-dev/authservice/internal/shared/models"
 )
 
+const (
+	EMAIL    = "email"
+	USERNAME = "username"
+	SMS      = "sms"
+)
+
+const (
+	EMAILREGEX    = `^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$`
+	PHONEREGEX    = `^\+[1-9]\d{1,14}$`
+	USERNAMEREGEX = `^[a-zA-Z0-9\-]{3,20}$`
+)
+
 type AuthenticationSvc struct {
-	Repo repository.AuthenticatorRepo
-	JWT  *crypto.JWT
+	Repo    authentication.AuthenticatorRepo
+	crypto  crypto.Crypto
+	Hashing hashing.Hashing
 }
 
-func NewAuthService(repo account.AccountCURDRepositories, hashing hashing.Hashing) *AuthenticationSvc {
+func NewAuthService(repo authentication.AuthenticatorRepo, cry crypto.Crypto, hashing hashing.Hashing) *AuthenticationSvc {
 	return &AuthenticationSvc{
 		Repo:    repo,
+		crypto:  cry,
 		Hashing: hashing,
 	}
 }
 
-func (s *AccountSvc) Create(req request.CreateRequest) (response.CreateResponse, error) {
+func _checkUsernameOrEmailOrSMS(field string) (string, error) {
+	email, err := regexp.MatchString(EMAILREGEX, field)
+	if err != nil {
+		return "", errs.Err(err)
+	}
 
+	if email {
+		return EMAIL, nil
+	}
+
+	username, err := regexp.MatchString(USERNAMEREGEX, field)
+	if err != nil {
+		return "", errs.Err(err)
+	}
+	if username {
+		return USERNAME, nil
+	}
+	return "", errvar.USERNAME_NOT_VALID
+}
+
+func (a *AuthenticationSvc) _createJWT(claims map[string]string) (string, error) {
+	token, err := a.crypto.Generate(claims, timeutil.TokenExpire())
+	return token, errs.Err(err)
+}
+
+func (a *AuthenticationSvc) Login(req request.LoginRequest) (response.LoginResponse, error) {
+	hashPassword, err := a.Hashing.Sum([]byte(req.Password))
+	if err != nil {
+		return response.LoginResponse{}, errs.Err(err)
+	}
+	usernameType, err := _checkUsernameOrEmailOrSMS(req.Username)
+	if err != nil {
+		return response.LoginResponse{}, errs.Err(err)
+	}
+	table, err := a.Repo.Find(usernameType, req.Username)
+	if err != nil {
+		return response.LoginResponse{}, errs.Err(err)
+	}
+
+	if table.Password != hashPassword {
+		return response.LoginResponse{
+			Msg:  messages.USERNAME_OR_PASSWORD_IS_WORNG,
+			Code: statuscode.VALIDATION_ERR,
+		}, nil
+	}
+
+	claims := map[string]string{}
+
+	if len(table.TwoFactor) > 0 {
+		jsonTwoFactory, err := json.Marshal(table.TwoFactor)
+		if err != nil {
+			return response.LoginResponse{}, errs.Err(err)
+		}
+		claims = map[string]string{
+			"type":    "TwoFactor",
+			"options": string(jsonTwoFactory),
+		}
+	} else {
+		claims = map[string]string{
+			"id": strconv.Itoa(int(table.ID)),
+		}
+	}
+
+	crp, err := a._createJWT(claims)
+	if err != nil {
+		return response.LoginResponse{}, errs.Err(err)
+	}
+
+	return response.LoginResponse{
+		Data:  models.AccountOutput(table),
+		Msg:   messages.LOGIN_IS_SUCCESSFUL,
+		Token: crp,
+		Code:  statuscode.SUCCESSFUL,
+	}, nil
+
+}
+func (a *AuthenticationSvc) Register(req request.RegisterRequest) (response.RegisterResponse, error) {
 	var err error
-	account, ok := models.AccountInput(req)
+
+	req.Password, err = a.Hashing.Sum([]byte(req.Password))
+	if err != nil {
+		return response.RegisterResponse{}, errs.Err(err)
+	}
+
+	table, ok := models.AccountInput(req)
 	if !ok {
-		return response.CreateResponse{
+		return response.RegisterResponse{
 			Msg:  messages.NOT_VALID_FIELDS_ERR,
 			Code: statuscode.VALIDATION_ERR,
 		}, nil
 	}
 
-	account.Password, err = s.Hashing.Sum([]byte(req.Password))
+	err = a.Repo.Create(table)
 	if err != nil {
-		return response.CreateResponse{}, errs.Err(err)
+		return response.RegisterResponse{}, errs.Err(err)
 	}
 
-	err = s.Repo.Create(account)
+	claims := map[string]string{
+		"id": strconv.Itoa(int(table.ID)),
+	}
+
+	crp, err := a._createJWT(claims)
 	if err != nil {
-		return response.CreateResponse{}, errs.Err(err)
+		return response.RegisterResponse{}, errs.Err(err)
 	}
 
-	return response.CreateResponse{
-		Msg:  messages.CREATE_ACCOUNT_SUCCESSFUL,
-		Code: statuscode.SUCCESSFUL,
-	}, nil
-
-}
-
-func (s *AccountSvc) UpdateService(req request.UpdateRequest) (response.UpdateResponse, error) {
-	var err error
-	account, ok := models.AccountInput(req)
-	if !ok {
-		return response.UpdateResponse{
-			Msg:  messages.NOT_VALID_FIELDS_ERR,
-			Code: statuscode.VALIDATION_ERR,
-		}, nil
-	}
-
-	account.Password, err = s.Hashing.Sum([]byte(req.Password))
-	if err != nil {
-		return response.UpdateResponse{}, errs.Err(err)
-	}
-
-	err = s.Repo.Update(account)
-	if err != nil {
-		return response.UpdateResponse{}, errs.Err(err)
-	}
-
-	return response.UpdateResponse{
-		Msg:  messages.UPDATE_ACCOUNT_SUCCESSFUL,
-		Code: statuscode.SUCCESSFUL,
-	}, nil
-
-}
-
-func (s *AccountSvc) DeleteService(req request.DeleteRequest) (response.DeleteResponse, error) {
-	err := s.Repo.Delete(int(req.Id))
-	if err != nil {
-		return response.DeleteResponse{}, errs.Err(err)
-	}
-
-	return response.DeleteResponse{
-		Msg:  messages.DELETE_ACCOUNT_SUCCESSFUL,
-		Code: statuscode.SUCCESSFUL,
+	return response.RegisterResponse{
+		Data:  models.AccountOutput(table),
+		Msg:   messages.LOGIN_IS_SUCCESSFUL,
+		Token: crp,
+		Code:  statuscode.SUCCESSFUL,
 	}, nil
 }
 
-func (s *AccountSvc) ReadService(req request.ReadRequest) (response.ReadResponse, error) {
-	account, err := s.Repo.Read(int(req.Id))
-	if err != nil {
-		return response.ReadResponse{}, errs.Err(err)
-	}
-
-	return response.ReadResponse{
-		Msg:  messages.READ_ACCOUNT_SUCCESSFUL,
-		Code: statuscode.SUCCESSFUL,
-		Data: models.AccountOutput(account),
-	}, nil
-}
+var _ authentication.AuthenticatorService = &AuthenticationSvc{}

@@ -51,7 +51,7 @@ func (s *AccountSvc) Create(req request.CreateRequest) (response.CreateResponse,
 
 }
 
-func (s *AccountSvc) UpdateService(req request.UpdateRequest) (response.UpdateResponse, error) {
+func (s *AccountSvc) Update(req request.UpdateRequest) (response.UpdateResponse, error) {
 	var err error
 	account, ok := models.AccountInput(req)
 	if !ok {
@@ -78,7 +78,7 @@ func (s *AccountSvc) UpdateService(req request.UpdateRequest) (response.UpdateRe
 
 }
 
-func (s *AccountSvc) DeleteService(req request.DeleteRequest) (response.DeleteResponse, error) {
+func (s *AccountSvc) Delete(req request.DeleteRequest) (response.DeleteResponse, error) {
 	err := s.Repo.Delete(int(req.Id))
 	if err != nil {
 		return response.DeleteResponse{}, errs.Err(err)
@@ -90,7 +90,7 @@ func (s *AccountSvc) DeleteService(req request.DeleteRequest) (response.DeleteRe
 	}, nil
 }
 
-func (s *AccountSvc) ReadService(req request.ReadRequest) (response.ReadResponse, error) {
+func (s *AccountSvc) Read(req request.ReadRequest) (response.ReadResponse, error) {
 	account, err := s.Repo.Read(int(req.Id))
 	if err != nil {
 		return response.ReadResponse{}, errs.Err(err)
@@ -102,3 +102,5 @@ func (s *AccountSvc) ReadService(req request.ReadRequest) (response.ReadResponse
 		Data: models.AccountOutput(account),
 	}, nil
 }
+
+var _ account.AccountCURDService = &AccountSvc{}
