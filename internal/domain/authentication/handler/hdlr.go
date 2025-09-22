@@ -1,0 +1,85 @@
+package handler
+
+import (
+	"github.com/sajad-dev/authservice/internal/domain/account"
+	"github.com/sajad-dev/authservice/internal/domain/account/accountproto"
+	"github.com/sajad-dev/authservice/internal/domain/account/dto/gen/request"
+	"github.com/sajad-dev/authservice/internal/shared/adaptor/validation"
+	"github.com/sajad-dev/authservice/internal/shared/errors/errs/globalerr"
+)
+
+type AuthenticationHndlr struct {
+	authenticationproto.UnimplementedAuthticationServer
+	Service            service.AuthenticatorService
+	ValidationInstance *validation.ValidationRequest
+}
+
+func NewAuthenticationHandler(svc service.AuthenticatorService , vld *validation.ValidationRequest) *AuthenticationHndlr {
+
+	return at
+}
+
+
+
+func (a *AccountHndlr) Create(req *accountproto.CreateRequest) (*accountproto.CreateResponse, error) {
+
+	reqValidation := request.ToRequestCreate(req)
+
+	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+		return nil, err
+	}
+
+	res, err := a.Service.Create(*reqValidation)
+	if err = globalerr.ServerErr(err); err != nil {
+		return nil, err
+	}
+
+	return res.ToProto(), nil
+}
+
+func (a *AccountHndlr) Update(req *accountproto.UpdateRequest) (*accountproto.UpdateResponse, error) {
+	reqValidation := request.ToRequestUpdate(req)
+
+	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+		return nil, err
+	}
+
+	res, err := a.Service.Update(*reqValidation)
+	if err = globalerr.ServerErr(err); err != nil {
+		return nil, err
+	}
+
+	return res.ToProto(), nil
+}
+
+func (a *AccountHndlr) Delete(req *accountproto.DeleteRequest) (*accountproto.DeleteResponse, error) {
+	reqValidation := request.ToRequestDelete(req)
+
+	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+		return nil, err
+	}
+
+	res, err := a.Service.Delete(*reqValidation)
+	if err = globalerr.ServerErr(err); err != nil {
+		return nil, err
+	}
+
+	return res.ToProto(), nil
+}
+
+func (a *AccountHndlr) Read(req *accountproto.ReadRequest) (*accountproto.ReadResponse, error) {
+	reqValidation := request.ToRequestRead(req)
+
+	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+		return nil, err
+	}
+
+	res, err := a.Service.Read(*reqValidation)
+	if err = globalerr.ServerErr(err); err != nil {
+		return nil, err
+	}
+
+	return res.ToProto(), nil
+}
+
+var _ AuthenticatorHandler = &AuthenticationHandler{}

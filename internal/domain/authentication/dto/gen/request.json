@@ -1,0 +1,77 @@
+{
+  "ProtoPackage": "authenticationproto",
+  "ImportPath": [
+    "github.com/sajad-dev/authservice/internal/domain/authentication/authenticationproto"
+  ],
+  "Data": [
+    {
+      "Name": "login",
+      "Data": {
+        "FuncName": "ToRequestLogin",
+        "StructName": "LoginRequest",
+        "ProtoStruct": "LoginRequest",
+        "Fields": [
+          {
+            "To": "Username",
+            "Type": "string",
+            "From": "Username",
+            "Validations": "",
+            "Json": "username"
+          },
+          {
+            "To": "Password",
+            "Type": "string",
+            "From": "Password",
+            "Validations": "",
+            "Json": "password"
+          }
+        ]
+      }
+    },
+    {
+      "Name": "register",
+      "Data": {
+        "FuncName": "ToRequestRegister",
+        "StructName": "RegisterRequest",
+        "ProtoStruct": "RegisterRequest",
+        "Fields": [
+          {
+            "To": "Username",
+            "Type": "string",
+            "From": "Username",
+            "Validations": "",
+            "Json": "username"
+          },
+          {
+            "To": "Email",
+            "Type": "string",
+            "From": "Email",
+            "Validations": "",
+            "Json": "email"
+          },
+          {
+            "To": "FirstName",
+            "Type": "string",
+            "From": "FirstName",
+            "Validations": "",
+            "Json": "first_name"
+          },
+          {
+            "To": "PasswordConfirmation",
+            "Type": "string",
+            "From": "PasswordConfirmation",
+            "Validations": "",
+            "Json": "password_confirmation"
+          },
+          {
+            "To": "Password",
+            "Type": "string",
+            "From": "Password",
+            "Validations": "",
+            "Json": "password"
+          }
+        ]
+      }
+    }
+  ]
+}
