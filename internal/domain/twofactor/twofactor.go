@@ -1,20 +1,20 @@
 package twofactor
 
 import (
-	"github.com/sajad-dev/authservice/internal/domain/forgetpassword/dto/gen/request"
-	"github.com/sajad-dev/authservice/internal/domain/forgetpassword/dto/gen/response"
-	"github.com/sajad-dev/authservice/internal/domain/forgetpassword/forgetpasswordproto"
+	"github.com/sajad-dev/authservice/internal/domain/twofactor/dto/gen/request"
+	"github.com/sajad-dev/authservice/internal/domain/twofactor/dto/gen/response"
+	"github.com/sajad-dev/authservice/internal/domain/twofactor/twofactorproto"
 	"github.com/sajad-dev/authservice/internal/shared/models"
 )
 
 type TwoFactorHandler interface {
-	Forget(req *forgetpasswordproto.ForgetRequest) (*forgetpasswordproto.ForgetResponse, error)
-	Reset(req *forgetpasswordproto.ResetRequest) (*forgetpasswordproto.ResetResponse, error)
+	Email(req *twofactorproto.EmailRequest) (*twofactorproto.TwoFactorResponse, error)
+	Google(req *twofactorproto.GoogleRequest) (*twofactorproto.TwoFactorResponse, error)
 }
 
 type TwoFactorService interface {
-	Forget(req request.ForgetRequest) (response.ForgetResponse, error)
-	Reset(req request.ResetRequest) (response.ResetResponse, error)
+	Google(req request.GoogleRequest) (response.TwoFactorResponse, error)
+	Email(req request.EmailRequest) (response.TwoFactorResponse, error)
 }
 
 type TwoFactorRepo interface {

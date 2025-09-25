@@ -1,21 +1,20 @@
 package handler
 
 import (
-	"github.com/sajad-dev/authservice/internal/domain/forgetpassword"
-	"github.com/sajad-dev/authservice/internal/domain/forgetpassword/dto/gen/request"
-	"github.com/sajad-dev/authservice/internal/domain/forgetpassword/forgetpasswordproto"
-
+	"github.com/sajad-dev/authservice/internal/domain/twofactor"
+	"github.com/sajad-dev/authservice/internal/domain/twofactor/dto/gen/request"
+	"github.com/sajad-dev/authservice/internal/domain/twofactor/twofactorproto"
 	"github.com/sajad-dev/authservice/internal/shared/adaptor/validation"
 	"github.com/sajad-dev/authservice/internal/shared/errors/errs/globalerr"
 )
 
 type TwoFactorHndlr struct {
-	forgetpasswordproto.UnimplementedTwoFactorServer
-	Service    forgetpassword.TwoFactorService
+	twofactorproto.UnimplementedTwofactoryServer
+	Service    twofactor.TwoFactorService
 	Validation validation.Validation
 }
 
-func NewTwoFactorHandler(svc forgetpassword.TwoFactorService, vld validation.Validation) *TwoFactorHndlr {
+func NewTwoFactorHandler(svc twofactor.TwoFactorService, vld validation.Validation) *TwoFactorHndlr {
 
 	return &TwoFactorHndlr{
 		Service:    svc,
@@ -23,15 +22,15 @@ func NewTwoFactorHandler(svc forgetpassword.TwoFactorService, vld validation.Val
 	}
 }
 
-func (a *TwoFactorHndlr) Forget(req *forgetpasswordproto.ForgetRequest) (*forgetpasswordproto.ForgetResponse, error) {
+func (a *TwoFactorHndlr) Email(req *twofactorproto.EmailRequest) (*twofactorproto.TwoFactorResponse, error) {
 
-	reqValidation := request.ToRequestForget(req)
+	reqValidation := request.ToRequestEmail(req)
 
 	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
 		return nil, err
 	}
 
-	res, err := a.Service.Forget(*reqValidation)
+	res, err := a.Service.Email(*reqValidation)
 	if err = globalerr.ServerErr(err); err != nil {
 		return nil, err
 	}
@@ -39,15 +38,15 @@ func (a *TwoFactorHndlr) Forget(req *forgetpasswordproto.ForgetRequest) (*forget
 	return res.ToProto(), nil
 }
 
-func (a *TwoFactorHndlr) Reset(req *forgetpasswordproto.ResetRequest) (*forgetpasswordproto.ResetResponse, error) {
+func (a *TwoFactorHndlr) Google(req *twofactorproto.GoogleRequest) (*twofactorproto.TwoFactorResponse, error) {
 
-	reqValidation := request.ToRequestReset(req)
+	reqValidation := request.ToRequestGoogle(req)
 
 	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
 		return nil, err
 	}
 
-	res, err := a.Service.Reset(*reqValidation)
+	res, err := a.Service.Google(*reqValidation)
 	if err = globalerr.ServerErr(err); err != nil {
 		return nil, err
 	}
@@ -55,4 +54,4 @@ func (a *TwoFactorHndlr) Reset(req *forgetpasswordproto.ResetRequest) (*forgetpa
 	return res.ToProto(), nil
 }
 
-var _ forgetpassword.TwoFactorHandler = &TwoFactorHndlr{}
+var _ twofactor.TwoFactorHandler = &TwoFactorHndlr{}

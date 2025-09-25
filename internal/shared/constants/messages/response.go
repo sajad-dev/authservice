@@ -6,7 +6,8 @@ const (
 	VALIDATION_ERR_TITLE          = "Not valid fields"
 	SERVER_ERR                    = "Server error"
 	USERNAME_OR_PASSWORD_IS_WORNG = "user name or password is worng"
-	TOKEN_NOT_VALID = "token not valid"
+	TOKEN_NOT_VALID               = "token not valid"
+	GOOGLE_CODE_IS_NOT_VALID      = "Google code is not valid"
 )
 
 // Message response
@@ -16,6 +17,7 @@ const (
 	FORGET_PASSWORD_SEND_MAIL_IS_SUCCESSFUL = "Email send !"
 	RESET_PASSWORD_IS_SUCCESSFUL            = "Password chenge."
 	EMAIL_TWO_FACTORT_SUCCESSFUL            = "email two factor"
+	GOOGLE_TWO_FACTORT_SUCCESSFUL           = "google two factor"
 	SMS_TWO_FACTORT_SUCCESSFUL              = "smg two factor"
 	ADD_GROUP_POLICY_SUCCESSFUL             = "Add Policy"
 	ADD_POLICY_SUCCESSFUL                   = "Add Policy"

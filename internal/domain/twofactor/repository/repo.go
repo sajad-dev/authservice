@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"github.com/sajad-dev/authservice/internal/domain/forgetpassword"
+	"github.com/sajad-dev/authservice/internal/domain/twofactor"
 	"github.com/sajad-dev/authservice/internal/shared/adaptor/sqldb"
 	"github.com/sajad-dev/authservice/internal/shared/models"
 )
@@ -11,8 +11,8 @@ type TwoFactorRepo struct {
 	DBCode    sqldb.SqlDB[*models.TwoFactorCode]
 }
 
-func NewTwoFactorRepo(db sqldb.SqlDB[*models.Accounts]) *TwoFactorRepo {
-	return &TwoFactorRepo{DB: db}
+func NewTwoFactorRepo(dbAcc sqldb.SqlDB[*models.Accounts], dbCode sqldb.SqlDB[*models.TwoFactorCode]) *TwoFactorRepo {
+	return &TwoFactorRepo{DBAccount: dbAcc, DBCode: dbCode}
 }
 
 func (s TwoFactorRepo) FindByCode(code int, codeType string) ([]*models.TwoFactorCode, error) {
@@ -26,4 +26,4 @@ func (s TwoFactorRepo) FindById(id int) (*models.Accounts, error) {
 	return s.DBAccount.GetByID(id)
 }
 
-var _ forgetpassword.TwoFactorRepo = &TwoFactorRepo{}
+var _ twofactor.TwoFactorRepo = &TwoFactorRepo{}
