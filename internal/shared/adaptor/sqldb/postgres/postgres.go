@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/sajad-dev/authservice/internal/shared/adaptor/sqldb"
 	"github.com/sajad-dev/authservice/internal/shared/errors/errs"
@@ -41,6 +42,13 @@ func (p *Postgres[M]) GetByID(id int) (M, error) {
 func (p *Postgres[M]) Delete(id int) error {
 	var params M
 	return p.DB.Delete(params, id).Error
+}
+
+func (p *Postgres[M]) RemoveExpierd(column string, id int) error {
+	var params M
+	return p.DB.Where(fmt.Sprintf("%s = ?", column), id).
+		Or("expired_at < ?", time.Now()).
+		Delete(params).Error
 }
 
 var _ sqldb.SqlDB[struct{}] = &Postgres[struct{}]{}

@@ -7,4 +7,5 @@ type SqlDB[M any] interface {
 	Save(params M) error
 	GetByID(id int) (M, error)
 	Delete(id int) error
+	RemoveExpierd(column string, id int) error
 }

@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package twofactornotifierproto;
+
+option go_package = "/internal/domain/twofactornotifier/twofactornotifierproto";
+
+service TwofactorNotifier {
+  rpc NotifierEmail (NotifierEmailRequest) returns (TwoFactorNotifierResponse);
+}
+
+message TwoFactorNotifierResponse {
+  int32 code = 1;
+  string message = 2;
+}
+
+message NotifierEmailRequest {
+      string token = 1;
+}
+
+

@@ -9,23 +9,13 @@ import (
 	"github.com/sajad-dev/authservice/internal/domain/twofactor/dto/gen/response"
 	"github.com/sajad-dev/authservice/internal/shared/adaptor/crypto"
 	"github.com/sajad-dev/authservice/internal/shared/adaptor/hashing"
+	"github.com/sajad-dev/authservice/internal/shared/constants"
 	"github.com/sajad-dev/authservice/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/internal/shared/constants/statuscode"
 	"github.com/sajad-dev/authservice/internal/shared/errors/errs"
 	"github.com/sajad-dev/authservice/internal/shared/errors/errvar"
 	"github.com/sajad-dev/authservice/internal/shared/helpers/timeutil"
 	"github.com/sajad-dev/authservice/internal/shared/models"
-)
-
-type TwoFactor string
-
-const (
-	EMAIL_TWO_FACTORY  TwoFactor = "email"
-	GOOGLE_TWO_FACTORY TwoFactor = "google"
-)
-
-const (
-	EMAIL_TWO_FACTORY_CODE TwoFactor = "email"
 )
 
 type TwoFactorSvc struct {
@@ -101,7 +91,7 @@ func (s *TwoFactorSvc) Google(req request.GoogleRequest) (response.TwoFactorResp
 }
 
 func (s *TwoFactorSvc) Email(req request.EmailRequest) (response.TwoFactorResponse, error) {
-	table, err := s.Repo.FindByCode(int(req.Code), string(EMAIL_TWO_FACTORY_CODE))
+	table, err := s.Repo.FindByCode(int(req.Code), string(constants.EMAIL_TWO_FACTORY_CODE))
 	if err != nil {
 		return response.TwoFactorResponse{}, errs.Err(err)
 	}
