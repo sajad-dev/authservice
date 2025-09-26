@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package authorizationproto;
+
+option go_package = "/internal/domain/authorization/authorizationproto";
+
+service Authorization {
+  rpc Group (GroupRequest) returns (AuthorizationResponse);
+  rpc Policy (PolicyRequest) returns (AuthorizationResponse);
+}
+
+message AuthorizationResponse {
+  int32 code = 1;
+  string msg= 2;
+}
+message GroupRequest {
+      string sub = 1;
+      string Grp = 2;
+}
+
+
+message PolicyRequest {
+      string sub = 1;
+      string obj = 2;
+      string act = 3;
+}
+

@@ -10,7 +10,7 @@ service TwofactorNotifier {
 
 message TwoFactorNotifierResponse {
   int32 code = 1;
-  string message = 2;
+  string msg = 2;
 }
 
 message NotifierEmailRequest {

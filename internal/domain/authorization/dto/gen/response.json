@@ -1,0 +1,30 @@
+{
+  "ProtoPackage": "authorizationproto",
+  "ImportPath": [
+    "github.com/sajad-dev/authservice/internal/domain/authorization/authorizationproto"
+  ],
+  "Data": [
+    {
+      "Name": "authorization",
+      "Data": {
+        "FuncName": "ToProto",
+        "StructName": "AuthorizationResponse",
+        "ProtoStruct": "AuthorizationResponse",
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Msg",
+            "Type": "string",
+            "From": "Msg",
+            "Json": "msg"
+          }
+        ]
+      }
+    }
+  ]
+}
