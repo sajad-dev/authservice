@@ -27,8 +27,6 @@ type TestTwoFactorNotifierSuite struct {
 	hash                     hashing.Hashing
 }
 
-
-
 func (s *TestTwoFactorNotifierSuite) SetupSuite() {
 	s.repoMock = new(mocks.TwoFactorNotifierRepository)
 
@@ -50,18 +48,41 @@ func (s *TestTwoFactorNotifierSuite) SetupSuite() {
 }
 
 func (s *TestTwoFactorNotifierSuite) TestEmailNotifierService() {
-	token, err := s.crypto.Generate(map[string]string{
-		"type": "TwoFactor",
-		"id":   "0",
-	},timeutil.TokenExpire())
-	s.NoError(err)
-
-	reqNotifier := request.NotifierEmailRequest{
-		Token: token,
+	tests := []struct {
+		name        string
+		token       string
+		wantMessage string
+		wantErr     bool
+	}{
+		{
+			name:        "Success",
+			token:       "valid-token",
+			wantMessage: messages.EMAIL_TWO_FACTORT_SUCCESSFUL,
+			wantErr:     false,
+		},
 	}
-	respNotifier, err := s.twoFactorNotifierService.NotifierEmail(reqNotifier)
-	s.NoError(err)
-	s.Equal(messages.EMAIL_TWO_FACTORT_SUCCESSFUL, respNotifier.Message)
+
+	for _, tt := range tests {
+		s.Run(tt.name, func() {
+			token, err := s.crypto.Generate(map[string]string{
+				"type": "TwoFactor",
+				"id":   "0",
+			}, timeutil.TokenExpire())
+			s.NoError(err)
+
+			reqNotifier := request.NotifierEmailRequest{
+				Token: token,
+			}
+
+			respNotifier, err := s.twoFactorNotifierService.NotifierEmail(reqNotifier)
+			if !tt.wantErr {
+				s.NoError(err)
+			} else {
+				s.Error(err)
+			}
+			s.Equal(tt.wantMessage, respNotifier.Message)
+		})
+	}
 }
 
 func TestTwoFactorNotifierSuite_Run(t *testing.T) {
@@ -71,3 +92,4 @@ func TestTwoFactorNotifierSuite_Run(t *testing.T) {
 	}
 	suite.Run(t, su)
 }
+
