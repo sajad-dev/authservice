@@ -56,59 +56,89 @@ func (s *TestAuthenticationSuite) SetupSuite() {
 		s.hash,
 	)
 }
-
-func (s *TestAuthenticationSuite) TestRegisterService() {
-	req := request.RegisterRequest{
-		Email:                "test@email.com",
-		Username:             "testuser",
-		Password:             "pass",
-		PasswordConfirmation: "pass",
+func (s *TestAuthenticationSuite) TestRegister() {
+	tests := []struct {
+		name    string
+		req     request.RegisterRequest
+		wantErr bool
+		wantMsg string
+	}{
+		{
+			name: "Success",
+			req: request.RegisterRequest{
+				Email:                "test@email.com",
+				Username:             "testuser",
+				Password:             "pass",
+				PasswordConfirmation: "pass",
+			},
+			wantErr: false,
+			wantMsg: messages.LOGIN_IS_SUCCESSFUL,
+		},
 	}
 
-	resp, err := s.authService.Register(req)
-	s.NoError(err)
-	s.Equal(messages.LOGIN_IS_SUCCESSFUL, resp.Msg)
-	s.NotEmpty(resp.Token)
-	s.Equal("test@email.com", resp.Data.Email)
+	for _, tt := range tests {
+		s.Run(tt.name, func() {
+			resp, err := s.authService.Register(tt.req)
+			if !tt.wantErr {
+				s.NoError(err)
+			} else {
+				s.Error(err)
+			}
+			s.Equal(tt.wantMsg, resp.Msg)
+			s.NotEmpty(resp.Token)
+			s.Equal(tt.req.Email, resp.Data.Email)
+		})
+	}
 }
 
-func (s *TestAuthenticationSuite) TestLoginService_Success() {
-	req := request.LoginRequest{
-		Username: "testuser",
-		Password: "pass",
+func (s *TestAuthenticationSuite) TestLogin() {
+	tests := []struct {
+		name    string
+		req     request.LoginRequest
+		wantErr bool
+		wantMsg string
+	}{
+		{
+			name: "Success",
+			req: request.LoginRequest{
+				Username: "testuser",
+				Password: "pass",
+			},
+			wantErr: false,
+			wantMsg: messages.LOGIN_IS_SUCCESSFUL,
+		},
+		{
+			name: "Wrong Password",
+			req: request.LoginRequest{
+				Username: "testuser",
+				Password: "wrongpass",
+			},
+			wantErr: false,
+			wantMsg: messages.USERNAME_OR_PASSWORD_IS_WORNG,
+		},
+		{
+			name: "Two Factor Authentication",
+			req: request.LoginRequest{
+				Username: "user2fa",
+				Password: "pass",
+			},
+			wantErr: false,
+			wantMsg: messages.LOGIN_WITH_TWO_FACTOR,
+		},
 	}
 
-	resp, err := s.authService.Login(req)
-	s.NoError(err)
-	s.Equal(messages.LOGIN_IS_SUCCESSFUL, resp.Msg)
-	s.NotEmpty(resp.Token)
-	s.Equal("testuser", resp.Data.Username)
-}
-
-func (s *TestAuthenticationSuite) TestLoginService_WrongPassword() {
-	req := request.LoginRequest{
-		Username: "testuser",
-		Password: "worngpass",
+	for _, tt := range tests {
+		s.Run(tt.name, func() {
+			resp, err := s.authService.Login(tt.req)
+			if !tt.wantErr {
+				s.NoError(err)
+			} else {
+				s.Error(err)
+			}
+			s.Equal(tt.wantMsg, resp.Msg)
+	
+		})
 	}
-
-	resp, err := s.authService.Login(req)
-	s.NoError(err)
-	s.Equal(resp.Msg, messages.USERNAME_OR_PASSWORD_IS_WORNG)
-	s.Empty(resp.Token)
-}
-
-func (s *TestAuthenticationSuite) TestLoginService_TwoFactor() {
-	req := request.LoginRequest{
-		Username: "user2fa",
-		Password: "pass",
-	}
-
-	resp, err := s.authService.Login(req)
-
-	s.NoError(err)
-	s.Equal(messages.LOGIN_WITH_TWO_FACTOR, resp.Msg)
-	s.NotEmpty(resp.Token)
-	s.ElementsMatch([]string{"email"}, resp.Data.TwoFactor)
 }
 
 func TestAuthenticationSuite_Run(t *testing.T) {

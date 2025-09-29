@@ -25,27 +25,65 @@ func (s *TestAuthenticationSuite) SetupSuite() {
 }
 
 func (s *TestAuthenticationSuite) TestCreate() {
-	account := models.NewAccounts(
-		models.WithUsername("authuser"),
-		models.WithEmail("auth@example.com"),
-		models.WithPassword("password123"),
-	)
-	err := s.authRepo.Create(account)
-	assert.NoError(s.T(), err)
+	tests := []struct {
+		name    string
+		account *models.Accounts
+		wantErr bool
+	}{
+		{
+			name: "Create new account successfully",
+			account: models.NewAccounts(
+				models.WithUsername("authuser"),
+				models.WithEmail("auth@example.com"),
+				models.WithPassword("password123"),
+			),
+			wantErr: false,
+		},
+	}
+
+	for _, tt := range tests {
+		s.Run(tt.name, func() {
+			err := s.authRepo.Create(tt.account)
+			if !tt.wantErr {
+				s.NoError(err)
+			} else {
+				s.Error(err)
+			}
+		})
+	}
 }
 
-func (s *TestAuthenticationSuite) TestGetByFields() {
-	account := models.NewAccounts(
-		models.WithUsername("fielduser"),
-		models.WithEmail("field@example.com"),
-		models.WithPassword("password123"),
-	)
-	err := s.authRepo.Create(account)
-	assert.NoError(s.T(), err)
+func (s *TestAuthenticationSuite) TestFind() {
+	tests := []struct {
+		name    string
+		account *models.Accounts
+		wantErr bool
+	}{
+		{
+			name: "Find account by email",
+			account: models.NewAccounts(
+				models.WithUsername("fielduser"),
+				models.WithEmail("field@example.com"),
+				models.WithPassword("password123"),
+			),
+			wantErr: false,
+		},
+	}
 
-	found, err := s.authRepo.Find("email", account.Email)
-	assert.NoError(s.T(), err)
-	assert.Equal(s.T(), account.Username, found.Username)
+	for _, tt := range tests {
+		s.Run(tt.name, func() {
+			err := s.authRepo.Create(tt.account)
+			s.NoError(err)
+
+			found, err := s.authRepo.Find("email", tt.account.Email)
+			if !tt.wantErr {
+				s.NoError(err)
+				s.Equal(tt.account.Username, found.Username)
+			} else {
+				s.Error(err)
+			}
+		})
+	}
 }
 
 func TestAuthenticationSuite_Run(t *testing.T) {
