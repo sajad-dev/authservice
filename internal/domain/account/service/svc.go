@@ -12,11 +12,11 @@ import (
 )
 
 type AccountSvc struct {
-	Repo    account.AccountCURDRepositories
+	Repo    account.AccountCURDRepository
 	Hashing hashing.Hashing
 }
 
-func NewAccountSvc(repo account.AccountCURDRepositories, hashing hashing.Hashing) *AccountSvc {
+func NewAccountSvc(repo account.AccountCURDRepository, hashing hashing.Hashing) *AccountSvc {
 	return &AccountSvc{
 		Repo:    repo,
 		Hashing: hashing,

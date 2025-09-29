@@ -31,4 +31,4 @@ func (r *AccountRepo) Delete(id int) error {
 	return r.DB.Delete(id)
 }
 
-var _ account.AccountCURDRepositories = &AccountRepo{}
+var _ account.AccountCURDRepository = &AccountRepo{}

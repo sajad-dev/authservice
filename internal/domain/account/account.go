@@ -21,7 +21,7 @@ type AccountCURDService interface {
 	Read(req request.ReadRequest) (response.ReadResponse, error)
 }
 
-type AccountCURDRepositories interface {
+type AccountCURDRepository interface {
 	Create(req *models.Accounts) error
 	Update(req *models.Accounts) error
 	Delete(id int) error
