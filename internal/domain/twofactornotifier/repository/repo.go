@@ -1,4 +1,4 @@
-package repositories
+package repository
 
 import (
 	"github.com/sajad-dev/authservice/internal/domain/twofactornotifier"
