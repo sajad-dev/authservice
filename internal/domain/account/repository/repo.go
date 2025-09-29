@@ -1,4 +1,4 @@
-package repositories
+package repository
 
 import (
 	"github.com/sajad-dev/authservice/internal/domain/account"
@@ -23,8 +23,8 @@ func (a AccountRepo) Update(req *models.Accounts) error {
 }
 
 func (r *AccountRepo) Read(id int) (*models.Accounts, error) {
-	acc, err := r.DB.GetByID(id)
-	return acc, err
+	return r.DB.GetByID(id)
+
 }
 
 func (r *AccountRepo) Delete(id int) error {

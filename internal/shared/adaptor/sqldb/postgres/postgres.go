@@ -19,7 +19,7 @@ func (p *Postgres[M]) Create(params M) error {
 
 func (p *Postgres[M]) Where(params M) ([]M, error) {
 	var rows []M
-	err := p.DB.Where(params).Find(rows).Error
+	err := p.DB.Where(params).Find(&rows).Error
 	return rows, err
 }
 
@@ -35,20 +35,20 @@ func (p *Postgres[M]) Save(params M) error {
 
 func (p *Postgres[M]) GetByID(id int) (M, error) {
 	var params M
-	err := p.DB.First(params).Error
+	err := p.DB.First(&params,id).Error
 	return params, err
 }
 
 func (p *Postgres[M]) Delete(id int) error {
 	var params M
-	return p.DB.Delete(params, id).Error
+	return p.DB.Delete(&params, id).Error
 }
 
 func (p *Postgres[M]) RemoveExpierd(column string, id int) error {
 	var params M
 	return p.DB.Where(fmt.Sprintf("%s = ?", column), id).
 		Or("expired_at < ?", time.Now()).
-		Delete(params).Error
+		Delete(&params).Error
 }
 
 var _ sqldb.SqlDB[struct{}] = &Postgres[struct{}]{}
