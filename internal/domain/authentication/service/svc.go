@@ -2,6 +2,7 @@ package service
 
 import (
 	"encoding/json"
+	"log"
 	"regexp"
 	"strconv"
 
@@ -31,12 +32,12 @@ const (
 )
 
 type AuthenticationSvc struct {
-	Repo    authentication.AuthenticatorRepo
+	Repo    authentication.AuthenticatorRepository
 	crypto  crypto.Crypto
 	Hashing hashing.Hashing
 }
 
-func NewAuthService(repo authentication.AuthenticatorRepo, cry crypto.Crypto, hashing hashing.Hashing) *AuthenticationSvc {
+func NewAuthService(repo authentication.AuthenticatorRepository, cry crypto.Crypto, hashing hashing.Hashing) *AuthenticationSvc {
 	return &AuthenticationSvc{
 		Repo:    repo,
 		crypto:  cry,
@@ -91,17 +92,20 @@ func (a *AuthenticationSvc) Login(req request.LoginRequest) (response.LoginRespo
 	}
 
 	claims := map[string]string{}
+	msg := ""
 
 	if len(table.TwoFactor) > 0 {
 		jsonTwoFactory, err := json.Marshal(table.TwoFactor)
 		if err != nil {
 			return response.LoginResponse{}, errs.Err(err)
 		}
+		msg = messages.LOGIN_WITH_TWO_FACTOR
 		claims = map[string]string{
 			"type":    "TwoFactor",
 			"options": string(jsonTwoFactory),
 		}
 	} else {
+		msg = messages.LOGIN_IS_SUCCESSFUL
 		claims = map[string]string{
 			"id": strconv.Itoa(int(table.ID)),
 		}
@@ -114,7 +118,7 @@ func (a *AuthenticationSvc) Login(req request.LoginRequest) (response.LoginRespo
 
 	return response.LoginResponse{
 		Data:  models.AccountOutput(table),
-		Msg:   messages.LOGIN_IS_SUCCESSFUL,
+		Msg:   msg,
 		Token: crp,
 		Code:  statuscode.SUCCESSFUL,
 	}, nil
@@ -127,7 +131,6 @@ func (a *AuthenticationSvc) Register(req request.RegisterRequest) (response.Regi
 	if err != nil {
 		return response.RegisterResponse{}, errs.Err(err)
 	}
-
 	table, ok := models.AccountInput(req)
 	if !ok {
 		return response.RegisterResponse{
@@ -136,6 +139,7 @@ func (a *AuthenticationSvc) Register(req request.RegisterRequest) (response.Regi
 		}, nil
 	}
 
+	log.Println(table)
 	err = a.Repo.Create(table)
 	if err != nil {
 		return response.RegisterResponse{}, errs.Err(err)

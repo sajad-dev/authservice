@@ -1,4 +1,4 @@
-package crypto
+package hs256
 
 import (
 	"fmt"

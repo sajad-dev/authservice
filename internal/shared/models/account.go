@@ -25,7 +25,7 @@ type AccountFiltered struct {
 	LastName  string
 	Email     string
 	Username  string
-	TwoFactor []string
+	TwoFactor pq.StringArray
 }
 
 type AccountOption func(*Accounts)
@@ -69,22 +69,45 @@ func NewAccounts(opts ...AccountOption) *Accounts {
 	return account
 }
 
-func AccountInput(inp any) (*Accounts, bool) {
-	val := reflect.ValueOf(inp)
+func getStringField(val reflect.Value, fieldName string) string {
+	fieldVal := val.FieldByName(fieldName)
+	if fieldVal.IsValid() && fieldVal.Kind() == reflect.String {
+		return fieldVal.String()
+	}
+	return ""
+}
 
-	twofactor, ok := val.FieldByName("TwoFactor").Interface().(pq.StringArray)
-	if !ok {
-		return nil, false
+func getStringArrayField(val reflect.Value, fieldName string) (pq.StringArray, bool) {
+	fieldVal := val.FieldByName(fieldName)
+	if fieldVal.IsValid() && fieldVal.Kind() == reflect.Slice {
+		if strArray, ok := fieldVal.Interface().(pq.StringArray); ok {
+			return strArray, true
+		}
 	}
 
-	return &Accounts{
-		FirstName: val.FieldByName("FirstName").String(),
-		LastName:  val.FieldByName("LastName").String(),
-		Email:     val.FieldByName("Email").String(),
-		Password:  val.FieldByName("Password").String(),
-		Username:  val.FieldByName("Username").String(),
-		TwoFactor: twofactor,
-	}, true
+	return nil, false
+}
+func AccountInput(inp any) (*Accounts, bool) {
+	val := reflect.ValueOf(inp)
+	if val.Kind() == reflect.Ptr {
+		val = val.Elem()
+	}
+
+	firstName := getStringField(val, "FirstName")
+	lastName := getStringField(val, "LastName")
+	email := getStringField(val, "Email")
+	password := getStringField(val, "Password")
+	username := getStringField(val, "Username")
+	twofactor, _ := getStringArrayField(val, "TwoFactor")
+
+	return NewAccounts(
+		WithFirstName(firstName),
+		WithLastName(lastName),
+		WithEmail(email),
+		WithPassword(password),
+		WithUsername(username),
+		WithTwoFactor(twofactor),
+	), true
 }
 
 func AccountOutput(row *Accounts) AccountFiltered {

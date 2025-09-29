@@ -10,6 +10,10 @@ import (
 
 type Sha256 struct{}
 
+func NewSha256 () *Sha256{
+	return &Sha256{}
+}
+
 func (s *Sha256) Sum(data []byte) (string, error) {
 	hashSha256 := al.New()
 	_, err := hashSha256.Write(data)

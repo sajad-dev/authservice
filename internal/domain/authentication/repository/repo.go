@@ -22,4 +22,4 @@ func (s AuthenticationRepo) Find(clm string, value string) (*models.Accounts, er
 	return s.DB.WhereField(clm, value)
 }
 
-var _ authentication.AuthenticatorRepo = &AuthenticationRepo{}
+var _ authentication.AuthenticatorRepository = &AuthenticationRepo{}

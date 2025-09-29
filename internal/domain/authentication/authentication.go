@@ -16,7 +16,7 @@ type AuthenticatorService interface {
 	Register(req request.RegisterRequest) (response.RegisterResponse, error)
 }
 
-type AuthenticatorRepo interface {
+type AuthenticatorRepository interface {
 	Find(clm string, value string) (*models.Accounts, error)
 	Create(row *models.Accounts) error
 }
