@@ -26,7 +26,7 @@ type TwoFactorNotifierSvc struct {
 	Crypto crypto.Crypto
 }
 
-func NewForgetPasswordService(cry crypto.Crypto, repo twofactornotifier.TwoFactorNotifierRepository) *TwoFactorNotifierSvc {
+func NewTwoFactorNotifierService(repo twofactornotifier.TwoFactorNotifierRepository, cry crypto.Crypto) *TwoFactorNotifierSvc {
 	return &TwoFactorNotifierSvc{
 		Repo:   repo,
 		Crypto: cry,
@@ -73,7 +73,7 @@ func (s *TwoFactorNotifierSvc) NotifierEmail(req request.NotifierEmailRequest) (
 	err = s.Repo.CreateCode(
 		models.NewTwoFactorCode(
 			models.WithCode(code),
-			models.WithType(string(constants.EMAIL_TWO_FACTORY_CODE)),
+			models.WithType(string(constants.EMAIL_TWO_FACTOR_CODE)),
 			models.WithAccount(*account),
 		),
 	)
