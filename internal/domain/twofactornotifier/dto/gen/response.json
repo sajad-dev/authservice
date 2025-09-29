@@ -18,10 +18,10 @@
             "Json": "code"
           },
           {
-            "To": "Message",
+            "To": "Msg",
             "Type": "string",
-            "From": "Message",
-            "Json": "message"
+            "From": "Msg",
+            "Json": "msg"
           }
         ]
       }

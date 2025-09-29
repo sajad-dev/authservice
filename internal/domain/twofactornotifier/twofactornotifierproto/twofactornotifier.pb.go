@@ -24,7 +24,7 @@ const (
 type TwoFactorNotifierResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Msg           string                 `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -66,9 +66,9 @@ func (x *TwoFactorNotifierResponse) GetCode() int32 {
 	return 0
 }
 
-func (x *TwoFactorNotifierResponse) GetMessage() string {
+func (x *TwoFactorNotifierResponse) GetMsg() string {
 	if x != nil {
-		return x.Message
+		return x.Msg
 	}
 	return ""
 }
@@ -121,10 +121,10 @@ var File_internal_domain_twofactornotifier_twofactornotifier_proto protoreflect.
 
 const file_internal_domain_twofactornotifier_twofactornotifier_proto_rawDesc = "" +
 	"\n" +
-	"9internal/domain/twofactornotifier/twofactornotifier.proto\x12\x16twofactornotifierproto\"I\n" +
+	"9internal/domain/twofactornotifier/twofactornotifier.proto\x12\x16twofactornotifierproto\"A\n" +
 	"\x19TwoFactorNotifierResponse\x12\x12\n" +
-	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\",\n" +
+	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
+	"\x03msg\x18\x02 \x01(\tR\x03msg\",\n" +
 	"\x14NotifierEmailRequest\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token2\x85\x01\n" +
 	"\x11TwofactorNotifier\x12p\n" +

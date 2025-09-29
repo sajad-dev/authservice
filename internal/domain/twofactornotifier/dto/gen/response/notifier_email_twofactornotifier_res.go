@@ -6,12 +6,12 @@ import (
 
 type TwoFactorNotifierResponse struct {
 	Code int32 `json:"code"`
-	Message string `json:"message"`
+	Msg string `json:"msg"`
 } 
 
 func (a *TwoFactorNotifierResponse) ToProto () *twofactornotifierproto.TwoFactorNotifierResponse {
 	return &twofactornotifierproto.TwoFactorNotifierResponse{
 		Code: a.Code,
-		Message: a.Message,
+		Msg: a.Msg,
 	}
 }

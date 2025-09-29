@@ -80,7 +80,7 @@ func (s *TestTwoFactorNotifierSuite) TestEmailNotifierService() {
 			} else {
 				s.Error(err)
 			}
-			s.Equal(tt.wantMessage, respNotifier.Message)
+			s.Equal(tt.wantMessage, respNotifier.Msg)
 		})
 	}
 }

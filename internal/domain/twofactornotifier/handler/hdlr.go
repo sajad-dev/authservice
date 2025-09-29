@@ -15,7 +15,7 @@ type TwoFactorNotifierHndlr struct {
 	Validation validation.Validation
 }
 
-func NewForgetPasswordHandler(svc twofactornotifier.TwoFactorNotifierService, vld validation.Validation) *TwoFactorNotifierHndlr {
+func NewTwoFactorNotifierHandler(svc twofactornotifier.TwoFactorNotifierService, vld validation.Validation) *TwoFactorNotifierHndlr {
 
 	return &TwoFactorNotifierHndlr{
 		Service:    svc,
