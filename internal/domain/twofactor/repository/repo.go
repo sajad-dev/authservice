@@ -26,4 +26,4 @@ func (s TwoFactorRepo) FindById(id int) (*models.Accounts, error) {
 	return s.DBAccount.GetByID(id)
 }
 
-var _ twofactor.TwoFactorRepo = &TwoFactorRepo{}
+var _ twofactor.TwoFactorRepository = &TwoFactorRepo{}

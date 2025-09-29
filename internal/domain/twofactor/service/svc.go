@@ -19,12 +19,12 @@ import (
 )
 
 type TwoFactorSvc struct {
-	Repo    twofactor.TwoFactorRepo
+	Repo    twofactor.TwoFactorRepository
 	Crypto  crypto.Crypto
 	Hashing hashing.Hashing
 }
 
-func NewTwoFactorService(cry crypto.Crypto, hashing hashing.Hashing, repo twofactor.TwoFactorRepo) *TwoFactorSvc {
+func NewTwoFactorService(repo twofactor.TwoFactorRepository, cry crypto.Crypto, hashing hashing.Hashing) *TwoFactorSvc {
 	return &TwoFactorSvc{
 		Repo:    repo,
 		Crypto:  cry,
@@ -61,11 +61,10 @@ func (s *TwoFactorSvc) Google(req request.GoogleRequest) (response.TwoFactorResp
 		return response.TwoFactorResponse{}, errs.Err(err)
 	}
 
-	if account.GoogleAuthScreatKey == "" {
+	if account.GoogleAuthSecretKey == "" {
 		return response.TwoFactorResponse{}, errs.Err(errvar.SCREAT_KEY_IS_NOT_VALID)
 	}
-
-	valid := totp.Validate(strconv.Itoa(int(req.Code)), account.GoogleAuthScreatKey)
+	valid := totp.Validate(strconv.Itoa(int(req.Code)), account.GoogleAuthSecretKey)
 	if !valid {
 		return response.TwoFactorResponse{
 			Msg:  messages.GOOGLE_CODE_IS_NOT_VALID,
@@ -83,7 +82,7 @@ func (s *TwoFactorSvc) Google(req request.GoogleRequest) (response.TwoFactorResp
 	}
 
 	return response.TwoFactorResponse{
-		Msg:   messages.GOOGLE_TWO_FACTORT_SUCCESSFUL,
+		Msg:   messages.LOGIN_IS_SUCCESSFUL,
 		Code:  statuscode.SUCCESSFUL,
 		Token: cry,
 		Data:  models.AccountOutput(account),
@@ -91,7 +90,7 @@ func (s *TwoFactorSvc) Google(req request.GoogleRequest) (response.TwoFactorResp
 }
 
 func (s *TwoFactorSvc) Email(req request.EmailRequest) (response.TwoFactorResponse, error) {
-	table, err := s.Repo.FindByCode(int(req.Code), string(constants.EMAIL_TWO_FACTORY_CODE))
+	table, err := s.Repo.FindByCode(int(req.Code), string(constants.EMAIL_TWO_FACTOR_CODE))
 	if err != nil {
 		return response.TwoFactorResponse{}, errs.Err(err)
 	}
@@ -106,7 +105,7 @@ func (s *TwoFactorSvc) Email(req request.EmailRequest) (response.TwoFactorRespon
 	}
 
 	return response.TwoFactorResponse{
-		Msg:   messages.GOOGLE_TWO_FACTORT_SUCCESSFUL,
+		Msg:   messages.LOGIN_IS_SUCCESSFUL,
 		Code:  statuscode.SUCCESSFUL,
 		Token: cry,
 		Data:  models.AccountOutput(&table[0].Account),

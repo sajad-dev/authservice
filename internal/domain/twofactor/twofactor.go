@@ -17,7 +17,7 @@ type TwoFactorService interface {
 	Email(req request.EmailRequest) (response.TwoFactorResponse, error)
 }
 
-type TwoFactorRepo interface {
+type TwoFactorRepository interface {
 	FindByCode(code int, codeType string) ([]*models.TwoFactorCode, error)
 	FindById(id int) (*models.Accounts, error)
 }

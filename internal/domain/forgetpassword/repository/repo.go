@@ -26,4 +26,4 @@ func (s ForgetPasswordRepo) FindById(id int) (*models.Accounts, error) {
 	return s.DB.GetByID(id)
 }
 
-var _ forgetpassword.ForgetPasswordRepo = &ForgetPasswordRepo{}
+var _ forgetpassword.ForgetPasswordRepository = &ForgetPasswordRepo{}

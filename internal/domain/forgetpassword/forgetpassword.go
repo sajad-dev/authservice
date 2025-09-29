@@ -17,7 +17,7 @@ type ForgetPasswordService interface {
 	Reset(req request.ResetRequest) (response.ResetResponse, error)
 }
 
-type ForgetPasswordRepo interface {
+type ForgetPasswordRepository interface {
 	Find(clm string, value string) (*models.Accounts, error)
 	FindById(id int) (*models.Accounts, error)
 	Update(row *models.Accounts) error

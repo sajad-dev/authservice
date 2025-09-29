@@ -17,12 +17,12 @@ import (
 )
 
 type ForgetPasswordSvc struct {
-	Repo    forgetpassword.ForgetPasswordRepo
+	Repo    forgetpassword.ForgetPasswordRepository
 	Crypto  crypto.Crypto
 	Hashing hashing.Hashing
 }
 
-func NewForgetPasswordService(cry crypto.Crypto, hashing hashing.Hashing, repo forgetpassword.ForgetPasswordRepo) *ForgetPasswordSvc {
+func NewForgetPasswordService(repo forgetpassword.ForgetPasswordRepository, hashing hashing.Hashing, cry crypto.Crypto) *ForgetPasswordSvc {
 	return &ForgetPasswordSvc{
 		Repo:    repo,
 		Crypto:  cry,

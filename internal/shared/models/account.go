@@ -16,7 +16,7 @@ type Accounts struct {
 	Username            string         `gorm:"unique;not null"`
 	TwoFactor           pq.StringArray `gorm:"type:text[]"`
 	Password            string         `gorm:"not null"`
-	GoogleAuthScreatKey string
+	GoogleAuthSecretKey string
 	LastForgetPassword  time.Time
 }
 
@@ -58,8 +58,8 @@ func WithLastForgetPassword(t time.Time) AccountOption {
 	return func(a *Accounts) { a.LastForgetPassword = t }
 }
 
-func WithGoogleAuthScreatKey(screatKey string) AccountOption {
-	return func(a *Accounts) { a.GoogleAuthScreatKey = screatKey }
+func WithGoogleAuthSecretKey(secretKey string) AccountOption {
+	return func(a *Accounts) { a.GoogleAuthSecretKey = secretKey }
 }
 func NewAccounts(opts ...AccountOption) *Accounts {
 	account := &Accounts{}
