@@ -1,35 +1,31 @@
 package repository
 
 import (
-	"github.com/sajad-dev/authservice/authentication/internal/domain/account"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/policy"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/authorize"
 )
 
-type AccountRepo struct {
-	DB sqldb.SqlDB[*models.Accounts]
+type PolicyRepo struct {
+	Authz authorize.Authorize
 }
 
-func NewAccountRepo(db sqldb.SqlDB[*models.Accounts]) *AccountRepo {
-	return &AccountRepo{DB: db}
+func NewAccountRepo(authz authorize.Authorize) *PolicyRepo {
+	return &PolicyRepo{
+		Authz: authz,
+	}
 }
 
-func (a AccountRepo) Create(req *models.Accounts) error {
-	return a.DB.Create(req)
+func (a *PolicyRepo) Create(sub string, obj string, act string) (bool,error) {
+	return a.Authz.AddPolicy(sub,obj,act)
 }
 
-func (a AccountRepo) Update(req *models.Accounts, id int) error {
-	req.ID = uint(id)
-	return a.DB.Save(req)
+func (a *PolicyRepo) Delete(sub string, obj string, act string) (bool,error) {
+	return a.Authz.RemovePolicy(sub,obj,act)
 }
 
-func (r *AccountRepo) Read(id int) (*models.Accounts, error) {
-	return r.DB.GetByID(id)
+func (r *PolicyRepo) GetAll() ([][]string, error) {
+	return r.Authz.GetAllGroup()
 
 }
 
-func (r *AccountRepo) Delete(id int) error {
-	return r.DB.Delete(id)
-}
-
-var _ account.AccountCURDRepository = &AccountRepo{}
+var _ policy.PolicyRepository = &PolicyRepo{}
