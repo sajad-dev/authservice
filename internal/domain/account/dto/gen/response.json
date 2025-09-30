@@ -65,6 +65,10 @@
             "Data": "models.AccountFiltered",
             "Fields": [
               {
+                "To": "Id",
+                "From": "Id"
+              },
+              {
                 "To": "FirstName",
                 "From": "FirstName"
               },

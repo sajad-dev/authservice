@@ -36,7 +36,7 @@ func (s *TestAccountSuite) SetupSuite() {
 	)
 
 	s.repoMock.On("Create", mock.Anything).Return(nil)
-	s.repoMock.On("Update", mock.Anything).Return(nil)
+	s.repoMock.On("Update", mock.Anything,mock.Anything).Return(nil)
 	s.repoMock.On("Read", 1).Return(account, nil)
 	s.repoMock.On("Delete", 1).Return(nil)
 

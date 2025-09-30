@@ -18,7 +18,8 @@ func (a AccountRepo) Create(req *models.Accounts) error {
 	return a.DB.Create(req)
 }
 
-func (a AccountRepo) Update(req *models.Accounts) error {
+func (a AccountRepo) Update(req *models.Accounts, id int) error {
+	req.ID = uint(id)
 	return a.DB.Save(req)
 }
 

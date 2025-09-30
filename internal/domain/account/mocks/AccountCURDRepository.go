@@ -78,17 +78,17 @@ func (_m *AccountCURDRepository) Read(id int) (*models.Accounts, error) {
 	return r0, r1
 }
 
-// Update provides a mock function with given fields: req
-func (_m *AccountCURDRepository) Update(req *models.Accounts) error {
-	ret := _m.Called(req)
+// Update provides a mock function with given fields: req, id
+func (_m *AccountCURDRepository) Update(req *models.Accounts, id int) error {
+	ret := _m.Called(req, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for Update")
 	}
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(*models.Accounts) error); ok {
-		r0 = rf(req)
+	if rf, ok := ret.Get(0).(func(*models.Accounts, int) error); ok {
+		r0 = rf(req, id)
 	} else {
 		r0 = ret.Error(0)
 	}

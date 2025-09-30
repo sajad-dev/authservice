@@ -23,7 +23,7 @@ type AccountCURDService interface {
 
 type AccountCURDRepository interface {
 	Create(req *models.Accounts) error
-	Update(req *models.Accounts) error
+	Update(req *models.Accounts, id int) error
 	Delete(id int) error
 	Read(id int) (*models.Accounts, error)
 }

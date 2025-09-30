@@ -113,7 +113,7 @@ func (s *TestAccountSuite) TestUpdate() {
 			_ = s.accountRepo.Create(tt.account)
 
 			tt.account.Username = tt.updatedTo
-			err := s.accountRepo.Update(tt.account)
+			err := s.accountRepo.Update(tt.account,int(tt.account.ID))
 			if !tt.wantErr {
 				s.NoError(err)
 				updated, _ := s.accountRepo.Read(int(tt.account.ID))

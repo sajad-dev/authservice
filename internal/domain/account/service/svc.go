@@ -66,7 +66,7 @@ func (s *AccountSvc) Update(req request.UpdateRequest) (response.UpdateResponse,
 		return response.UpdateResponse{}, errs.Err(err)
 	}
 
-	err = s.Repo.Update(account)
+	err = s.Repo.Update(account, int(req.Id))
 	if err != nil {
 		return response.UpdateResponse{}, errs.Err(err)
 	}

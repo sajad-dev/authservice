@@ -28,6 +28,7 @@ type User struct {
 	FirstName     string                 `protobuf:"bytes,4,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
 	LastName      string                 `protobuf:"bytes,5,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
 	TwoFactor     []string               `protobuf:"bytes,6,rep,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
+	Id            int32                  `protobuf:"varint,7,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -95,6 +96,13 @@ func (x *User) GetTwoFactor() []string {
 		return x.TwoFactor
 	}
 	return nil
+}
+
+func (x *User) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
 }
 
 type TwoFactorResponse struct {
@@ -265,7 +273,7 @@ var File_internal_domain_twofactor_twofactor_proto protoreflect.FileDescriptor
 
 const file_internal_domain_twofactor_twofactor_proto_rawDesc = "" +
 	"\n" +
-	")internal/domain/twofactor/twofactor.proto\x12\x0etwofactorproto\"\x93\x01\n" +
+	")internal/domain/twofactor/twofactor.proto\x12\x0etwofactorproto\"\xa3\x01\n" +
 	"\x04User\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1d\n" +
@@ -273,7 +281,8 @@ const file_internal_domain_twofactor_twofactor_proto_rawDesc = "" +
 	"first_name\x18\x04 \x01(\tR\tfirstName\x12\x1b\n" +
 	"\tlast_name\x18\x05 \x01(\tR\blastName\x12\x1d\n" +
 	"\n" +
-	"two_factor\x18\x06 \x03(\tR\ttwoFactor\"y\n" +
+	"two_factor\x18\x06 \x03(\tR\ttwoFactor\x12\x0e\n" +
+	"\x02id\x18\a \x01(\x05R\x02id\"y\n" +
 	"\x11TwoFactorResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\x12(\n" +

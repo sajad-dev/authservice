@@ -22,6 +22,7 @@ func (a *TwoFactorResponse) ToProto () *twofactorproto.TwoFactorResponse {
 }
 func AdaptorDataUser (data models.AccountFiltered) *twofactorproto.User{
 	return &twofactorproto.User{
+		Id: data.Id,
 		FirstName: data.FirstName,
 		LastName: data.LastName,
 		Username: data.Username,

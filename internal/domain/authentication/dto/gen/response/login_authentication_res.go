@@ -23,6 +23,7 @@ func (a *LoginResponse) ToProto () *authenticationproto.LoginResponse {
 func AdaptorDataUserLogin (data models.AccountFiltered) *authenticationproto.User{
 	return &authenticationproto.User{
 		FirstName: data.FirstName,
+		Id: data.Id,
 		LastName: data.LastName,
 		Username: data.Username,
 		Email: data.Email,

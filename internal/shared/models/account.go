@@ -21,6 +21,7 @@ type Accounts struct {
 }
 
 type AccountFiltered struct {
+	Id        int32
 	FirstName string
 	LastName  string
 	Email     string
@@ -113,6 +114,7 @@ func AccountInput(inp any) (*Accounts, bool) {
 func AccountOutput(row *Accounts) AccountFiltered {
 	return AccountFiltered{
 		FirstName: row.FirstName,
+		Id:        int32(row.ID),
 		LastName:  row.LastName,
 		Email:     row.Email,
 		Username:  row.Username,

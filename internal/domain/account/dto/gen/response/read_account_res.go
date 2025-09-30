@@ -20,6 +20,7 @@ func (a *ReadResponse) ToProto () *accountproto.ReadResponse {
 }
 func AdaptorDataUser (data models.AccountFiltered) *accountproto.User{
 	return &accountproto.User{
+		Id: data.Id,
 		FirstName: data.FirstName,
 		LastName: data.LastName,
 		Username: data.Username,
