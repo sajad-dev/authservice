@@ -1,106 +1,61 @@
 package service
 
 import (
-	"github.com/sajad-dev/authservice/authentication/internal/domain/account"
-	"github.com/sajad-dev/authservice/authentication/internal/domain/account/dto/gen/request"
-	"github.com/sajad-dev/authservice/authentication/internal/domain/account/dto/gen/response"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/hashing"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/messages"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/statuscode"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/policy"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/request"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/response"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/constants/messages"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/constants/statuscode"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs"
 )
 
-type AccountSvc struct {
-	Repo    account.AccountCURDRepository
-	Hashing hashing.Hashing
+type PolicySvc struct {
+	Repo policy.PolicyRepository
 }
 
-func NewAccountSvc(repo account.AccountCURDRepository, hashing hashing.Hashing) *AccountSvc {
-	return &AccountSvc{
-		Repo:    repo,
-		Hashing: hashing,
+func NewPolicySvc(repo policy.PolicyRepository) *PolicySvc {
+	return &PolicySvc{
+		Repo: repo,
 	}
 }
 
-func (s *AccountSvc) Create(req request.CreateRequest) (response.CreateResponse, error) {
+func (a *PolicySvc) Group(req *request.GroupRequest) (response.Response, error) {
 
-	var err error
-	account, ok := models.AccountInput(req)
+	ok, err := a.Repo.AddGroup(req.Subject, req.Group)
+	if err != nil {
+		return response.Response{}, errs.Err(err)
+	}
+
 	if !ok {
-		return response.CreateResponse{
-			Msg:  messages.ERR_INVALID_FIELDS,
+		return response.Response{
+			Msg:  messages.ERR_ADD_GROUP_FAILED,
 			Code: statuscode.VALIDATION_ERR,
 		}, nil
 	}
 
-	account.Password, err = s.Hashing.Sum([]byte(req.Password))
-	if err != nil {
-		return response.CreateResponse{}, errs.Err(err)
-	}
-
-	err = s.Repo.Create(account)
-	if err != nil {
-		return response.CreateResponse{}, errs.Err(err)
-	}
-
-	return response.CreateResponse{
-		Msg:  messages.SUCCESS_ACCOUNT_CREATED,
+	return response.Response{
+		Msg:  messages.SUCCESS_GROUP_ADDED,
 		Code: statuscode.SUCCESSFUL,
 	}, nil
 
 }
+func (a *PolicySvc) Policy(req *request.PolicyRequest) (response.Response, error) {
+	ok, err := a.Repo.AddPolicy(req.Subject, req.Group, req.Action)
+	if err != nil {
+		return response.Response{}, errs.Err(err)
+	}
 
-func (s *AccountSvc) Update(req request.UpdateRequest) (response.UpdateResponse, error) {
-	var err error
-	account, ok := models.AccountInput(req)
 	if !ok {
-		return response.UpdateResponse{
-			Msg:  messages.ERR_INVALID_FIELDS,
+		return response.Response{
+			Msg:  messages.ERR_ADD_POLICY_FAILED,
 			Code: statuscode.VALIDATION_ERR,
-		}, nil
+		}, errs.Err(err)
 	}
 
-	account.Password, err = s.Hashing.Sum([]byte(req.Password))
-	if err != nil {
-		return response.UpdateResponse{}, errs.Err(err)
-	}
-
-	err = s.Repo.Update(account, int(req.Id))
-	if err != nil {
-		return response.UpdateResponse{}, errs.Err(err)
-	}
-
-	return response.UpdateResponse{
-		Msg:  messages.SUCCESS_ACCOUNT_UPDATED,
-		Code: statuscode.SUCCESSFUL,
-	}, nil
-
-}
-
-func (s *AccountSvc) Delete(req request.DeleteRequest) (response.DeleteResponse, error) {
-	err := s.Repo.Delete(int(req.Id))
-	if err != nil {
-		return response.DeleteResponse{}, errs.Err(err)
-	}
-
-	return response.DeleteResponse{
-		Msg:  messages.SUCCESS_ACCOUNT_DELETED,
+	return response.Response{
+		Msg:  messages.SUCCESS_POLICY_ADDED,
 		Code: statuscode.SUCCESSFUL,
 	}, nil
 }
 
-func (s *AccountSvc) Read(req request.ReadRequest) (response.ReadResponse, error) {
-	account, err := s.Repo.Read(int(req.Id))
-	if err != nil {
-		return response.ReadResponse{}, errs.Err(err)
-	}
-
-	return response.ReadResponse{
-		Msg:  messages.SUCCESS_ACCOUNT_RETRIEVED,
-		Code: statuscode.SUCCESSFUL,
-		Data: models.AccountOutput(account),
-	}, nil
-}
-
-var _ account.AccountCURDService = &AccountSvc{}
+var _ policy.PolicyService = &PolicySvc{}

@@ -17,6 +17,6 @@ type PolicyService interface {
 }
 
 type PolicyRepository interface {
-	AddGroup(sub string, grp string) (response.Response, error)
-	AddPolicy(sub string, grp string, act string) (response.Response, error)
+	AddGroup(sub string, grp string) (bool, error)
+	AddPolicy(sub string, grp string, act string) (bool, error)
 }

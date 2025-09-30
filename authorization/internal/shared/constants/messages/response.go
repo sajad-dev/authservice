@@ -2,10 +2,13 @@ package messages
 
 // Error response constants
 const (
-	ERR_INVALID_GOOGLE_CODE = "Invalid Google verification code"
+	ERR_ADD_GROUP_FAILED   = "Failed to add group"
+	ERR_ADD_POLICY_FAILED  = "Failed to add policy"
 )
 
 // Success message constants
 const (
-	SUCCESS_ACCOUNT_RETRIEVED = "Account details retrieved successfully"
+	SUCCESS_GROUP_ADDED    = "Group added successfully"
+	SUCCESS_POLICY_ADDED   = "Policy added successfully"
 )
+
