@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/go-playground/validator"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/response"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/mocks"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/policyproto"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/validation/validate"
@@ -29,14 +30,14 @@ func (s *PolicyHandlerSuite) TestCreate() {
 	tests := []struct {
 		name    string
 		req     *policyproto.CreateRequest
-		res     *policyproto.Response
+		res     response.Response
 		wantErr bool
 		wantMsg string
 	}{
 		{
 			name: "Success",
 			req:  &policyproto.CreateRequest{Subject: "user", Object: "resource", Action: "create"},
-			res: &policyproto.Response{
+			res: response.Response{
 				Code: statuscode.SUCCESSFUL,
 				Msg:  "Policy created successfully",
 			},
@@ -65,14 +66,14 @@ func (s *PolicyHandlerSuite) TestDelete() {
 	tests := []struct {
 		name    string
 		req     *policyproto.DeleteRequest
-		res     *policyproto.Response
+		res     response.Response
 		wantErr bool
 		wantMsg string
 	}{
 		{
 			name: "Success",
 			req:  &policyproto.DeleteRequest{Subject: "user", Object: "resource", Action: "delete"},
-			res: &policyproto.Response{
+			res: response.Response{
 				Code: statuscode.SUCCESSFUL,
 				Msg:  "Policy deleted successfully",
 			},
@@ -101,14 +102,14 @@ func (s *PolicyHandlerSuite) TestGetAll() {
 	tests := []struct {
 		name    string
 		req     *policyproto.GetAllRequest
-		res     *policyproto.GetAllResponse
+		res     response.GetAllResponse
 		wantErr bool
 		wantMsg string
 	}{
 		{
 			name: "Success",
 			req:  &policyproto.GetAllRequest{},
-			res: &policyproto.GetAllResponse{
+			res: response.GetAllResponse{
 				Code: statuscode.SUCCESSFUL,
 				Msg:  "Fetched all policies successfully",
 				// Data: [][]string{[]string{}},
