@@ -18,15 +18,15 @@ func NewPolicyHandler(svc policy.PolicyService, vld validation.Validation) *Poli
 	return &PolicyHndlr{Service: svc, Validation: vld}
 }
 
-func (a *PolicyHndlr) Policy(req *policyproto.PolicyRequest) (*policyproto.Response, error) {
+func (a *PolicyHndlr) Create(req *policyproto.CreateRequest) (*policyproto.Response, error) {
 
-	reqValidation := request.ToRequestPolicy(req)
+	reqValidation := request.ToRequestCreate(req)
 
 	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
 		return nil, err
 	}
 
-	res, err := a.Service.Policy(*reqValidation)
+	res, err := a.Service.Create(*reqValidation)
 	if err = globalerr.ServerErr(err); err != nil {
 		return nil, err
 	}
@@ -34,15 +34,24 @@ func (a *PolicyHndlr) Policy(req *policyproto.PolicyRequest) (*policyproto.Respo
 	return res.ToProto(), nil
 }
 
-func (a *PolicyHndlr) Group(req *policyproto.GroupRequest) (*policyproto.Response, error) {
+func (a *PolicyHndlr) Delete(req *policyproto.DeleteRequest) (*policyproto.Response, error) {
 
-	reqValidation := request.ToRequestGroup(req)
+	reqValidation := request.ToRequestDelete(req)
 
 	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
 		return nil, err
 	}
 
-	res, err := a.Service.Group(*reqValidation)
+	res, err := a.Service.Delete(*reqValidation)
+	if err = globalerr.ServerErr(err); err != nil {
+		return nil, err
+	}
+
+	return res.ToProto(), nil
+}
+
+func (a *PolicyHndlr) GetAll(req *policyproto.GetAllRequest) (*policyproto.GetAllResponse, error) {
+	res, err := a.Service.GetAll()
 	if err = globalerr.ServerErr(err); err != nil {
 		return nil, err
 	}

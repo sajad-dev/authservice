@@ -19,16 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Policy_Group_FullMethodName  = "/policyproto.Policy/Group"
-	Policy_Policy_FullMethodName = "/policyproto.Policy/Policy"
+	Policy_Create_FullMethodName = "/policyproto.Policy/Create"
+	Policy_Delete_FullMethodName = "/policyproto.Policy/Delete"
+	Policy_GetAll_FullMethodName = "/policyproto.Policy/GetAll"
 )
 
 // PolicyClient is the client API for Policy service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PolicyClient interface {
-	Group(ctx context.Context, in *GroupRequest, opts ...grpc.CallOption) (*Response, error)
-	Policy(ctx context.Context, in *PolicyRequest, opts ...grpc.CallOption) (*Response, error)
+	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*Response, error)
+	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*Response, error)
+	GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllResponse, error)
 }
 
 type policyClient struct {
@@ -39,20 +41,30 @@ func NewPolicyClient(cc grpc.ClientConnInterface) PolicyClient {
 	return &policyClient{cc}
 }
 
-func (c *policyClient) Group(ctx context.Context, in *GroupRequest, opts ...grpc.CallOption) (*Response, error) {
+func (c *policyClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*Response, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Response)
-	err := c.cc.Invoke(ctx, Policy_Group_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Policy_Create_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *policyClient) Policy(ctx context.Context, in *PolicyRequest, opts ...grpc.CallOption) (*Response, error) {
+func (c *policyClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*Response, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Response)
-	err := c.cc.Invoke(ctx, Policy_Policy_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Policy_Delete_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *policyClient) GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetAllResponse)
+	err := c.cc.Invoke(ctx, Policy_GetAll_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -63,8 +75,9 @@ func (c *policyClient) Policy(ctx context.Context, in *PolicyRequest, opts ...gr
 // All implementations must embed UnimplementedPolicyServer
 // for forward compatibility.
 type PolicyServer interface {
-	Group(context.Context, *GroupRequest) (*Response, error)
-	Policy(context.Context, *PolicyRequest) (*Response, error)
+	Create(context.Context, *CreateRequest) (*Response, error)
+	Delete(context.Context, *DeleteRequest) (*Response, error)
+	GetAll(context.Context, *GetAllRequest) (*GetAllResponse, error)
 	mustEmbedUnimplementedPolicyServer()
 }
 
@@ -75,11 +88,14 @@ type PolicyServer interface {
 // pointer dereference when methods are called.
 type UnimplementedPolicyServer struct{}
 
-func (UnimplementedPolicyServer) Group(context.Context, *GroupRequest) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Group not implemented")
+func (UnimplementedPolicyServer) Create(context.Context, *CreateRequest) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedPolicyServer) Policy(context.Context, *PolicyRequest) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Policy not implemented")
+func (UnimplementedPolicyServer) Delete(context.Context, *DeleteRequest) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedPolicyServer) GetAll(context.Context, *GetAllRequest) (*GetAllResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAll not implemented")
 }
 func (UnimplementedPolicyServer) mustEmbedUnimplementedPolicyServer() {}
 func (UnimplementedPolicyServer) testEmbeddedByValue()                {}
@@ -102,38 +118,56 @@ func RegisterPolicyServer(s grpc.ServiceRegistrar, srv PolicyServer) {
 	s.RegisterService(&Policy_ServiceDesc, srv)
 }
 
-func _Policy_Group_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GroupRequest)
+func _Policy_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PolicyServer).Group(ctx, in)
+		return srv.(PolicyServer).Create(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Policy_Group_FullMethodName,
+		FullMethod: Policy_Create_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PolicyServer).Group(ctx, req.(*GroupRequest))
+		return srv.(PolicyServer).Create(ctx, req.(*CreateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Policy_Policy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PolicyRequest)
+func _Policy_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PolicyServer).Policy(ctx, in)
+		return srv.(PolicyServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Policy_Policy_FullMethodName,
+		FullMethod: Policy_Delete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PolicyServer).Policy(ctx, req.(*PolicyRequest))
+		return srv.(PolicyServer).Delete(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Policy_GetAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PolicyServer).GetAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Policy_GetAll_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PolicyServer).GetAll(ctx, req.(*GetAllRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -146,12 +180,16 @@ var Policy_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*PolicyServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Group",
-			Handler:    _Policy_Group_Handler,
+			MethodName: "Create",
+			Handler:    _Policy_Create_Handler,
 		},
 		{
-			MethodName: "Policy",
-			Handler:    _Policy_Policy_Handler,
+			MethodName: "Delete",
+			Handler:    _Policy_Delete_Handler,
+		},
+		{
+			MethodName: "GetAll",
+			Handler:    _Policy_GetAll_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

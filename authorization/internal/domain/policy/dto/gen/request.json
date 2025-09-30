@@ -5,11 +5,11 @@
   ],
   "Data": [
     {
-      "Name": "group",
+      "Name": "create",
       "Data": {
-        "FuncName": "ToRequestGroup",
-        "StructName": "GroupRequest",
-        "ProtoStruct": "GroupRequest",
+        "FuncName": "ToRequestCreate",
+        "StructName": "CreateRequest",
+        "ProtoStruct": "CreateRequest",
         "Fields": [
           {
             "To": "Subject",
@@ -24,16 +24,23 @@
             "From": "Group",
             "Validations": "",
             "Json": "group"
+          },
+          {
+            "To": "Action",
+            "Type": "string",
+            "From": "Action",
+            "Validations": "",
+            "Json": "action"
           }
         ]
       }
     },
     {
-      "Name": "policy",
+      "Name": "delete",
       "Data": {
-        "FuncName": "ToRequestPolicy",
-        "StructName": "PolicyRequest",
-        "ProtoStruct": "PolicyRequest",
+        "FuncName": "ToRequestDelete",
+        "StructName": "DeleteRequest",
+        "ProtoStruct": "DeleteRequest",
         "Fields": [
           {
             "To": "Subject",

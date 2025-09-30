@@ -19,28 +19,8 @@ func NewPolicySvc(repo policy.PolicyRepository) *PolicySvc {
 	}
 }
 
-func (a *PolicySvc) Group(req *request.GroupRequest) (response.Response, error) {
-
-	ok, err := a.Repo.AddGroup(req.Subject, req.Group)
-	if err != nil {
-		return response.Response{}, errs.Err(err)
-	}
-
-	if !ok {
-		return response.Response{
-			Msg:  messages.ERR_ADD_GROUP_FAILED,
-			Code: statuscode.VALIDATION_ERR,
-		}, nil
-	}
-
-	return response.Response{
-		Msg:  messages.SUCCESS_GROUP_ADDED,
-		Code: statuscode.SUCCESSFUL,
-	}, nil
-
-}
-func (a *PolicySvc) Policy(req *request.PolicyRequest) (response.Response, error) {
-	ok, err := a.Repo.AddPolicy(req.Subject, req.Group, req.Action)
+func (a *PolicySvc) Create(req request.CreateRequest) (response.Response, error) {
+	ok, err := a.Repo.Create(req.Subject, req.Group, req.Action)
 	if err != nil {
 		return response.Response{}, errs.Err(err)
 	}
@@ -53,6 +33,37 @@ func (a *PolicySvc) Policy(req *request.PolicyRequest) (response.Response, error
 	}
 
 	return response.Response{
+		Msg:  messages.SUCCESS_POLICY_ADDED,
+		Code: statuscode.SUCCESSFUL,
+	}, nil
+}
+
+func (a *PolicySvc) Delete(req request.DeleteRequest) (response.Response, error) {
+	ok, err := a.Repo.Delete(req.Subject, req.Group, req.Action)
+	if err != nil {
+		return response.Response{}, errs.Err(err)
+	}
+
+	if !ok {
+		return response.Response{
+			Msg:  messages.ERR_ADD_POLICY_FAILED,
+			Code: statuscode.VALIDATION_ERR,
+		}, errs.Err(err)
+	}
+
+	return response.Response{
+		Msg:  messages.SUCCESS_POLICY_ADDED,
+		Code: statuscode.SUCCESSFUL,
+	}, nil
+}
+
+func (a *PolicySvc) GetAll() (response.GetAllResponse, error) {
+	_, err := a.Repo.GetAll()
+	if err != nil {
+		return response.GetAllResponse{}, errs.Err(err)
+	}
+
+	return response.GetAllResponse{
 		Msg:  messages.SUCCESS_POLICY_ADDED,
 		Code: statuscode.SUCCESSFUL,
 	}, nil

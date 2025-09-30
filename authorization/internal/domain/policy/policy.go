@@ -7,16 +7,19 @@ import (
 )
 
 type PolicyHandler interface {
-	Group(req *policyproto.GroupRequest) (policyproto.Response, error)
-	Policy(req *policyproto.PolicyRequest) (policyproto.Response, error)
+	Create(req *policyproto.CreateRequest) (*policyproto.Response, error)
+	Delete(req *policyproto.DeleteRequest) (*policyproto.Response, error)
+	GetAll(req *policyproto.GetAllRequest) (*policyproto.GetAllResponse, error)
 }
 
 type PolicyService interface {
-	Group(req request.GroupRequest) (response.Response, error)
-	Policy(req request.PolicyRequest) (response.Response, error)
+	Create(req request.CreateRequest) (response.Response, error)
+	Delete(req request.DeleteRequest) (response.Response, error)
+	GetAll() (response.GetAllResponse, error)
 }
 
 type PolicyRepository interface {
-	AddGroup(sub string, grp string) (bool, error)
-	AddPolicy(sub string, grp string, act string) (bool, error)
+	Create(sub string, grp string, act string) (bool, error)
+	Delete(sub string, grp string, act string) (bool, error)
+	GetAll() ([][]string, error)
 }

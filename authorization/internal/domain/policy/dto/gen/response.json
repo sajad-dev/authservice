@@ -25,6 +25,28 @@
           }
         ]
       }
+    },
+    {
+      "Name": "getall",
+      "Data": {
+        "FuncName": "ToProto",
+        "StructName": "GetAllResponse",
+        "ProtoStruct": "GetAllResponse",
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Msg",
+            "Type": "string",
+            "From": "Msg",
+            "Json": "msg"
+          }
+        ]
+      }
     }
   ]
 }
