@@ -1,0 +1,37 @@
+package response
+
+import (
+	{{- range .ImportPath}}
+	"{{ . }}"
+	{{- end}}
+)
+
+type {{ .StructName }} struct {
+	{{- range .Fields}}
+	{{ .From }} {{ .Type }} `json:"{{ .Json }}"`
+	{{- end }}
+} 
+
+func (a *{{ .StructName }}) {{ .FuncName }} () *{{ .ProtoPackage }}.{{ .ProtoStruct }} {
+	return &{{ .ProtoPackage }}.{{ .ProtoStruct }}{
+		{{- range .Fields }}
+		
+		{{- if .HaveFunction}}
+		{{ .To }}: {{.Function}}(a.{{ .From }}),
+		{{- else }}
+		{{ .To }}: a.{{ .From }},
+		{{- end}}
+
+		{{- end }}
+	}
+}
+
+{{- range .AdaptorField}}
+func {{ .FuncName}} (data {{ .Data }}) *{{ .ProtoPackage }}.{{ .ProtoStruct }}{
+	return &{{ .ProtoPackage }}.{{ .ProtoStruct }}{
+		{{- range .Fields }}
+		{{ .To }}: data.{{ .From }},
+		{{- end }}
+	}
+}
+{{- end}}
