@@ -22,7 +22,6 @@ import (
 const (
 	EMAIL    = "email"
 	USERNAME = "username"
-	SMS      = "sms"
 )
 
 const (
@@ -45,7 +44,7 @@ func NewAuthService(repo authentication.AuthenticatorRepository, cry crypto.Cryp
 	}
 }
 
-func _checkUsernameOrEmailOrSMS(field string) (string, error) {
+func _checkUsernameOrEmail(field string) (string, error) {
 	email, err := regexp.MatchString(EMAILREGEX, field)
 	if err != nil {
 		return "", errs.Err(err)
@@ -75,7 +74,7 @@ func (a *AuthenticationSvc) Login(req request.LoginRequest) (response.LoginRespo
 	if err != nil {
 		return response.LoginResponse{}, errs.Err(err)
 	}
-	usernameType, err := _checkUsernameOrEmailOrSMS(req.Username)
+	usernameType, err := _checkUsernameOrEmail(req.Username)
 	if err != nil {
 		return response.LoginResponse{}, errs.Err(err)
 	}
@@ -86,7 +85,7 @@ func (a *AuthenticationSvc) Login(req request.LoginRequest) (response.LoginRespo
 
 	if table.Password != hashPassword {
 		return response.LoginResponse{
-			Msg:  messages.USERNAME_OR_PASSWORD_IS_WORNG,
+			Msg:  messages.ERR_INVALID_CREDENTIALS,
 			Code: statuscode.VALIDATION_ERR,
 		}, nil
 	}
@@ -99,13 +98,13 @@ func (a *AuthenticationSvc) Login(req request.LoginRequest) (response.LoginRespo
 		if err != nil {
 			return response.LoginResponse{}, errs.Err(err)
 		}
-		msg = messages.LOGIN_WITH_TWO_FACTOR
+		msg = messages.SUCCESS_LOGIN_TWO_FACTOR
 		claims = map[string]string{
 			"type":    "TwoFactor",
 			"options": string(jsonTwoFactory),
 		}
 	} else {
-		msg = messages.LOGIN_IS_SUCCESSFUL
+		msg = messages.SUCCESS_LOGIN
 		claims = map[string]string{
 			"id": strconv.Itoa(int(table.ID)),
 		}
@@ -134,7 +133,7 @@ func (a *AuthenticationSvc) Register(req request.RegisterRequest) (response.Regi
 	table, ok := models.AccountInput(req)
 	if !ok {
 		return response.RegisterResponse{
-			Msg:  messages.NOT_VALID_FIELDS_ERR,
+			Msg:  messages.ERR_INVALID_FIELDS,
 			Code: statuscode.VALIDATION_ERR,
 		}, nil
 	}
@@ -156,7 +155,7 @@ func (a *AuthenticationSvc) Register(req request.RegisterRequest) (response.Regi
 
 	return response.RegisterResponse{
 		Data:  models.AccountOutput(table),
-		Msg:   messages.LOGIN_IS_SUCCESSFUL,
+		Msg:   messages.SUCCESS_REGISTER,
 		Token: crp,
 		Code:  statuscode.SUCCESSFUL,
 	}, nil

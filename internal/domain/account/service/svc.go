@@ -29,7 +29,7 @@ func (s *AccountSvc) Create(req request.CreateRequest) (response.CreateResponse,
 	account, ok := models.AccountInput(req)
 	if !ok {
 		return response.CreateResponse{
-			Msg:  messages.NOT_VALID_FIELDS_ERR,
+			Msg:  messages.ERR_INVALID_FIELDS,
 			Code: statuscode.VALIDATION_ERR,
 		}, nil
 	}
@@ -45,7 +45,7 @@ func (s *AccountSvc) Create(req request.CreateRequest) (response.CreateResponse,
 	}
 
 	return response.CreateResponse{
-		Msg:  messages.CREATE_ACCOUNT_SUCCESSFUL,
+		Msg:  messages.SUCCESS_ACCOUNT_CREATED,
 		Code: statuscode.SUCCESSFUL,
 	}, nil
 
@@ -56,7 +56,7 @@ func (s *AccountSvc) Update(req request.UpdateRequest) (response.UpdateResponse,
 	account, ok := models.AccountInput(req)
 	if !ok {
 		return response.UpdateResponse{
-			Msg:  messages.NOT_VALID_FIELDS_ERR,
+			Msg:  messages.ERR_INVALID_FIELDS,
 			Code: statuscode.VALIDATION_ERR,
 		}, nil
 	}
@@ -72,7 +72,7 @@ func (s *AccountSvc) Update(req request.UpdateRequest) (response.UpdateResponse,
 	}
 
 	return response.UpdateResponse{
-		Msg:  messages.UPDATE_ACCOUNT_SUCCESSFUL,
+		Msg:  messages.SUCCESS_ACCOUNT_UPDATED,
 		Code: statuscode.SUCCESSFUL,
 	}, nil
 
@@ -85,7 +85,7 @@ func (s *AccountSvc) Delete(req request.DeleteRequest) (response.DeleteResponse,
 	}
 
 	return response.DeleteResponse{
-		Msg:  messages.DELETE_ACCOUNT_SUCCESSFUL,
+		Msg:  messages.SUCCESS_ACCOUNT_DELETED,
 		Code: statuscode.SUCCESSFUL,
 	}, nil
 }
@@ -97,7 +97,7 @@ func (s *AccountSvc) Read(req request.ReadRequest) (response.ReadResponse, error
 	}
 
 	return response.ReadResponse{
-		Msg:  messages.READ_ACCOUNT_SUCCESSFUL,
+		Msg:  messages.SUCCESS_ACCOUNT_RETRIEVED,
 		Code: statuscode.SUCCESSFUL,
 		Data: models.AccountOutput(account),
 	}, nil

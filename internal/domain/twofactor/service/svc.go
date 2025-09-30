@@ -51,7 +51,7 @@ func (s *TwoFactorSvc) Google(req request.GoogleRequest) (response.TwoFactorResp
 	idInt, err := strconv.Atoi(id)
 	if !okType || !okID || typeToken != "TwoFactor" || err != nil {
 		return response.TwoFactorResponse{
-			Msg:  messages.TOKEN_NOT_VALID,
+			Msg:  messages.ERR_INVALID_TOKEN,
 			Code: statuscode.VALIDATION_ERR,
 		}, nil
 	}
@@ -67,7 +67,7 @@ func (s *TwoFactorSvc) Google(req request.GoogleRequest) (response.TwoFactorResp
 	valid := totp.Validate(strconv.Itoa(int(req.Code)), account.GoogleAuthSecretKey)
 	if !valid {
 		return response.TwoFactorResponse{
-			Msg:  messages.GOOGLE_CODE_IS_NOT_VALID,
+			Msg:  messages.ERR_INVALID_GOOGLE_CODE,
 			Code: statuscode.VALIDATION_ERR,
 		}, nil
 	}
@@ -82,7 +82,7 @@ func (s *TwoFactorSvc) Google(req request.GoogleRequest) (response.TwoFactorResp
 	}
 
 	return response.TwoFactorResponse{
-		Msg:   messages.LOGIN_IS_SUCCESSFUL,
+		Msg:   messages.SUCCESS_LOGIN,
 		Code:  statuscode.SUCCESSFUL,
 		Token: cry,
 		Data:  models.AccountOutput(account),
@@ -105,7 +105,7 @@ func (s *TwoFactorSvc) Email(req request.EmailRequest) (response.TwoFactorRespon
 	}
 
 	return response.TwoFactorResponse{
-		Msg:   messages.LOGIN_IS_SUCCESSFUL,
+		Msg:   messages.SUCCESS_LOGIN,
 		Code:  statuscode.SUCCESSFUL,
 		Token: cry,
 		Data:  models.AccountOutput(&table[0].Account),

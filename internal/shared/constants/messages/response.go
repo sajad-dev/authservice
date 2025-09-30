@@ -1,26 +1,32 @@
 package messages
 
-// Error response
+// Error response constants
 const (
-	NOT_VALID_FIELDS_ERR          = "Not valid fields"
-	VALIDATION_ERR_TITLE          = "Not valid fields"
-	SERVER_ERR                    = "Server error"
-	USERNAME_OR_PASSWORD_IS_WORNG = "user name or password is worng"
-	TOKEN_NOT_VALID               = "token not valid"
-	GOOGLE_CODE_IS_NOT_VALID      = "Google code is not valid"
+	ERR_INVALID_FIELDS      = "Invalid fields provided"
+	ERR_VALIDATION          = "Field validation failed"
+	ERR_INTERNAL_SERVER     = "Internal server error"
+	ERR_INVALID_CREDENTIALS = "Invalid username or password"
+	ERR_INVALID_TOKEN       = "Invalid authentication token"
+	ERR_INVALID_GOOGLE_CODE = "Invalid Google verification code"
 )
 
-// Message response
+// Success message constants
 const (
-	LOGIN_IS_SUCCESSFUL                     = "Login is successful"
-	LOGIN_WITH_TWO_FACTOR                   = "Two factor"
-	FORGET_PASSWORD_SEND_MAIL_IS_SUCCESSFUL = "Email send !"
-	RESET_PASSWORD_IS_SUCCESSFUL            = "Password chenge."
-	EMAIL_TWO_FACTORT_SUCCESSFUL            = "email two factor"
-	SEND_EMAIL_TWO_FACTORT_SUCCESSFUL            = "email two factor"
-	GOOGLE_TWO_FACTORT_SUCCESSFUL           = "google two factor"
-	CREATE_ACCOUNT_SUCCESSFUL               = "Create account"
-	UPDATE_ACCOUNT_SUCCESSFUL               = "Update account"
-	DELETE_ACCOUNT_SUCCESSFUL               = "Delete account"
-	READ_ACCOUNT_SUCCESSFUL                 = "Read account"
+	SUCCESS_LOGIN            = "Login successful"
+	SUCCESS_LOGIN_TWO_FACTOR = "Login successful with two-factor authentication"
+
+	SUCCESS_REGISTER = "Register successful"
+
+	SUCCESS_PASSWORD_RESET_EMAIL = "Password reset email sent"
+	SUCCESS_PASSWORD_RESET       = "Password successfully reset"
+
+	SUCCESS_EMAIL_TWO_FACTOR      = "Email two-factor authentication successful"
+	SUCCESS_SEND_EMAIL_TWO_FACTOR = "Email sent for two-factor authentication"
+
+	SUCCESS_GOOGLE_TWO_FACTOR = "Google two-factor authentication successful"
+
+	SUCCESS_ACCOUNT_CREATED   = "Account created successfully"
+	SUCCESS_ACCOUNT_UPDATED   = "Account updated successfully"
+	SUCCESS_ACCOUNT_DELETED   = "Account deleted successfully"
+	SUCCESS_ACCOUNT_RETRIEVED = "Account details retrieved successfully"
 )

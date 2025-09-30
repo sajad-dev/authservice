@@ -68,7 +68,7 @@ func (a ForgetPasswordSvc) Forget(req request.ForgetRequest) (response.ForgetRes
 	}
 
 	return response.ForgetResponse{
-		Msg:   messages.FORGET_PASSWORD_SEND_MAIL_IS_SUCCESSFUL,
+		Msg:   messages.SUCCESS_PASSWORD_RESET_EMAIL,
 		Code:  statuscode.SUCCESSFUL,
 		Token: token,
 	}, nil
@@ -84,7 +84,7 @@ func (a ForgetPasswordSvc) Reset(req request.ResetRequest) (response.ResetRespon
 	idInt, err := strconv.Atoi(id)
 	if !okType || !okID || typeToken != "ForgetPassword" || err != nil {
 		return response.ResetResponse{
-			Msg:  messages.TOKEN_NOT_VALID,
+			Msg:  messages.ERR_INVALID_TOKEN,
 			Code: statuscode.VALIDATION_ERR,
 		}, nil
 	}
@@ -108,7 +108,7 @@ func (a ForgetPasswordSvc) Reset(req request.ResetRequest) (response.ResetRespon
 
 	return response.ResetResponse{
 			Code: statuscode.SUCCESSFUL,
-			Msg:  messages.RESET_PASSWORD_IS_SUCCESSFUL,
+			Msg:  messages.SUCCESS_PASSWORD_RESET,
 		},
 		nil
 }

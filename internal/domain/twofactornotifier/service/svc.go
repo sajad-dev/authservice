@@ -93,7 +93,7 @@ func (s *TwoFactorNotifierSvc) NotifierEmail(req request.NotifierEmailRequest) (
 	}
 
 	return response.TwoFactorNotifierResponse{
-		Msg: messages.EMAIL_TWO_FACTORT_SUCCESSFUL,
+		Msg: messages.SUCCESS_SEND_EMAIL_TWO_FACTOR,
 		Code:    statuscode.SUCCESSFUL,
 	}, nil
 }
