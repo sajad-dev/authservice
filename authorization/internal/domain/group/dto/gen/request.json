@@ -1,0 +1,63 @@
+{
+  "ProtoPackage": "policyproto",
+  "ImportPath": [
+    "github.com/sajad-dev/authservice/authorization/internal/domain/policy/policyproto"
+  ],
+  "Data": [
+    {
+      "Name": "group",
+      "Data": {
+        "FuncName": "ToRequestGroup",
+        "StructName": "GroupRequest",
+        "ProtoStruct": "GroupRequest",
+        "Fields": [
+          {
+            "To": "Subject",
+            "Type": "string",
+            "From": "Subject",
+            "Validations": "",
+            "Json": "subject"
+          },
+          {
+            "To": "Group",
+            "Type": "string",
+            "From": "Group",
+            "Validations": "",
+            "Json": "group"
+          }
+        ]
+      }
+    },
+    {
+      "Name": "policy",
+      "Data": {
+        "FuncName": "ToRequestPolicy",
+        "StructName": "PolicyRequest",
+        "ProtoStruct": "PolicyRequest",
+        "Fields": [
+          {
+            "To": "Subject",
+            "Type": "string",
+            "From": "Subject",
+            "Validations": "",
+            "Json": "subject"
+          },
+          {
+            "To": "Group",
+            "Type": "string",
+            "From": "Group",
+            "Validations": "",
+            "Json": "group"
+          },
+          {
+            "To": "Action",
+            "Type": "string",
+            "From": "Action",
+            "Validations": "",
+            "Json": "action"
+          }
+        ]
+      }
+    }
+  ]
+}
