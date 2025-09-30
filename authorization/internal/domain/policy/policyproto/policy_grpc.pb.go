@@ -19,139 +19,139 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Authorization_Group_FullMethodName  = "/policyproto.Authorization/Group"
-	Authorization_Policy_FullMethodName = "/policyproto.Authorization/Policy"
+	Policy_Group_FullMethodName  = "/policyproto.Policy/Group"
+	Policy_Policy_FullMethodName = "/policyproto.Policy/Policy"
 )
 
-// AuthorizationClient is the client API for Authorization service.
+// PolicyClient is the client API for Policy service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AuthorizationClient interface {
+type PolicyClient interface {
 	Group(ctx context.Context, in *GroupRequest, opts ...grpc.CallOption) (*Response, error)
 	Policy(ctx context.Context, in *PolicyRequest, opts ...grpc.CallOption) (*Response, error)
 }
 
-type authorizationClient struct {
+type policyClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAuthorizationClient(cc grpc.ClientConnInterface) AuthorizationClient {
-	return &authorizationClient{cc}
+func NewPolicyClient(cc grpc.ClientConnInterface) PolicyClient {
+	return &policyClient{cc}
 }
 
-func (c *authorizationClient) Group(ctx context.Context, in *GroupRequest, opts ...grpc.CallOption) (*Response, error) {
+func (c *policyClient) Group(ctx context.Context, in *GroupRequest, opts ...grpc.CallOption) (*Response, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Response)
-	err := c.cc.Invoke(ctx, Authorization_Group_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Policy_Group_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authorizationClient) Policy(ctx context.Context, in *PolicyRequest, opts ...grpc.CallOption) (*Response, error) {
+func (c *policyClient) Policy(ctx context.Context, in *PolicyRequest, opts ...grpc.CallOption) (*Response, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Response)
-	err := c.cc.Invoke(ctx, Authorization_Policy_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Policy_Policy_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AuthorizationServer is the server API for Authorization service.
-// All implementations must embed UnimplementedAuthorizationServer
+// PolicyServer is the server API for Policy service.
+// All implementations must embed UnimplementedPolicyServer
 // for forward compatibility.
-type AuthorizationServer interface {
+type PolicyServer interface {
 	Group(context.Context, *GroupRequest) (*Response, error)
 	Policy(context.Context, *PolicyRequest) (*Response, error)
-	mustEmbedUnimplementedAuthorizationServer()
+	mustEmbedUnimplementedPolicyServer()
 }
 
-// UnimplementedAuthorizationServer must be embedded to have
+// UnimplementedPolicyServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedAuthorizationServer struct{}
+type UnimplementedPolicyServer struct{}
 
-func (UnimplementedAuthorizationServer) Group(context.Context, *GroupRequest) (*Response, error) {
+func (UnimplementedPolicyServer) Group(context.Context, *GroupRequest) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Group not implemented")
 }
-func (UnimplementedAuthorizationServer) Policy(context.Context, *PolicyRequest) (*Response, error) {
+func (UnimplementedPolicyServer) Policy(context.Context, *PolicyRequest) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Policy not implemented")
 }
-func (UnimplementedAuthorizationServer) mustEmbedUnimplementedAuthorizationServer() {}
-func (UnimplementedAuthorizationServer) testEmbeddedByValue()                       {}
+func (UnimplementedPolicyServer) mustEmbedUnimplementedPolicyServer() {}
+func (UnimplementedPolicyServer) testEmbeddedByValue()                {}
 
-// UnsafeAuthorizationServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AuthorizationServer will
+// UnsafePolicyServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to PolicyServer will
 // result in compilation errors.
-type UnsafeAuthorizationServer interface {
-	mustEmbedUnimplementedAuthorizationServer()
+type UnsafePolicyServer interface {
+	mustEmbedUnimplementedPolicyServer()
 }
 
-func RegisterAuthorizationServer(s grpc.ServiceRegistrar, srv AuthorizationServer) {
-	// If the following call pancis, it indicates UnimplementedAuthorizationServer was
+func RegisterPolicyServer(s grpc.ServiceRegistrar, srv PolicyServer) {
+	// If the following call pancis, it indicates UnimplementedPolicyServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&Authorization_ServiceDesc, srv)
+	s.RegisterService(&Policy_ServiceDesc, srv)
 }
 
-func _Authorization_Group_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Policy_Group_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GroupRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthorizationServer).Group(ctx, in)
+		return srv.(PolicyServer).Group(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Authorization_Group_FullMethodName,
+		FullMethod: Policy_Group_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthorizationServer).Group(ctx, req.(*GroupRequest))
+		return srv.(PolicyServer).Group(ctx, req.(*GroupRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Authorization_Policy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Policy_Policy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PolicyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthorizationServer).Policy(ctx, in)
+		return srv.(PolicyServer).Policy(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Authorization_Policy_FullMethodName,
+		FullMethod: Policy_Policy_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthorizationServer).Policy(ctx, req.(*PolicyRequest))
+		return srv.(PolicyServer).Policy(ctx, req.(*PolicyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Authorization_ServiceDesc is the grpc.ServiceDesc for Authorization service.
+// Policy_ServiceDesc is the grpc.ServiceDesc for Policy service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Authorization_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "policyproto.Authorization",
-	HandlerType: (*AuthorizationServer)(nil),
+var Policy_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "policyproto.Policy",
+	HandlerType: (*PolicyServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Group",
-			Handler:    _Authorization_Group_Handler,
+			Handler:    _Policy_Group_Handler,
 		},
 		{
 			MethodName: "Policy",
-			Handler:    _Authorization_Policy_Handler,
+			Handler:    _Policy_Policy_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

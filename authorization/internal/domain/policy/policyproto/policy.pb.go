@@ -199,8 +199,8 @@ const file_internal_domain_policy_policy_proto_rawDesc = "" +
 	"\rPolicyRequest\x12\x18\n" +
 	"\asubject\x18\x01 \x01(\tR\asubject\x12\x14\n" +
 	"\x05group\x18\x02 \x01(\tR\x05group\x12\x16\n" +
-	"\x06action\x18\x03 \x01(\tR\x06action2\x87\x01\n" +
-	"\rAuthorization\x129\n" +
+	"\x06action\x18\x03 \x01(\tR\x06action2\x80\x01\n" +
+	"\x06Policy\x129\n" +
 	"\x05Group\x12\x19.policyproto.GroupRequest\x1a\x15.policyproto.Response\x12;\n" +
 	"\x06Policy\x12\x1a.policyproto.PolicyRequest\x1a\x15.policyproto.ResponseB%Z#/internal/domain/policy/policyprotob\x06proto3"
 
@@ -223,10 +223,10 @@ var file_internal_domain_policy_policy_proto_goTypes = []any{
 	(*PolicyRequest)(nil), // 2: policyproto.PolicyRequest
 }
 var file_internal_domain_policy_policy_proto_depIdxs = []int32{
-	1, // 0: policyproto.Authorization.Group:input_type -> policyproto.GroupRequest
-	2, // 1: policyproto.Authorization.Policy:input_type -> policyproto.PolicyRequest
-	0, // 2: policyproto.Authorization.Group:output_type -> policyproto.Response
-	0, // 3: policyproto.Authorization.Policy:output_type -> policyproto.Response
+	1, // 0: policyproto.Policy.Group:input_type -> policyproto.GroupRequest
+	2, // 1: policyproto.Policy.Policy:input_type -> policyproto.PolicyRequest
+	0, // 2: policyproto.Policy.Group:output_type -> policyproto.Response
+	0, // 3: policyproto.Policy.Policy:output_type -> policyproto.Response
 	2, // [2:4] is the sub-list for method output_type
 	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

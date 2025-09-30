@@ -13,8 +13,8 @@ const (
 	DOMAIN_PATH            = "./internal/domain"
 	REQUEST_PATH           = "/dto/gen/request.json"
 	RESPONSE_PATH          = "/dto/gen/response.json"
-	REQUEST_SAVE_GEN_CODE  = "./internal/domain/%s/dto/gen/request/%s_%s_req.go"
-	RESPONSE_SAVE_GEN_CODE = "./internal/domain/%s/dto/gen/response/%s_%s_res.go"
+	REQUEST_SAVE_GEN_CODE  = "./internal/domain/%s/dto/gen/request/%s_%s.go"
+	RESPONSE_SAVE_GEN_CODE = "./internal/domain/%s/dto/gen/response/%s_%s.go"
 	TEMPL_FILE_REQUEST     = "./templates/request.tmpl"
 	TEMPL_FILE_RESPONSE    = "./templates/response.tmpl"
 )
