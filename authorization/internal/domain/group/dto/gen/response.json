@@ -1,7 +1,7 @@
 {
-  "ProtoPackage": "policyproto",
+  "ProtoPackage": "groupproto",
   "ImportPath": [
-    "github.com/sajad-dev/authservice/authorization/internal/domain/policy/policyproto"
+    "github.com/sajad-dev/authservice/authorization/internal/domain/group/groupproto"
   ],
   "Data": [
     {
@@ -10,6 +10,28 @@
         "FuncName": "ToProto",
         "StructName": "Response",
         "ProtoStruct": "Response",
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Msg",
+            "Type": "string",
+            "From": "Msg",
+            "Json": "msg"
+          }
+        ]
+      }
+    },
+    {
+      "Name": "getall",
+      "Data": {
+        "FuncName": "ToProto",
+        "StructName": "GetAllResponse",
+        "ProtoStruct": "GetAllResponse",
         "Fields": [
           {
             "To": "Code",

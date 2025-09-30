@@ -1,37 +1,40 @@
 syntax = "proto3";
 
-package policyproto;
+package groupproto;
 
-option go_package = "/internal/domain/policy/policyproto";
+option go_package = "/internal/domain/group/groupproto";
 
-service Policy {
+service Group {
   rpc Create (CreateRequest) returns (Response);
   rpc Delete (DeleteRequest) returns (Response);
-  rpc GetAll () returns (GetAllResponse);
+  rpc GetAll (GetAllRequest) returns (GetAllResponse);
 }
 
 message Response {
   int32 code = 1;
-  string message = 2;
+  string msg = 2;
 }
-message repeated_string {
-    repeated string strings = 1;
+message GroupList {
+    repeated string group = 1;
 }
-message Response {
+message GetAllResponse {
   int32 code = 1;
-  string message = 2;
-  reapeted repeated_string data = 3 ;
+  string msg = 2;
+  repeated GroupList data = 3 ;
 }
 
 message CreateRequest {
       string subject = 1;
-      string group = 2;
+      string object = 2;
       string action = 3;
 }
 
 message DeleteRequest {
       string subject = 1;
-      string group = 2;
+      string object = 2;
       string action = 3;
+}
+
+message GetAllRequest {
 }
 

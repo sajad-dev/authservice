@@ -19,7 +19,7 @@ type PolicyService interface {
 }
 
 type PolicyRepository interface {
-	Create(sub string, grp string, act string) (bool, error)
-	Delete(sub string, grp string, act string) (bool, error)
+	Create(sub string, obj string, act string) (bool, error)
+	Delete(sub string, obj string, act string) (bool, error)
 	GetAll() ([][]string, error)
 }

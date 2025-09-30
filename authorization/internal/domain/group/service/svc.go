@@ -1,46 +1,26 @@
 package service
 
 import (
-	"github.com/sajad-dev/authservice/authorization/internal/domain/policy"
-	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/request"
-	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/response"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/group"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/group/dto/gen/request"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/group/dto/gen/response"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/constants/statuscode"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs"
 )
 
-type PolicySvc struct {
-	Repo policy.PolicyRepository
+type GroupSvc struct {
+	Repo group.GroupRepository
 }
 
-func NewPolicySvc(repo policy.PolicyRepository) *PolicySvc {
-	return &PolicySvc{
+func NewGroupSvc(repo group.GroupRepository) *GroupSvc {
+	return &GroupSvc{
 		Repo: repo,
 	}
 }
 
-func (a *PolicySvc) Group(req *request.GroupRequest) (response.Response, error) {
-
-	ok, err := a.Repo.AddGroup(req.Subject, req.Group)
-	if err != nil {
-		return response.Response{}, errs.Err(err)
-	}
-
-	if !ok {
-		return response.Response{
-			Msg:  messages.ERR_ADD_GROUP_FAILED,
-			Code: statuscode.VALIDATION_ERR,
-		}, nil
-	}
-
-	return response.Response{
-		Msg:  messages.SUCCESS_GROUP_ADDED,
-		Code: statuscode.SUCCESSFUL,
-	}, nil
-
-}
-func (a *PolicySvc) Policy(req *request.PolicyRequest) (response.Response, error) {
-	ok, err := a.Repo.AddPolicy(req.Subject, req.Group, req.Action)
+func (a *GroupSvc) Create(req request.CreateRequest) (response.Response, error) {
+	ok, err := a.Repo.Create(req.Subject, req.Group)
 	if err != nil {
 		return response.Response{}, errs.Err(err)
 	}
@@ -58,4 +38,36 @@ func (a *PolicySvc) Policy(req *request.PolicyRequest) (response.Response, error
 	}, nil
 }
 
-var _ policy.PolicyService = &PolicySvc{}
+func (a *GroupSvc) Delete(req request.DeleteRequest) (response.Response, error) {
+	ok, err := a.Repo.Delete(req.Subject, req.Group)
+	if err != nil {
+		return response.Response{}, errs.Err(err)
+	}
+
+	if !ok {
+		return response.Response{
+			Msg:  messages.ERR_ADD_POLICY_FAILED,
+			Code: statuscode.VALIDATION_ERR,
+		}, errs.Err(err)
+	}
+
+	return response.Response{
+		Msg:  messages.SUCCESS_POLICY_ADDED,
+		Code: statuscode.SUCCESSFUL,
+	}, nil
+}
+
+func (a *GroupSvc) GetAll() (response.GetAllResponse, error) {
+	_, err := a.Repo.GetAll()
+	if err != nil {
+		return response.GetAllResponse{}, errs.Err(err)
+	}
+
+	return response.GetAllResponse{
+		Msg:  messages.SUCCESS_POLICY_ADDED,
+		Code: statuscode.SUCCESSFUL,
+	}, nil
+}
+
+var _ group.GroupService = &GroupSvc{}
+

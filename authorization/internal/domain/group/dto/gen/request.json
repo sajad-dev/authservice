@@ -1,15 +1,15 @@
 {
-  "ProtoPackage": "policyproto",
+  "ProtoPackage": "groupproto",
   "ImportPath": [
-    "github.com/sajad-dev/authservice/authorization/internal/domain/policy/policyproto"
+    "github.com/sajad-dev/authservice/authorization/internal/domain/group/groupproto"
   ],
   "Data": [
     {
-      "Name": "group",
+      "Name": "create",
       "Data": {
-        "FuncName": "ToRequestGroup",
-        "StructName": "GroupRequest",
-        "ProtoStruct": "GroupRequest",
+        "FuncName": "ToRequestCreate",
+        "StructName": "CreateRequest",
+        "ProtoStruct": "CreateRequest",
         "Fields": [
           {
             "To": "Subject",
@@ -29,11 +29,11 @@
       }
     },
     {
-      "Name": "policy",
+      "Name": "delete",
       "Data": {
-        "FuncName": "ToRequestPolicy",
-        "StructName": "PolicyRequest",
-        "ProtoStruct": "PolicyRequest",
+        "FuncName": "ToRequestDelete",
+        "StructName": "DeleteRequest",
+        "ProtoStruct": "DeleteRequest",
         "Fields": [
           {
             "To": "Subject",
@@ -48,13 +48,6 @@
             "From": "Group",
             "Validations": "",
             "Json": "group"
-          },
-          {
-            "To": "Action",
-            "Type": "string",
-            "From": "Action",
-            "Validations": "",
-            "Json": "action"
           }
         ]
       }

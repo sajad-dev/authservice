@@ -1,35 +1,31 @@
 package repository
 
 import (
-	"github.com/sajad-dev/authservice/authentication/internal/domain/account"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/group"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/authorize"
 )
 
-type AccountRepo struct {
-	DB sqldb.SqlDB[*models.Accounts]
+type GroupRepo struct {
+	Authz authorize.Authorize
 }
 
-func NewAccountRepo(db sqldb.SqlDB[*models.Accounts]) *AccountRepo {
-	return &AccountRepo{DB: db}
+func NewGroupRepo(authz authorize.Authorize) *GroupRepo {
+	return &GroupRepo{
+		Authz: authz,
+	}
 }
 
-func (a AccountRepo) Create(req *models.Accounts) error {
-	return a.DB.Create(req)
+func (a *GroupRepo) Create(sub string, grp string) (bool, error) {
+	return a.Authz.AddGroup(sub, grp)
 }
 
-func (a AccountRepo) Update(req *models.Accounts, id int) error {
-	req.ID = uint(id)
-	return a.DB.Save(req)
+func (a *GroupRepo) Delete(sub string, grp string) (bool, error) {
+	return a.Authz.RemoveGroup(sub, grp)
 }
 
-func (r *AccountRepo) Read(id int) (*models.Accounts, error) {
-	return r.DB.GetByID(id)
+func (r *GroupRepo) GetAll() ([][]string, error) {
+	return r.Authz.GetAllGroup()
 
 }
 
-func (r *AccountRepo) Delete(id int) error {
-	return r.DB.Delete(id)
-}
-
-var _ account.AccountCURDRepository = &AccountRepo{}
+var _ group.GroupRepository = &GroupRepo{}

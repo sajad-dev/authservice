@@ -1,21 +1,21 @@
-package policy
+package group
 
 import (
-	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/request"
-	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/response"
-	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/policyproto"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/group/dto/gen/request"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/group/dto/gen/response"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/group/groupproto"
 )
 
 type GroupHandler interface {
-	Create(req *policyproto.CreateRequest) (policyproto.Response, error)
-	Delete(req *policyproto.DeleteRequest) (policyproto.Response, error)
-	GetAll(req *policyproto.GetAllRequest) (policyproto.Response, error)
+	Create(req *groupproto.CreateRequest) (*groupproto.Response, error)
+	Delete(req *groupproto.DeleteRequest) (*groupproto.Response, error)
+	GetAll(req *groupproto.GetAllRequest) (*groupproto.GetAllResponse, error)
 }
 
 type GroupService interface {
-	Create(req request.GroupRequest) (response.Response, error)
-	Delete(req request.GroupRequest) (response.Response, error)
-	GetAll(req request.GroupRequest) (response.Response, error)
+	Create(req request.CreateRequest) (response.Response, error)
+	Delete(req request.DeleteRequest) (response.Response, error)
+	GetAll() (response.GetAllResponse, error)
 }
 
 type GroupRepository interface {

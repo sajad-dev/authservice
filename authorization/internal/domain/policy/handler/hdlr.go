@@ -14,7 +14,7 @@ type PolicyHndlr struct {
 	Validation validation.Validation
 }
 
-func NewPolicyHandler(svc policy.PolicyService, vld validation.Validation) *PolicyHndlr {
+func NewPolicyHndlr(svc policy.PolicyService, vld validation.Validation) *PolicyHndlr {
 	return &PolicyHndlr{Service: svc, Validation: vld}
 }
 

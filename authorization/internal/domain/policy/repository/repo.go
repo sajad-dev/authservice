@@ -9,7 +9,7 @@ type PolicyRepo struct {
 	Authz authorize.Authorize
 }
 
-func NewAccountRepo(authz authorize.Authorize) *PolicyRepo {
+func NewPolicyRepo(authz authorize.Authorize) *PolicyRepo {
 	return &PolicyRepo{
 		Authz: authz,
 	}
