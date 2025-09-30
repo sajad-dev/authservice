@@ -180,7 +180,7 @@ func (x *GetAllResponse) GetData() []*PolicyList {
 type CreateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Subject       string                 `protobuf:"bytes,1,opt,name=subject,proto3" json:"subject,omitempty"`
-	Group         string                 `protobuf:"bytes,2,opt,name=group,proto3" json:"group,omitempty"`
+	Object        string                 `protobuf:"bytes,2,opt,name=object,proto3" json:"object,omitempty"`
 	Action        string                 `protobuf:"bytes,3,opt,name=action,proto3" json:"action,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -223,9 +223,9 @@ func (x *CreateRequest) GetSubject() string {
 	return ""
 }
 
-func (x *CreateRequest) GetGroup() string {
+func (x *CreateRequest) GetObject() string {
 	if x != nil {
-		return x.Group
+		return x.Object
 	}
 	return ""
 }
@@ -240,7 +240,7 @@ func (x *CreateRequest) GetAction() string {
 type DeleteRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Subject       string                 `protobuf:"bytes,1,opt,name=subject,proto3" json:"subject,omitempty"`
-	Group         string                 `protobuf:"bytes,2,opt,name=group,proto3" json:"group,omitempty"`
+	Object        string                 `protobuf:"bytes,2,opt,name=object,proto3" json:"object,omitempty"`
 	Action        string                 `protobuf:"bytes,3,opt,name=action,proto3" json:"action,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -283,9 +283,9 @@ func (x *DeleteRequest) GetSubject() string {
 	return ""
 }
 
-func (x *DeleteRequest) GetGroup() string {
+func (x *DeleteRequest) GetObject() string {
 	if x != nil {
-		return x.Group
+		return x.Object
 	}
 	return ""
 }
@@ -347,14 +347,14 @@ const file_internal_domain_policy_policy_proto_rawDesc = "" +
 	"\x0eGetAllResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\x12+\n" +
-	"\x04data\x18\x03 \x03(\v2\x17.policyproto.PolicyListR\x04data\"W\n" +
+	"\x04data\x18\x03 \x03(\v2\x17.policyproto.PolicyListR\x04data\"Y\n" +
 	"\rCreateRequest\x12\x18\n" +
-	"\asubject\x18\x01 \x01(\tR\asubject\x12\x14\n" +
-	"\x05group\x18\x02 \x01(\tR\x05group\x12\x16\n" +
-	"\x06action\x18\x03 \x01(\tR\x06action\"W\n" +
+	"\asubject\x18\x01 \x01(\tR\asubject\x12\x16\n" +
+	"\x06object\x18\x02 \x01(\tR\x06object\x12\x16\n" +
+	"\x06action\x18\x03 \x01(\tR\x06action\"Y\n" +
 	"\rDeleteRequest\x12\x18\n" +
-	"\asubject\x18\x01 \x01(\tR\asubject\x12\x14\n" +
-	"\x05group\x18\x02 \x01(\tR\x05group\x12\x16\n" +
+	"\asubject\x18\x01 \x01(\tR\asubject\x12\x16\n" +
+	"\x06object\x18\x02 \x01(\tR\x06object\x12\x16\n" +
 	"\x06action\x18\x03 \x01(\tR\x06action\"\x0f\n" +
 	"\rGetAllRequest2\xc5\x01\n" +
 	"\x06Policy\x12;\n" +

@@ -19,11 +19,11 @@
             "Json": "subject"
           },
           {
-            "To": "Group",
+            "To": "Object",
             "Type": "string",
-            "From": "Group",
+            "From": "Object",
             "Validations": "",
-            "Json": "group"
+            "Json": "object"
           },
           {
             "To": "Action",
@@ -50,11 +50,11 @@
             "Json": "subject"
           },
           {
-            "To": "Group",
+            "To": "Object",
             "Type": "string",
-            "From": "Group",
+            "From": "Object",
             "Validations": "",
-            "Json": "group"
+            "Json": "object"
           },
           {
             "To": "Action",

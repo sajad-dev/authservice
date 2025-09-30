@@ -6,14 +6,14 @@ import (
 
 type CreateRequest struct {
 	Subject string `json:"subject" validate:""`
-	Group string `json:"group" validate:""`
+	Object string `json:"object" validate:""`
 	Action string `json:"action" validate:""`
 } 
 
 func ToRequestCreate(pd *policyproto.CreateRequest) *CreateRequest {
 	return &CreateRequest{
 		Subject: pd.Subject,
-		Group: pd.Group,
+		Object: pd.Object,
 		Action: pd.Action,
 	}
 }

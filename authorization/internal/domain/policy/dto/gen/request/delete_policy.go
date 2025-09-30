@@ -6,14 +6,14 @@ import (
 
 type DeleteRequest struct {
 	Subject string `json:"subject" validate:""`
-	Group string `json:"group" validate:""`
+	Object string `json:"object" validate:""`
 	Action string `json:"action" validate:""`
 } 
 
 func ToRequestDelete(pd *policyproto.DeleteRequest) *DeleteRequest {
 	return &DeleteRequest{
 		Subject: pd.Subject,
-		Group: pd.Group,
+		Object: pd.Object,
 		Action: pd.Action,
 	}
 }

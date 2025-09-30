@@ -20,7 +20,7 @@ func NewPolicySvc(repo policy.PolicyRepository) *PolicySvc {
 }
 
 func (a *PolicySvc) Create(req request.CreateRequest) (response.Response, error) {
-	ok, err := a.Repo.Create(req.Subject, req.Group, req.Action)
+	ok, err := a.Repo.Create(req.Subject, req.Object, req.Action)
 	if err != nil {
 		return response.Response{}, errs.Err(err)
 	}
@@ -39,7 +39,7 @@ func (a *PolicySvc) Create(req request.CreateRequest) (response.Response, error)
 }
 
 func (a *PolicySvc) Delete(req request.DeleteRequest) (response.Response, error) {
-	ok, err := a.Repo.Delete(req.Subject, req.Group, req.Action)
+	ok, err := a.Repo.Delete(req.Subject, req.Object, req.Action)
 	if err != nil {
 		return response.Response{}, errs.Err(err)
 	}
