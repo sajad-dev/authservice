@@ -3,163 +3,136 @@ package repository_test
 import (
 	"testing"
 
-	"github.com/sajad-dev/authservice/authorization/internal/domain/account"
-	"github.com/sajad-dev/authservice/authorization/internal/domain/account/repository"
-	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/sqldb/sqlite"
-	"github.com/sajad-dev/authservice/authorization/internal/shared/helpers/testhelper/testdb"
-	"github.com/sajad-dev/authservice/authorization/internal/shared/models"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/group/repository"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/authorize/mocks"
 	"github.com/stretchr/testify/suite"
 )
 
-type TestAccountSuite struct {
+type GroupRepoTestSuite struct {
 	suite.Suite
-	accountRepo account.AccountCURDRepository
+	repo      *repository.GroupRepo
+	mockAuthz *mocks.Authorize
 }
 
-func (s *TestAccountSuite) SetupSuite() {
-	db, err := testdb.Conn(&models.Accounts{})
-	s.NoError(err)
-
-	s.accountRepo = repository.NewAccountRepo(sqlite.NewSqlite[*models.Accounts](db))
+func (s *GroupRepoTestSuite) SetupTest() {
+	s.mockAuthz = new(mocks.Authorize)
+	s.repo = repository.NewGroupRepo(s.mockAuthz)
 }
 
-func (s *TestAccountSuite) TestCreate() {
+func (s *GroupRepoTestSuite) TestCreate() {
 	tests := []struct {
 		name    string
-		account *models.Accounts
+		sub     string
+		grp     string
+		mockRet bool
+		mockErr error
+		want    bool
 		wantErr bool
 	}{
 		{
-			name: "Create new account successfully",
-			account: models.NewAccounts(
-				models.WithUsername("testuser"),
-				models.WithEmail("test@example.com"),
-				models.WithPassword("password123"),
-				models.WithTwoFactor([]string{"email"}),
-			),
+			name:    "Success",
+			sub:     "user",
+			grp:     "resource",
+			mockRet: true,
+			mockErr: nil,
+			want:    true,
 			wantErr: false,
 		},
 	}
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
-			err := s.accountRepo.Create(tt.account)
-			if !tt.wantErr {
-				s.NoError(err)
-			} else {
+			s.mockAuthz.On("AddGroup", tt.sub, tt.grp).Return(tt.mockRet, tt.mockErr)
+
+			resp, err := s.repo.Create(tt.sub, tt.grp)
+
+			if tt.wantErr {
 				s.Error(err)
+			} else {
+				s.NoError(err)
 			}
+			s.Equal(tt.want, resp)
+
+			s.mockAuthz.AssertExpectations(s.T())
 		})
 	}
 }
 
-func (s *TestAccountSuite) TestRead() {
+func (s *GroupRepoTestSuite) TestDelete() {
 	tests := []struct {
 		name    string
-		account *models.Accounts
+		sub     string
+		grp     string
+		mockRet bool
+		mockErr error
+		want    bool
 		wantErr bool
 	}{
 		{
-			name: "Read created account by ID",
-			account: models.NewAccounts(
-				models.WithUsername("readuser"),
-				models.WithEmail("read@example.com"),
-				models.WithPassword("readpass"),
-				models.WithTwoFactor([]string{}),
-			),
+			name:    "Success",
+			sub:     "user",
+			grp:     "resource",
+			mockRet: true,
+			mockErr: nil,
+			want:    true,
 			wantErr: false,
 		},
 	}
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
-			err := s.accountRepo.Create(tt.account)
-			s.NoError(err)
+			s.mockAuthz.On("RemoveGroup", tt.sub, tt.grp).Return(tt.mockRet, tt.mockErr)
 
-			read, err := s.accountRepo.Read(int(tt.account.ID))
-			if !tt.wantErr {
-				s.NoError(err)
-				s.Equal(tt.account.Username, read.Username)
-				s.Equal(tt.account.Email, read.Email)
-			} else {
+			resp, err := s.repo.Delete(tt.sub, tt.grp)
+
+			if tt.wantErr {
 				s.Error(err)
+			} else {
+				s.NoError(err)
 			}
+			s.Equal(tt.want, resp)
+
+			s.mockAuthz.AssertExpectations(s.T())
 		})
 	}
 }
 
-func (s *TestAccountSuite) TestUpdate() {
-	tests := []struct {
-		name      string
-		account   *models.Accounts
-		updatedTo string
-		wantErr   bool
-	}{
-		{
-			name: "Update account username successfully",
-			account: models.NewAccounts(
-				models.WithUsername("updateuser"),
-				models.WithEmail("update@example.com"),
-				models.WithPassword("updatepass"),
-				models.WithTwoFactor([]string{}),
-			),
-			updatedTo: "updateduser",
-			wantErr:   false,
-		},
-	}
-
-	for _, tt := range tests {
-		s.Run(tt.name, func() {
-			_ = s.accountRepo.Create(tt.account)
-
-			tt.account.Username = tt.updatedTo
-			err := s.accountRepo.Update(tt.account,int(tt.account.ID))
-			if !tt.wantErr {
-				s.NoError(err)
-				updated, _ := s.accountRepo.Read(int(tt.account.ID))
-				s.Equal(tt.updatedTo, updated.Username)
-			} else {
-				s.Error(err)
-			}
-		})
-	}
-}
-
-func (s *TestAccountSuite) TestDelete() {
+func (s *GroupRepoTestSuite) TestGetAll() {
 	tests := []struct {
 		name    string
-		account *models.Accounts
+		mockRet [][]string
+		mockErr error
+		want    [][]string
 		wantErr bool
 	}{
 		{
-			name: "Delete account successfully",
-			account: models.NewAccounts(
-				models.WithUsername("deleteuser"),
-				models.WithEmail("delete@example.com"),
-				models.WithPassword("deletepass"),
-				models.WithTwoFactor([]string{"email"}),
-			),
+			name:    "Success",
+			mockRet: [][]string{{"user", "resource", "create"}},
+			mockErr: nil,
+			want:    [][]string{{"user", "resource", "create"}},
 			wantErr: false,
 		},
 	}
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
-			_ = s.accountRepo.Create(tt.account)
+			s.mockAuthz.On("GetAllGroup").Return(tt.mockRet, tt.mockErr)
 
-			err := s.accountRepo.Delete(int(tt.account.ID))
-			if !tt.wantErr {
-				s.NoError(err)
-				_, err = s.accountRepo.Read(int(tt.account.ID))
+			resp, err := s.repo.GetAll()
+
+			if tt.wantErr {
 				s.Error(err)
 			} else {
-				s.Error(err)
+				s.NoError(err)
 			}
+			s.Equal(tt.want, resp)
+
+			s.mockAuthz.AssertExpectations(s.T())
 		})
 	}
 }
 
-func TestAccountSuite_Run(t *testing.T) {
-	suite.Run(t, new(TestAccountSuite))
+func TestGroupRepoTestSuite(t *testing.T) {
+	suite.Run(t, new(GroupRepoTestSuite))
 }
 

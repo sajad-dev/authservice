@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v6.32.1
-// source: internal/domain/group/policy.proto
+// source: internal/domain/group/group.proto
 
 package groupproto
 
@@ -193,5 +193,5 @@ var Group_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "internal/domain/group/policy.proto",
+	Metadata: "internal/domain/group/group.proto",
 }

@@ -14,7 +14,7 @@ type GroupHndlr struct {
 	Validation validation.Validation
 }
 
-func NewGroupHandler(svc group.GroupService, vld validation.Validation) *GroupHndlr {
+func NewGroupHndlr(svc group.GroupService, vld validation.Validation) *GroupHndlr {
 	return &GroupHndlr{Service: svc, Validation: vld}
 }
 

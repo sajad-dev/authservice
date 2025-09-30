@@ -4,55 +4,52 @@ import (
 	"testing"
 
 	"github.com/go-playground/validator"
-	"github.com/sajad-dev/authservice/authorization/internal/domain/account"
-	"github.com/sajad-dev/authservice/authorization/internal/domain/account/accountproto"
-	"github.com/sajad-dev/authservice/authorization/internal/domain/account/dto/gen/response"
-	"github.com/sajad-dev/authservice/authorization/internal/domain/account/handler"
-	"github.com/sajad-dev/authservice/authorization/internal/domain/account/mocks"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/group/dto/gen/response"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/group/groupproto"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/group/handler"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/group/mocks"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/validation/validate"
-	"github.com/sajad-dev/authservice/authorization/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/constants/statuscode"
-	"github.com/sajad-dev/authservice/authorization/internal/shared/models"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 )
 
-type TestAccountCURDHandlerSuite struct {
+type GroupHandlerSuite struct {
 	suite.Suite
-	handler  account.AccountCURDHandler
-	mocksSVC *mocks.AccountCURDService
+	handler  *handler.GroupHndlr
+	mocksSvc *mocks.GroupService
 }
 
-func (s *TestAccountCURDHandlerSuite) SetupSuite() {
-	mocksSVC := new(mocks.AccountCURDService)
-	s.mocksSVC = mocksSVC
+func (s *GroupHandlerSuite) SetupSuite() {
+	mocksSvc := new(mocks.GroupService)
+	s.mocksSvc = mocksSvc
 
-	s.handler = handler.NewAccountHandler(mocksSVC, validate.NewValidate(validator.New()))
+	s.handler = handler.NewGroupHndlr(mocksSvc, validate.NewValidate(validator.New()))
 }
 
-func (s *TestAccountCURDHandlerSuite) TestCreate() {
+func (s *GroupHandlerSuite) TestCreate() {
 	tests := []struct {
 		name    string
-		req     *accountproto.CreateRequest
-		res     response.CreateResponse
+		req     *groupproto.CreateRequest
+		res     response.Response
 		wantErr bool
 		wantMsg string
 	}{
 		{
 			name: "Success",
-			req:  &accountproto.CreateRequest{Username: "test", Email: "test@example.com"},
-			res: response.CreateResponse{
+			req:  &groupproto.CreateRequest{Subject: "user", Group: "resource"},
+			res: response.Response{
 				Code: statuscode.SUCCESSFUL,
-				Msg:  messages.CREATE_ACCOUNT_SUCCESSFUL,
+				Msg:  "Group created successfully",
 			},
 			wantErr: false,
-			wantMsg: messages.CREATE_ACCOUNT_SUCCESSFUL,
+			wantMsg: "Group created successfully",
 		},
 	}
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
-			s.mocksSVC.On("Create", mock.Anything).Return(tt.res, nil)
+			s.mocksSvc.On("Create", mock.Anything).Return(tt.res, nil)
 
 			resp, err := s.handler.Create(tt.req)
 			if !tt.wantErr {
@@ -66,65 +63,29 @@ func (s *TestAccountCURDHandlerSuite) TestCreate() {
 	}
 }
 
-func (s *TestAccountCURDHandlerSuite) TestUpdate() {
+func (s *GroupHandlerSuite) TestDelete() {
 	tests := []struct {
 		name    string
-		req     *accountproto.UpdateRequest
-		res     response.UpdateResponse
+		req     *groupproto.DeleteRequest
+		res     response.Response
 		wantErr bool
 		wantMsg string
 	}{
 		{
 			name: "Success",
-			req:  &accountproto.UpdateRequest{Username: "test", Email: "update@example.com"},
-			res: response.UpdateResponse{
+			req:  &groupproto.DeleteRequest{Subject: "user", Group: "resource"},
+			res: response.Response{
 				Code: statuscode.SUCCESSFUL,
-				Msg:  messages.UPDATE_ACCOUNT_SUCCESSFUL,
+				Msg:  "Group deleted successfully",
 			},
 			wantErr: false,
-			wantMsg: messages.UPDATE_ACCOUNT_SUCCESSFUL,
+			wantMsg: "Group deleted successfully",
 		},
 	}
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
-			s.mocksSVC.On("Update", mock.Anything).Return(tt.res, nil)
-
-			resp, err := s.handler.Update(tt.req)
-			if !tt.wantErr {
-				s.NoError(err)
-			} else {
-				s.Error(err)
-			}
-
-			s.Equal(tt.wantMsg, resp.Msg)
-		})
-	}
-}
-
-func (s *TestAccountCURDHandlerSuite) TestDelete() {
-	tests := []struct {
-		name    string
-		req     *accountproto.DeleteRequest
-		res     response.DeleteResponse
-		wantErr bool
-		wantMsg string
-	}{
-		{
-			name: "Success",
-			req:  &accountproto.DeleteRequest{Id: 0},
-			res: response.DeleteResponse{
-				Code: statuscode.SUCCESSFUL,
-				Msg:  messages.DELETE_ACCOUNT_SUCCESSFUL,
-			},
-			wantErr: false,
-			wantMsg: messages.DELETE_ACCOUNT_SUCCESSFUL,
-		},
-	}
-
-	for _, tt := range tests {
-		s.Run(tt.name, func() {
-			s.mocksSVC.On("Delete", mock.Anything).Return(tt.res, nil)
+			s.mocksSvc.On("Delete", mock.Anything).Return(tt.res, nil)
 
 			resp, err := s.handler.Delete(tt.req)
 			if !tt.wantErr {
@@ -138,35 +99,32 @@ func (s *TestAccountCURDHandlerSuite) TestDelete() {
 	}
 }
 
-func (s *TestAccountCURDHandlerSuite) TestRead() {
+func (s *GroupHandlerSuite) TestGetAll() {
 	tests := []struct {
 		name    string
-		req     *accountproto.ReadRequest
-		res     response.ReadResponse
+		req     *groupproto.GetAllRequest
+		res     response.GetAllResponse
 		wantErr bool
 		wantMsg string
 	}{
 		{
 			name: "Success",
-			req:  &accountproto.ReadRequest{Id: 0},
-			res: response.ReadResponse{
+			req:  &groupproto.GetAllRequest{},
+			res: response.GetAllResponse{
 				Code: statuscode.SUCCESSFUL,
-				Msg:  messages.READ_ACCOUNT_SUCCESSFUL,
-				Data: models.AccountFiltered{
-					Username: "test",
-					Email:    "test@example.com",
-				},
+				Msg:  "Fetched all policies successfully",
+				// Data: [][]string{[]string{}},
 			},
 			wantErr: false,
-			wantMsg: messages.READ_ACCOUNT_SUCCESSFUL,
+			wantMsg: "Fetched all policies successfully",
 		},
 	}
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
-			s.mocksSVC.On("Read", mock.Anything).Return(tt.res, nil)
+			s.mocksSvc.On("GetAll", mock.Anything).Return(tt.res, nil)
 
-			resp, err := s.handler.Read(tt.req)
+			resp, err := s.handler.GetAll(tt.req)
 			if !tt.wantErr {
 				s.NoError(err)
 			} else {
@@ -178,6 +136,7 @@ func (s *TestAccountCURDHandlerSuite) TestRead() {
 	}
 }
 
-func TestAccountCURDHandlerSuite_Run(t *testing.T) {
-	suite.Run(t, new(TestAccountCURDHandlerSuite))
+func TestGroupHandlerSuite_Run(t *testing.T) {
+	suite.Run(t, new(GroupHandlerSuite))
 }
+

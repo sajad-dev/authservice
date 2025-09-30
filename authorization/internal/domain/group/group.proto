@@ -25,14 +25,12 @@ message GetAllResponse {
 
 message CreateRequest {
       string subject = 1;
-      string object = 2;
-      string action = 3;
+      string Group = 2;
 }
 
 message DeleteRequest {
       string subject = 1;
-      string object = 2;
-      string action = 3;
+      string Group = 2;
 }
 
 message GetAllRequest {

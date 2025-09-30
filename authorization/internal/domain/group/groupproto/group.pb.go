@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.9
 // 	protoc        v6.32.1
-// source: internal/domain/group/policy.proto
+// source: internal/domain/group/group.proto
 
 package groupproto
 
@@ -31,7 +31,7 @@ type Response struct {
 
 func (x *Response) Reset() {
 	*x = Response{}
-	mi := &file_internal_domain_group_policy_proto_msgTypes[0]
+	mi := &file_internal_domain_group_group_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +43,7 @@ func (x *Response) String() string {
 func (*Response) ProtoMessage() {}
 
 func (x *Response) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_domain_group_policy_proto_msgTypes[0]
+	mi := &file_internal_domain_group_group_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +56,7 @@ func (x *Response) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Response.ProtoReflect.Descriptor instead.
 func (*Response) Descriptor() ([]byte, []int) {
-	return file_internal_domain_group_policy_proto_rawDescGZIP(), []int{0}
+	return file_internal_domain_group_group_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Response) GetCode() int32 {
@@ -82,7 +82,7 @@ type GroupList struct {
 
 func (x *GroupList) Reset() {
 	*x = GroupList{}
-	mi := &file_internal_domain_group_policy_proto_msgTypes[1]
+	mi := &file_internal_domain_group_group_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -94,7 +94,7 @@ func (x *GroupList) String() string {
 func (*GroupList) ProtoMessage() {}
 
 func (x *GroupList) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_domain_group_policy_proto_msgTypes[1]
+	mi := &file_internal_domain_group_group_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -107,7 +107,7 @@ func (x *GroupList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GroupList.ProtoReflect.Descriptor instead.
 func (*GroupList) Descriptor() ([]byte, []int) {
-	return file_internal_domain_group_policy_proto_rawDescGZIP(), []int{1}
+	return file_internal_domain_group_group_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *GroupList) GetGroup() []string {
@@ -128,7 +128,7 @@ type GetAllResponse struct {
 
 func (x *GetAllResponse) Reset() {
 	*x = GetAllResponse{}
-	mi := &file_internal_domain_group_policy_proto_msgTypes[2]
+	mi := &file_internal_domain_group_group_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -140,7 +140,7 @@ func (x *GetAllResponse) String() string {
 func (*GetAllResponse) ProtoMessage() {}
 
 func (x *GetAllResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_domain_group_policy_proto_msgTypes[2]
+	mi := &file_internal_domain_group_group_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -153,7 +153,7 @@ func (x *GetAllResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAllResponse.ProtoReflect.Descriptor instead.
 func (*GetAllResponse) Descriptor() ([]byte, []int) {
-	return file_internal_domain_group_policy_proto_rawDescGZIP(), []int{2}
+	return file_internal_domain_group_group_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GetAllResponse) GetCode() int32 {
@@ -180,15 +180,14 @@ func (x *GetAllResponse) GetData() []*GroupList {
 type CreateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Subject       string                 `protobuf:"bytes,1,opt,name=subject,proto3" json:"subject,omitempty"`
-	Object        string                 `protobuf:"bytes,2,opt,name=object,proto3" json:"object,omitempty"`
-	Action        string                 `protobuf:"bytes,3,opt,name=action,proto3" json:"action,omitempty"`
+	Group         string                 `protobuf:"bytes,2,opt,name=Group,proto3" json:"Group,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateRequest) Reset() {
 	*x = CreateRequest{}
-	mi := &file_internal_domain_group_policy_proto_msgTypes[3]
+	mi := &file_internal_domain_group_group_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -200,7 +199,7 @@ func (x *CreateRequest) String() string {
 func (*CreateRequest) ProtoMessage() {}
 
 func (x *CreateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_domain_group_policy_proto_msgTypes[3]
+	mi := &file_internal_domain_group_group_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -213,7 +212,7 @@ func (x *CreateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRequest.ProtoReflect.Descriptor instead.
 func (*CreateRequest) Descriptor() ([]byte, []int) {
-	return file_internal_domain_group_policy_proto_rawDescGZIP(), []int{3}
+	return file_internal_domain_group_group_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *CreateRequest) GetSubject() string {
@@ -223,16 +222,9 @@ func (x *CreateRequest) GetSubject() string {
 	return ""
 }
 
-func (x *CreateRequest) GetObject() string {
+func (x *CreateRequest) GetGroup() string {
 	if x != nil {
-		return x.Object
-	}
-	return ""
-}
-
-func (x *CreateRequest) GetAction() string {
-	if x != nil {
-		return x.Action
+		return x.Group
 	}
 	return ""
 }
@@ -240,15 +232,14 @@ func (x *CreateRequest) GetAction() string {
 type DeleteRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Subject       string                 `protobuf:"bytes,1,opt,name=subject,proto3" json:"subject,omitempty"`
-	Object        string                 `protobuf:"bytes,2,opt,name=object,proto3" json:"object,omitempty"`
-	Action        string                 `protobuf:"bytes,3,opt,name=action,proto3" json:"action,omitempty"`
+	Group         string                 `protobuf:"bytes,2,opt,name=Group,proto3" json:"Group,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *DeleteRequest) Reset() {
 	*x = DeleteRequest{}
-	mi := &file_internal_domain_group_policy_proto_msgTypes[4]
+	mi := &file_internal_domain_group_group_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -260,7 +251,7 @@ func (x *DeleteRequest) String() string {
 func (*DeleteRequest) ProtoMessage() {}
 
 func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_domain_group_policy_proto_msgTypes[4]
+	mi := &file_internal_domain_group_group_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -273,7 +264,7 @@ func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
 func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return file_internal_domain_group_policy_proto_rawDescGZIP(), []int{4}
+	return file_internal_domain_group_group_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *DeleteRequest) GetSubject() string {
@@ -283,16 +274,9 @@ func (x *DeleteRequest) GetSubject() string {
 	return ""
 }
 
-func (x *DeleteRequest) GetObject() string {
+func (x *DeleteRequest) GetGroup() string {
 	if x != nil {
-		return x.Object
-	}
-	return ""
-}
-
-func (x *DeleteRequest) GetAction() string {
-	if x != nil {
-		return x.Action
+		return x.Group
 	}
 	return ""
 }
@@ -305,7 +289,7 @@ type GetAllRequest struct {
 
 func (x *GetAllRequest) Reset() {
 	*x = GetAllRequest{}
-	mi := &file_internal_domain_group_policy_proto_msgTypes[5]
+	mi := &file_internal_domain_group_group_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -317,7 +301,7 @@ func (x *GetAllRequest) String() string {
 func (*GetAllRequest) ProtoMessage() {}
 
 func (x *GetAllRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_domain_group_policy_proto_msgTypes[5]
+	mi := &file_internal_domain_group_group_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -330,14 +314,14 @@ func (x *GetAllRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAllRequest.ProtoReflect.Descriptor instead.
 func (*GetAllRequest) Descriptor() ([]byte, []int) {
-	return file_internal_domain_group_policy_proto_rawDescGZIP(), []int{5}
+	return file_internal_domain_group_group_proto_rawDescGZIP(), []int{5}
 }
 
-var File_internal_domain_group_policy_proto protoreflect.FileDescriptor
+var File_internal_domain_group_group_proto protoreflect.FileDescriptor
 
-const file_internal_domain_group_policy_proto_rawDesc = "" +
+const file_internal_domain_group_group_proto_rawDesc = "" +
 	"\n" +
-	"\"internal/domain/group/policy.proto\x12\n" +
+	"!internal/domain/group/group.proto\x12\n" +
 	"groupproto\"0\n" +
 	"\bResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
@@ -347,15 +331,13 @@ const file_internal_domain_group_policy_proto_rawDesc = "" +
 	"\x0eGetAllResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\x12)\n" +
-	"\x04data\x18\x03 \x03(\v2\x15.groupproto.GroupListR\x04data\"Y\n" +
+	"\x04data\x18\x03 \x03(\v2\x15.groupproto.GroupListR\x04data\"?\n" +
 	"\rCreateRequest\x12\x18\n" +
-	"\asubject\x18\x01 \x01(\tR\asubject\x12\x16\n" +
-	"\x06object\x18\x02 \x01(\tR\x06object\x12\x16\n" +
-	"\x06action\x18\x03 \x01(\tR\x06action\"Y\n" +
+	"\asubject\x18\x01 \x01(\tR\asubject\x12\x14\n" +
+	"\x05Group\x18\x02 \x01(\tR\x05Group\"?\n" +
 	"\rDeleteRequest\x12\x18\n" +
-	"\asubject\x18\x01 \x01(\tR\asubject\x12\x16\n" +
-	"\x06object\x18\x02 \x01(\tR\x06object\x12\x16\n" +
-	"\x06action\x18\x03 \x01(\tR\x06action\"\x0f\n" +
+	"\asubject\x18\x01 \x01(\tR\asubject\x12\x14\n" +
+	"\x05Group\x18\x02 \x01(\tR\x05Group\"\x0f\n" +
 	"\rGetAllRequest2\xbe\x01\n" +
 	"\x05Group\x129\n" +
 	"\x06Create\x12\x19.groupproto.CreateRequest\x1a\x14.groupproto.Response\x129\n" +
@@ -363,19 +345,19 @@ const file_internal_domain_group_policy_proto_rawDesc = "" +
 	"\x06GetAll\x12\x19.groupproto.GetAllRequest\x1a\x1a.groupproto.GetAllResponseB#Z!/internal/domain/group/groupprotob\x06proto3"
 
 var (
-	file_internal_domain_group_policy_proto_rawDescOnce sync.Once
-	file_internal_domain_group_policy_proto_rawDescData []byte
+	file_internal_domain_group_group_proto_rawDescOnce sync.Once
+	file_internal_domain_group_group_proto_rawDescData []byte
 )
 
-func file_internal_domain_group_policy_proto_rawDescGZIP() []byte {
-	file_internal_domain_group_policy_proto_rawDescOnce.Do(func() {
-		file_internal_domain_group_policy_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_internal_domain_group_policy_proto_rawDesc), len(file_internal_domain_group_policy_proto_rawDesc)))
+func file_internal_domain_group_group_proto_rawDescGZIP() []byte {
+	file_internal_domain_group_group_proto_rawDescOnce.Do(func() {
+		file_internal_domain_group_group_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_internal_domain_group_group_proto_rawDesc), len(file_internal_domain_group_group_proto_rawDesc)))
 	})
-	return file_internal_domain_group_policy_proto_rawDescData
+	return file_internal_domain_group_group_proto_rawDescData
 }
 
-var file_internal_domain_group_policy_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
-var file_internal_domain_group_policy_proto_goTypes = []any{
+var file_internal_domain_group_group_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_internal_domain_group_group_proto_goTypes = []any{
 	(*Response)(nil),       // 0: groupproto.Response
 	(*GroupList)(nil),      // 1: groupproto.GroupList
 	(*GetAllResponse)(nil), // 2: groupproto.GetAllResponse
@@ -383,7 +365,7 @@ var file_internal_domain_group_policy_proto_goTypes = []any{
 	(*DeleteRequest)(nil),  // 4: groupproto.DeleteRequest
 	(*GetAllRequest)(nil),  // 5: groupproto.GetAllRequest
 }
-var file_internal_domain_group_policy_proto_depIdxs = []int32{
+var file_internal_domain_group_group_proto_depIdxs = []int32{
 	1, // 0: groupproto.GetAllResponse.data:type_name -> groupproto.GroupList
 	3, // 1: groupproto.Group.Create:input_type -> groupproto.CreateRequest
 	4, // 2: groupproto.Group.Delete:input_type -> groupproto.DeleteRequest
@@ -398,26 +380,26 @@ var file_internal_domain_group_policy_proto_depIdxs = []int32{
 	0, // [0:1] is the sub-list for field type_name
 }
 
-func init() { file_internal_domain_group_policy_proto_init() }
-func file_internal_domain_group_policy_proto_init() {
-	if File_internal_domain_group_policy_proto != nil {
+func init() { file_internal_domain_group_group_proto_init() }
+func file_internal_domain_group_group_proto_init() {
+	if File_internal_domain_group_group_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_internal_domain_group_policy_proto_rawDesc), len(file_internal_domain_group_policy_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_internal_domain_group_group_proto_rawDesc), len(file_internal_domain_group_group_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_internal_domain_group_policy_proto_goTypes,
-		DependencyIndexes: file_internal_domain_group_policy_proto_depIdxs,
-		MessageInfos:      file_internal_domain_group_policy_proto_msgTypes,
+		GoTypes:           file_internal_domain_group_group_proto_goTypes,
+		DependencyIndexes: file_internal_domain_group_group_proto_depIdxs,
+		MessageInfos:      file_internal_domain_group_group_proto_msgTypes,
 	}.Build()
-	File_internal_domain_group_policy_proto = out.File
-	file_internal_domain_group_policy_proto_goTypes = nil
-	file_internal_domain_group_policy_proto_depIdxs = nil
+	File_internal_domain_group_group_proto = out.File
+	file_internal_domain_group_group_proto_goTypes = nil
+	file_internal_domain_group_group_proto_depIdxs = nil
 }
