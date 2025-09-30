@@ -1,0 +1,25 @@
+{
+  "ProtoPackage": "twofactornotifierproto",
+  "ImportPath": [
+    "github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/twofactornotifierproto"
+  ],
+  "Data": [
+    {
+      "Name": "notifier_email",
+      "Data": {
+        "FuncName": "ToRequestNotifierEmail",
+        "StructName": "NotifierEmailRequest",
+        "ProtoStruct": "NotifierEmailRequest",
+        "Fields": [
+          {
+            "To": "Token",
+            "Type": "string",
+            "From": "Token",
+            "Validations": "",
+            "Json": "token"
+          }
+        ]
+      }
+    }
+  ]
+}

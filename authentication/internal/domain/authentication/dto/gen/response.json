@@ -1,0 +1,152 @@
+{
+  "ProtoPackage": "authenticationproto",
+  "ImportPath": [
+    "github.com/sajad-dev/authservice/authentication/internal/domain/authentication/authenticationproto"
+  ],
+  "Data": [
+    {
+      "Name": "login",
+      "Data": {
+        "ImportPath": [
+          "github.com/sajad-dev/authservice/authentication/internal/shared/models"
+        ],
+        "FuncName": "ToProto",
+        "StructName": "LoginResponse",
+        "ProtoStruct": "LoginResponse",
+        "AdaptorField": [
+          {
+            "FuncName": "AdaptorDataUserLogin",
+            "ProtoPackage": "authenticationproto",
+            "ProtoStruct": "User",
+            "Data": "models.AccountFiltered",
+            "Fields": [
+              {
+                "To": "FirstName",
+                "From": "FirstName"
+              },
+              {
+                "To": "Id",
+                "From": "Id"
+              },
+              {
+                "To": "LastName",
+                "From": "LastName"
+              },
+              {
+                "To": "Username",
+                "From": "Username"
+              },
+              {
+                "To": "Email",
+                "From": "Email"
+              },
+              {
+                "To": "TwoFactor",
+                "From": "TwoFactor"
+              }
+            ]
+          }
+        ],
+
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Msg",
+            "Type": "string",
+            "From": "Msg",
+            "Json": "msg"
+          },
+          {
+            "To": "Data",
+            "Type": "models.AccountFiltered",
+            "From": "Data",
+            "Json": "data",
+            "HaveFunction": true,
+            "Function": "AdaptorDataUserLogin"
+          },
+          {
+            "To": "Token",
+            "Type": "string",
+            "From": "Token",
+            "Json": "token"
+          }
+        ]
+      }
+    },
+    {
+      "Name": "register",
+      "Data": {
+        "ImportPath": [
+          "github.com/sajad-dev/authservice/authentication/internal/shared/models"
+        ],
+        "FuncName": "ToProto",
+        "StructName": "RegisterResponse",
+        "ProtoStruct": "RegisterResponse",
+        "AdaptorField": [
+          {
+            "FuncName": "AdaptorDataUserRegister",
+            "ProtoPackage": "authenticationproto",
+            "ProtoStruct": "User",
+            "Data": "models.AccountFiltered",
+            "Fields": [
+              {
+                "To": "FirstName",
+                "From": "FirstName"
+              },
+              {
+                "To": "LastName",
+                "From": "LastName"
+              },
+              {
+                "To": "Username",
+                "From": "Username"
+              },
+              {
+                "To": "Email",
+                "From": "Email"
+              },
+              {
+                "To": "TwoFactor",
+                "From": "TwoFactor"
+              }
+            ]
+          }
+        ],
+
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Msg",
+            "Type": "string",
+            "From": "Msg",
+            "Json": "msg"
+          },
+          {
+            "To": "Data",
+            "Type": "models.AccountFiltered",
+            "From": "Data",
+            "Json": "data",
+            "HaveFunction": true,
+            "Function": "AdaptorDataUserRegister"
+          },
+          {
+            "To": "Token",
+            "Type": "string",
+            "From": "Token",
+            "Json": "token"
+          }
+        ]
+      }
+    }
+  ]
+}

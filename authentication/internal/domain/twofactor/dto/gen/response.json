@@ -1,0 +1,81 @@
+{
+  "ProtoPackage": "twofactorproto",
+  "ImportPath": [
+    "github.com/sajad-dev/authservice/authentication/internal/domain/twofactor/twofactorproto"
+  ],
+  "Data": [
+    {
+      "Name": "twofactor",
+      "Data": {
+        "FuncName": "ToProto",
+        "StructName": "TwoFactorResponse",
+        "ProtoStruct": "TwoFactorResponse",
+        "ImportPath": [
+          "github.com/sajad-dev/authservice/authentication/internal/shared/models"
+        ],
+        "AdaptorField": [
+          {
+            "FuncName": "AdaptorDataUser",
+            "ProtoPackage": "twofactorproto",
+            "ProtoStruct": "User",
+            "Data": "models.AccountFiltered",
+            "Fields": [
+              {
+                "To": "Id",
+                "From": "Id"
+              },
+              {
+                "To": "FirstName",
+                "From": "FirstName"
+              },
+              {
+                "To": "LastName",
+                "From": "LastName"
+              },
+              {
+                "To": "Username",
+                "From": "Username"
+              },
+              {
+                "To": "Email",
+                "From": "Email"
+              },
+              {
+                "To": "TwoFactor",
+                "From": "TwoFactor"
+              }
+            ]
+          }
+        ],
+        "Fields": [
+          {
+            "To": "Code",
+            "Type": "int32",
+            "From": "Code",
+            "Json": "code"
+          },
+          {
+            "To": "Msg",
+            "Type": "string",
+            "From": "Msg",
+            "Json": "msg"
+          },
+          {
+            "To": "Token",
+            "Type": "string",
+            "From": "Token",
+            "Json": "token"
+          },
+          {
+            "To": "Data",
+            "Type": "models.AccountFiltered",
+            "From": "Data",
+            "Json": "data",
+            "HaveFunction": true,
+            "Function": "AdaptorDataUser"
+          }
+        ]
+      }
+    }
+  ]
+}

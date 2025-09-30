@@ -3,8 +3,8 @@ package grpcerr_test
 import (
 	"testing"
 
-	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/grpcerr"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/grpcerr/errorsproto"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs/grpcerr"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs/grpcerr/errorsproto"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc/codes"
 )

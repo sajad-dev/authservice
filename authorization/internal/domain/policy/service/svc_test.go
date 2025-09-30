@@ -1,184 +1,145 @@
-package service_test
+package service
 
 import (
 	"testing"
 
-	"github.com/sajad-dev/authservice/authentication/internal/domain/account"
-	"github.com/sajad-dev/authservice/authentication/internal/domain/account/dto/gen/request"
-	"github.com/sajad-dev/authservice/authentication/internal/domain/account/mocks"
-	"github.com/sajad-dev/authservice/authentication/internal/domain/account/service"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/crypto"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/hashing"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/hashing/sha256"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/messages"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/statuscode"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
-	"github.com/stretchr/testify/mock"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/request"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/response"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/mocks"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/constants/messages"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/constants/statuscode"
 	"github.com/stretchr/testify/suite"
 )
 
-type TestAccountSuite struct {
+type PolicySvcTestSuite struct {
 	suite.Suite
-	accountService account.AccountCURDService
-	repoMock       *mocks.AccountCURDRepository
-	crypto         crypto.Crypto
-	hash           hashing.Hashing
+	service  *PolicySvc
+	mockRepo *mocks.PolicyRepository
 }
 
-func (s *TestAccountSuite) SetupSuite() {
-	s.repoMock = new(mocks.AccountCURDRepository)
-
-	hash, _ := s.hash.Sum([]byte("pass"))
-	account := models.NewAccounts(
-		models.WithEmail("test@email.com"),
-		models.WithUsername("test"),
-		models.WithPassword(hash),
-	)
-
-	s.repoMock.On("Create", mock.Anything).Return(nil)
-	s.repoMock.On("Update", mock.Anything,mock.Anything).Return(nil)
-	s.repoMock.On("Read", 1).Return(account, nil)
-	s.repoMock.On("Delete", 1).Return(nil)
-
-	s.accountService = service.NewAccountSvc(
-		s.repoMock,
-		s.hash,
-	)
+func (s *PolicySvcTestSuite) SetupTest() {
+	s.mockRepo = new(mocks.PolicyRepository)
+	s.service = NewPolicySvc(s.mockRepo)
 }
 
-func (s *TestAccountSuite) TestCreate() {
+func (s *PolicySvcTestSuite) TestCreate() {
 	tests := []struct {
 		name    string
 		req     request.CreateRequest
+		mockRet bool
+		mockErr error
+		want    response.Response
 		wantErr bool
-		wantMsg string
 	}{
 		{
-			name: "Success",
-			req: request.CreateRequest{
-				Email:    "test@email.com",
-				Username: "test",
-				Password: "pass",
+			name:    "Success",
+			req:     request.CreateRequest{Subject: "user", Object: "resource", Action: "create"},
+			mockRet: true,
+			mockErr: nil,
+			want: response.Response{
+				Msg:  messages.SUCCESS_POLICY_ADDED,
+				Code: statuscode.SUCCESSFUL,
 			},
 			wantErr: false,
-			wantMsg: messages.CREATE_ACCOUNT_SUCCESSFUL,
 		},
 	}
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
-			resp, err := s.accountService.Create(tt.req)
-			if !tt.wantErr {
-				s.NoError(err)
-			} else {
+			s.mockRepo.On("Create", tt.req.Subject, tt.req.Object, tt.req.Action).Return(tt.mockRet, tt.mockErr)
+
+			resp, err := s.service.Create(tt.req)
+
+			if tt.wantErr {
 				s.Error(err)
+			} else {
+				s.NoError(err)
 			}
-			s.Equal(tt.wantMsg, resp.Msg)
-			s.Equal(int32(statuscode.SUCCESSFUL), resp.Code)
+			s.Equal(tt.want, resp)
+
+			s.mockRepo.AssertExpectations(s.T())
 		})
 	}
 }
 
-func (s *TestAccountSuite) TestUpdate() {
-	tests := []struct {
-		name    string
-		req     request.UpdateRequest
-		wantErr bool
-		wantMsg string
-	}{
-		{
-			name: "Success",
-			req: request.UpdateRequest{
-				Id:       1,
-				Email:    "testupdate@email.com",
-				Username: "testupdate",
-				Password: "pass",
-			},
-			wantErr: false,
-			wantMsg: messages.UPDATE_ACCOUNT_SUCCESSFUL,
-		},
-	}
-
-	for _, tt := range tests {
-		s.Run(tt.name, func() {
-			resp, err := s.accountService.Update(tt.req)
-			if !tt.wantErr {
-				s.NoError(err)
-			} else {
-				s.Error(err)
-			}
-			s.Equal(tt.wantMsg, resp.Msg)
-			s.Equal(int32(statuscode.SUCCESSFUL), resp.Code)
-		})
-	}
-}
-
-func (s *TestAccountSuite) TestRead() {
-	tests := []struct {
-		name    string
-		req     request.ReadRequest
-		wantErr bool
-		wantMsg string
-	}{
-		{
-			name: "Success",
-			req: request.ReadRequest{
-				Id: 1,
-			},
-			wantErr: false,
-			wantMsg: messages.READ_ACCOUNT_SUCCESSFUL,
-		},
-	}
-
-	for _, tt := range tests {
-		s.Run(tt.name, func() {
-			resp, err := s.accountService.Read(tt.req)
-			if !tt.wantErr {
-				s.NoError(err)
-			} else {
-				s.Error(err)
-			}
-			s.Equal(tt.wantMsg, resp.Msg)
-			s.Equal("test@email.com", resp.Data.Email)
-			s.Equal("test", resp.Data.Username)
-		})
-	}
-}
-
-func (s *TestAccountSuite) TestDelete() {
+func (s *PolicySvcTestSuite) TestDelete() {
 	tests := []struct {
 		name    string
 		req     request.DeleteRequest
+		mockRet bool
+		mockErr error
+		want    response.Response
 		wantErr bool
-		wantMsg string
 	}{
 		{
-			name: "Success",
-			req: request.DeleteRequest{
-				Id: 1,
+			name:    "Success",
+			req:     request.DeleteRequest{Subject: "user", Object: "resource", Action: "delete"},
+			mockRet: true,
+			mockErr: nil,
+			want: response.Response{
+				Msg:  messages.SUCCESS_POLICY_ADDED,
+				Code: statuscode.SUCCESSFUL,
 			},
 			wantErr: false,
-			wantMsg: messages.DELETE_ACCOUNT_SUCCESSFUL,
 		},
 	}
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
-			resp, err := s.accountService.Delete(tt.req)
-			if !tt.wantErr {
-				s.NoError(err)
-			} else {
+			s.mockRepo.On("Delete", tt.req.Subject, tt.req.Object, tt.req.Action).Return(tt.mockRet, tt.mockErr)
+
+			resp, err := s.service.Delete(tt.req)
+
+			if tt.wantErr {
 				s.Error(err)
+			} else {
+				s.NoError(err)
 			}
-			s.Equal(tt.wantMsg, resp.Msg)
-			s.Equal(int32(statuscode.SUCCESSFUL), resp.Code)
+			s.Equal(tt.want, resp)
+
+			s.mockRepo.AssertExpectations(s.T())
 		})
 	}
 }
 
-func TestAccountSuite_Run(t *testing.T) {
-	su := &TestAccountSuite{
-		hash: sha256.NewSha256(),
+func (s *PolicySvcTestSuite) TestGetAll() {
+	tests := []struct {
+		name    string
+		mockRet []interface{}
+		mockErr error
+		want    response.GetAllResponse
+		wantErr bool
+	}{
+		{
+			name:    "Success",
+			mockRet: []interface{}{},
+			mockErr: nil,
+			want: response.GetAllResponse{
+				Msg:  messages.SUCCESS_POLICY_ADDED,
+				Code: statuscode.SUCCESSFUL,
+			},
+			wantErr: false,
+		},
 	}
-	suite.Run(t, su)
+
+	for _, tt := range tests {
+		s.Run(tt.name, func() {
+			s.mockRepo.On("GetAll").Return(tt.mockRet, tt.mockErr)
+
+			resp, err := s.service.GetAll()
+
+			if tt.wantErr {
+				s.Error(err)
+			} else {
+				s.NoError(err)
+			}
+			s.Equal(tt.want, resp)
+
+			s.mockRepo.AssertExpectations(s.T())
+		})
+	}
+}
+
+func TestPolicySvcTestSuite(t *testing.T) {
+	suite.Run(t, new(PolicySvcTestSuite))
 }

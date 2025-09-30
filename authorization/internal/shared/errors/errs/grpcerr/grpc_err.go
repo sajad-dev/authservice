@@ -1,9 +1,9 @@
 package grpcerr
 
 import (
-	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/grpcerr/errorsproto"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/logging"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/stacktrace"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs/grpcerr/errorsproto"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs/logging"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs/stacktrace"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

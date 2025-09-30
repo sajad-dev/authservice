@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/sajad-dev/authservice/authentication/internal/config"
+	"github.com/sajad-dev/authservice/authorization/internal/config"
 )
 
 func CheckDebugTrueOrNot() {

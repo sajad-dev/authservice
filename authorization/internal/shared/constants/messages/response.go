@@ -4,6 +4,8 @@ package messages
 const (
 	ERR_ADD_GROUP_FAILED  = "Failed to add group"
 	ERR_ADD_POLICY_FAILED = "Failed to add policy"
+	ERR_INTERNAL_SERVER     = "Internal server error"
+	ERR_VALIDATION          = "Field validation failed"
 )
 
 // Success message constants

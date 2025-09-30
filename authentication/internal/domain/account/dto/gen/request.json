@@ -1,0 +1,153 @@
+{
+  "ProtoPackage": "accountproto",
+  "ImportPath": [
+    "github.com/sajad-dev/authservice/authentication/internal/domain/account/accountproto"
+  ],
+  "Data": [
+    {
+      "Name": "create",
+      "Data": {
+        "FuncName": "ToRequestCreate",
+        "StructName": "CreateRequest",
+        "ProtoStruct": "CreateRequest",
+        "Fields": [
+          {
+            "To": "FirstName",
+            "Type": "string",
+            "From": "FirstName",
+            "Validations": "",
+            "Json": "first_name"
+          },
+          {
+            "To": "LastName",
+            "Type": "string",
+            "From": "LastName",
+            "Validations": "",
+            "Json": "last_name"
+          },
+          {
+            "To": "Email",
+            "Type": "string",
+            "From": "Email",
+            "Validations": "",
+            "Json": "email"
+          },
+          {
+            "To": "Username",
+            "Type": "string",
+            "From": "Username",
+            "Validations": "",
+            "Json": "username"
+          },
+          {
+            "To": "TwoFactor",
+            "Type": "[]string",
+            "From": "TwoFactor",
+            "Validations": "",
+            "Json": "two_factor"
+          },
+          {
+            "To": "Password",
+            "Type": "string",
+            "From": "Password",
+            "Validations": "",
+            "Json": "password"
+          }
+        ]
+      }
+    },
+    {
+      "Name": "delete",
+      "Data": {
+        "FuncName": "ToRequestDelete",
+        "StructName": "DeleteRequest",
+        "ProtoStruct": "DeleteRequest",
+        "Fields": [
+          {
+            "To": "Id",
+            "Type": "int32",
+            "From": "Id",
+            "Validations": "",
+            "Json": "id"
+          }
+        ]
+      }
+    },
+    {
+      "Name": "read",
+      "Data": {
+        "FuncName": "ToRequestRead",
+        "StructName": "ReadRequest",
+        "ProtoStruct": "ReadRequest",
+        "Fields": [
+          {
+            "To": "Id",
+            "Type": "int32",
+            "From": "Id",
+            "Validations": "",
+            "Json": "id"
+          }
+        ]
+      }
+    },
+    {
+      "Name": "update",
+      "Data": {
+        "FuncName": "ToRequestUpdate",
+        "StructName": "UpdateRequest",
+        "ProtoStruct": "UpdateRequest",
+        "Fields": [
+          {
+            "To": "Id",
+            "Type": "int32",
+            "From": "Id",
+            "Validations": "",
+            "Json": "id"
+          },
+          {
+            "To": "FirstName",
+            "Type": "string",
+            "From": "FirstName",
+            "Validations": "",
+            "Json": "first_name"
+          },
+          {
+            "To": "LastName",
+            "Type": "string",
+            "From": "LastName",
+            "Validations": "",
+            "Json": "last_name"
+          },
+          {
+            "To": "Email",
+            "Type": "string",
+            "From": "Email",
+            "Validations": "",
+            "Json": "email"
+          },
+          {
+            "To": "Username",
+            "Type": "string",
+            "From": "Username",
+            "Validations": "",
+            "Json": "username"
+          },
+          {
+            "To": "TwoFactor",
+            "Type": "[]string",
+            "From": "TwoFactor",
+            "Validations": "",
+            "Json": "two_factor"
+          },
+          {
+            "To": "Password",
+            "Type": "string",
+            "From": "Password",
+            "Validations": "",
+            "Json": "password"
+          }
+        ]
+      }
+    }
+  ]
+}

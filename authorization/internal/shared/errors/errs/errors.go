@@ -1,6 +1,6 @@
 package errs
 
-import "github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/stacktrace"
+import "github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs/stacktrace"
 
 
 func Err(err error) error {

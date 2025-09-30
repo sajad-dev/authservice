@@ -3,11 +3,11 @@ package repository_test
 import (
 	"testing"
 
-	"github.com/sajad-dev/authservice/authentication/internal/domain/account"
-	"github.com/sajad-dev/authservice/authentication/internal/domain/account/repository"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb/sqlite"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/helpers/testhelper/testdb"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/account"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/account/repository"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/sqldb/sqlite"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/helpers/testhelper/testdb"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/models"
 	"github.com/stretchr/testify/suite"
 )
 

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/stacktrace"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs/stacktrace"
 	"github.com/stretchr/testify/assert"
 )
 
