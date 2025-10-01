@@ -24,7 +24,7 @@ type TwoFactorSvc struct {
 	Hashing hashing.Hashing
 }
 
-func NewTwoFactorService(repo twofactor.TwoFactorRepository, cry crypto.Crypto, hashing hashing.Hashing) *TwoFactorSvc {
+func NewTwoFactorSvc(repo twofactor.TwoFactorRepository, cry crypto.Crypto, hashing hashing.Hashing) *TwoFactorSvc {
 	return &TwoFactorSvc{
 		Repo:    repo,
 		Crypto:  cry,

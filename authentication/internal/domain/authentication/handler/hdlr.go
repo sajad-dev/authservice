@@ -8,21 +8,21 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/globalerr"
 )
 
-type AuthenticationHndlr struct {
+type AuthenticationHdlr struct {
 	authenticationproto.UnimplementedAuthticationServer
 	Service    authentication.AuthenticatorService
 	Validation validation.Validation
 }
 
-func NewAuthenticationHandler(svc authentication.AuthenticatorService, vld validation.Validation) *AuthenticationHndlr {
+func NewAuthenticationHdlr(svc authentication.AuthenticatorService, vld validation.Validation) *AuthenticationHdlr {
 
-	return &AuthenticationHndlr{
+	return &AuthenticationHdlr{
 		Service:    svc,
 		Validation: vld,
 	}
 }
 
-func (a *AuthenticationHndlr) Login(req *authenticationproto.LoginRequest) (*authenticationproto.LoginResponse, error) {
+func (a *AuthenticationHdlr) Login(req *authenticationproto.LoginRequest) (*authenticationproto.LoginResponse, error) {
 
 	reqValidation := request.ToRequestLogin(req)
 
@@ -38,7 +38,7 @@ func (a *AuthenticationHndlr) Login(req *authenticationproto.LoginRequest) (*aut
 	return res.ToProto(), nil
 }
 
-func (a *AuthenticationHndlr) Register(req *authenticationproto.RegisterRequest) (*authenticationproto.RegisterResponse, error) {
+func (a *AuthenticationHdlr) Register(req *authenticationproto.RegisterRequest) (*authenticationproto.RegisterResponse, error) {
 
 	reqValidation := request.ToRequestRegister(req)
 
@@ -54,4 +54,4 @@ func (a *AuthenticationHndlr) Register(req *authenticationproto.RegisterRequest)
 	return res.ToProto(), nil
 }
 
-var _ authentication.AuthenticatorHandler = &AuthenticationHndlr{}
+var _ authentication.AuthenticatorHandler = &AuthenticationHdlr{}

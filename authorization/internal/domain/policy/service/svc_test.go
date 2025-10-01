@@ -1,4 +1,4 @@
-package service
+package service_test
 
 import (
 	"testing"
@@ -6,6 +6,7 @@ import (
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/request"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/response"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/mocks"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/service"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/constants/statuscode"
 	"github.com/stretchr/testify/suite"
@@ -13,13 +14,13 @@ import (
 
 type PolicySvcTestSuite struct {
 	suite.Suite
-	service  *PolicySvc
+	service  *service.PolicySvc
 	mockRepo *mocks.PolicyRepository
 }
 
 func (s *PolicySvcTestSuite) SetupTest() {
 	s.mockRepo = new(mocks.PolicyRepository)
-	s.service = NewPolicySvc(s.mockRepo)
+	s.service = service.NewPolicySvc(s.mockRepo)
 }
 
 func (s *PolicySvcTestSuite) TestCreate() {

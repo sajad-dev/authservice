@@ -9,21 +9,21 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/globalerr"
 )
 
-type TwoFactorNotifierHndlr struct {
+type TwoFactorNotifierHdlr struct {
 	twofactornotifierproto.UnimplementedTwofactorNotifierServer
 	Service    twofactornotifier.TwoFactorNotifierService
 	Validation validation.Validation
 }
 
-func NewTwoFactorNotifierHandler(svc twofactornotifier.TwoFactorNotifierService, vld validation.Validation) *TwoFactorNotifierHndlr {
+func NewTwoFactorNotifierHdlr(svc twofactornotifier.TwoFactorNotifierService, vld validation.Validation) *TwoFactorNotifierHdlr {
 
-	return &TwoFactorNotifierHndlr{
+	return &TwoFactorNotifierHdlr{
 		Service:    svc,
 		Validation: vld,
 	}
 }
 
-func (a *TwoFactorNotifierHndlr) NotifierEmail(req *twofactornotifierproto.NotifierEmailRequest) (*twofactornotifierproto.TwoFactorNotifierResponse, error) {
+func (a *TwoFactorNotifierHdlr) NotifierEmail(req *twofactornotifierproto.NotifierEmailRequest) (*twofactornotifierproto.TwoFactorNotifierResponse, error) {
 
 	reqValidation := request.ToRequestNotifierEmail(req)
 
@@ -39,4 +39,4 @@ func (a *TwoFactorNotifierHndlr) NotifierEmail(req *twofactornotifierproto.Notif
 	return res.ToProto(), nil
 }
 
-var _ twofactornotifier.TwoFactorNotifierHandler = &TwoFactorNotifierHndlr{}
+var _ twofactornotifier.TwoFactorNotifierHandler = &TwoFactorNotifierHdlr{}

@@ -26,7 +26,7 @@ func (s *TestTwoFactorHandlerSuite) SetupSuite() {
 	mocksSVC := new(mocks.TwoFactorService)
 	s.mocksSVC = mocksSVC
 
-	s.handler = handler.NewTwoFactorHandler(mocksSVC, validate.NewValidate(validator.New()))
+	s.handler = handler.NewTwoFactorHdlr(mocksSVC, validate.NewValidate(validator.New()))
 }
 
 func (s *TestTwoFactorHandlerSuite) TestEmail() {
@@ -42,10 +42,10 @@ func (s *TestTwoFactorHandlerSuite) TestEmail() {
 			req:  &twofactorproto.EmailRequest{Code: 1111},
 			res: response.TwoFactorResponse{
 				Code: statuscode.SUCCESSFUL,
-				Msg:  messages.LOGIN_IS_SUCCESSFUL,
+				Msg:  messages.SUCCESS_LOGIN,
 			},
 			wantErr: false,
-			wantMsg: messages.LOGIN_IS_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_LOGIN,
 		},
 	}
 
@@ -78,10 +78,10 @@ func (s *TestTwoFactorHandlerSuite) TestGoogle() {
 			req:  &twofactorproto.GoogleRequest{Code: 1234, Token: "123456"},
 			res: response.TwoFactorResponse{
 				Code: statuscode.SUCCESSFUL,
-				Msg:  messages.LOGIN_IS_SUCCESSFUL,
+				Msg:  messages.SUCCESS_LOGIN,
 			},
 			wantErr: false,
-			wantMsg: messages.LOGIN_IS_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_LOGIN,
 		},
 	}
 

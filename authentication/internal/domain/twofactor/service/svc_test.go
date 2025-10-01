@@ -49,7 +49,7 @@ func (s *TestTwoFactorSuite) SetupSuite() {
 
 	s.repoMock.On("FindById", 0).Return(account, nil)
 
-	s.twoFactorService = service.NewTwoFactorService(
+	s.twoFactorService = service.NewTwoFactorSvc(
 		s.repoMock,
 		s.crypto,
 		s.hash,
@@ -69,7 +69,7 @@ func (s *TestTwoFactorSuite) TestEmailService() {
 				Code: 1111,
 			},
 			wantErr: false,
-			wantMsg: messages.LOGIN_IS_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_LOGIN,
 		},
 	}
 
@@ -115,7 +115,7 @@ func (s *TestTwoFactorSuite) TestGoogleService() {
 				Token: token,
 			},
 			wantErr: false,
-			wantMsg: messages.LOGIN_IS_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_LOGIN,
 		},
 	}
 

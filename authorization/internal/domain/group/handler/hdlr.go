@@ -8,17 +8,17 @@ import (
 	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs/globalerr"
 )
 
-type GroupHndlr struct {
+type GroupHdlr struct {
 	groupproto.UnimplementedGroupServer
 	Service    group.GroupService
 	Validation validation.Validation
 }
 
-func NewGroupHndlr(svc group.GroupService, vld validation.Validation) *GroupHndlr {
-	return &GroupHndlr{Service: svc, Validation: vld}
+func NewGroupHdlr(svc group.GroupService, vld validation.Validation) *GroupHdlr {
+	return &GroupHdlr{Service: svc, Validation: vld}
 }
 
-func (a *GroupHndlr) Create(req *groupproto.CreateRequest) (*groupproto.Response, error) {
+func (a *GroupHdlr) Create(req *groupproto.CreateRequest) (*groupproto.Response, error) {
 
 	reqValidation := request.ToRequestCreate(req)
 
@@ -34,7 +34,7 @@ func (a *GroupHndlr) Create(req *groupproto.CreateRequest) (*groupproto.Response
 	return res.ToProto(), nil
 }
 
-func (a *GroupHndlr) Delete(req *groupproto.DeleteRequest) (*groupproto.Response, error) {
+func (a *GroupHdlr) Delete(req *groupproto.DeleteRequest) (*groupproto.Response, error) {
 
 	reqValidation := request.ToRequestDelete(req)
 
@@ -50,7 +50,7 @@ func (a *GroupHndlr) Delete(req *groupproto.DeleteRequest) (*groupproto.Response
 	return res.ToProto(), nil
 }
 
-func (a *GroupHndlr) GetAll(req *groupproto.GetAllRequest) (*groupproto.GetAllResponse, error) {
+func (a *GroupHdlr) GetAll(req *groupproto.GetAllRequest) (*groupproto.GetAllResponse, error) {
 	res, err := a.Service.GetAll()
 	if err = globalerr.ServerErr(err); err != nil {
 		return nil, err
@@ -59,5 +59,5 @@ func (a *GroupHndlr) GetAll(req *groupproto.GetAllRequest) (*groupproto.GetAllRe
 	return res.ToProto(), nil
 }
 
-var _ group.GroupHandler = &GroupHndlr{}
+var _ group.GroupHandler = &GroupHdlr{}
 

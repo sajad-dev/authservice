@@ -26,7 +26,7 @@ func (s *TestTwoFactorNotifierHandlerSuite) SetupSuite() {
 	mocksSVC := new(mocks.TwoFactorNotifierService)
 	s.mocksSVC = mocksSVC
 
-	s.handler = handler.NewTwoFactorNotifierHandler(mocksSVC, validate.NewValidate(validator.New()))
+	s.handler = handler.NewTwoFactorNotifierHdlr(mocksSVC, validate.NewValidate(validator.New()))
 }
 
 func (s *TestTwoFactorNotifierHandlerSuite) TestNotifierEmail() {
@@ -42,10 +42,10 @@ func (s *TestTwoFactorNotifierHandlerSuite) TestNotifierEmail() {
 			req:  &twofactornotifierproto.NotifierEmailRequest{Token: "111"},
 			res: response.TwoFactorNotifierResponse{
 				Code: statuscode.SUCCESSFUL,
-				Msg:  messages.SEND_EMAIL_TWO_FACTORT_SUCCESSFUL,
+				Msg:  messages.SUCCESS_SEND_EMAIL_TWO_FACTOR,
 			},
 			wantErr: false,
-			wantMsg: messages.SEND_EMAIL_TWO_FACTORT_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_SEND_EMAIL_TWO_FACTOR,
 		},
 	}
 

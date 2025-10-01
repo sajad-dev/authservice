@@ -26,7 +26,7 @@ type TwoFactorNotifierSvc struct {
 	Crypto crypto.Crypto
 }
 
-func NewTwoFactorNotifierService(repo twofactornotifier.TwoFactorNotifierRepository, cry crypto.Crypto) *TwoFactorNotifierSvc {
+func NewTwoFactorNotifierSvc(repo twofactornotifier.TwoFactorNotifierRepository, cry crypto.Crypto) *TwoFactorNotifierSvc {
 	return &TwoFactorNotifierSvc{
 		Repo:   repo,
 		Crypto: cry,

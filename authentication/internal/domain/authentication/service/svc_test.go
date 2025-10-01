@@ -50,7 +50,7 @@ func (s *TestAuthenticationSuite) SetupSuite() {
 	s.repoMock.On("Find", "email", "2fa@email.com").Return(account2FA, nil)
 	s.repoMock.On("Find", "username", "user2fa").Return(account2FA, nil)
 
-	s.authService = service.NewAuthService(
+	s.authService = service.NewAuthenticationSvc(
 		s.repoMock,
 		s.crypto,
 		s.hash,
@@ -72,7 +72,7 @@ func (s *TestAuthenticationSuite) TestRegister() {
 				PasswordConfirmation: "pass",
 			},
 			wantErr: false,
-			wantMsg: messages.LOGIN_IS_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_REGISTER,
 		},
 	}
 
@@ -105,7 +105,7 @@ func (s *TestAuthenticationSuite) TestLogin() {
 				Password: "pass",
 			},
 			wantErr: false,
-			wantMsg: messages.LOGIN_IS_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_LOGIN,
 		},
 		{
 			name: "Wrong Password",
@@ -114,7 +114,7 @@ func (s *TestAuthenticationSuite) TestLogin() {
 				Password: "wrongpass",
 			},
 			wantErr: false,
-			wantMsg: messages.USERNAME_OR_PASSWORD_IS_WORNG,
+			wantMsg: messages.ERR_INVALID_CREDENTIALS,
 		},
 		{
 			name: "Two Factor Authentication",
@@ -123,7 +123,7 @@ func (s *TestAuthenticationSuite) TestLogin() {
 				Password: "pass",
 			},
 			wantErr: false,
-			wantMsg: messages.LOGIN_WITH_TWO_FACTOR,
+			wantMsg: messages.SUCCESS_LOGIN_TWO_FACTOR,
 		},
 	}
 

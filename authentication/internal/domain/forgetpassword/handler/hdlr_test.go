@@ -26,7 +26,7 @@ func (s *TestForgetPasswordHandlerSuite) SetupSuite() {
 	mocksSVC := new(mocks.ForgetPasswordService)
 	s.mocksSVC = mocksSVC
 
-	s.handler = handler.NewForgetPasswordHandler(mocksSVC, validate.NewValidate(validator.New()))
+	s.handler = handler.NewForgetPasswordHdlr(mocksSVC, validate.NewValidate(validator.New()))
 }
 
 func (s *TestForgetPasswordHandlerSuite) TestForget() {
@@ -42,10 +42,10 @@ func (s *TestForgetPasswordHandlerSuite) TestForget() {
 			req:  &forgetpasswordproto.ForgetRequest{Email: "test@example.com"},
 			res: response.ForgetResponse{
 				Code: statuscode.SUCCESSFUL,
-				Msg:  messages.FORGET_PASSWORD_SEND_MAIL_IS_SUCCESSFUL,
+				Msg:  messages.SUCCESS_PASSWORD_RESET_EMAIL,
 			},
 			wantErr: false,
-			wantMsg: messages.FORGET_PASSWORD_SEND_MAIL_IS_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_PASSWORD_RESET_EMAIL,
 		},
 	}
 
@@ -78,10 +78,10 @@ func (s *TestForgetPasswordHandlerSuite) TestReset() {
 			req:  &forgetpasswordproto.ResetRequest{Token: "token", Password: "123456", PasswordConfirmation: "123456"},
 			res: response.ResetResponse{
 				Code: statuscode.SUCCESSFUL,
-				Msg:  messages.RESET_PASSWORD_IS_SUCCESSFUL,
+				Msg:  messages.SUCCESS_PASSWORD_RESET,
 			},
 			wantErr: false,
-			wantMsg: messages.RESET_PASSWORD_IS_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_PASSWORD_RESET,
 		},
 	}
 

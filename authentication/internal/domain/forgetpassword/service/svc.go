@@ -22,7 +22,7 @@ type ForgetPasswordSvc struct {
 	Hashing hashing.Hashing
 }
 
-func NewForgetPasswordService(repo forgetpassword.ForgetPasswordRepository, hashing hashing.Hashing, cry crypto.Crypto) *ForgetPasswordSvc {
+func NewForgetPasswordSvc(repo forgetpassword.ForgetPasswordRepository, hashing hashing.Hashing, cry crypto.Crypto) *ForgetPasswordSvc {
 	return &ForgetPasswordSvc{
 		Repo:    repo,
 		Crypto:  cry,

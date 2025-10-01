@@ -8,17 +8,17 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/globalerr"
 )
 
-type AccountHndlr struct {
+type AccountHdlr struct {
 	accountproto.UnimplementedAccountServer
 	Service    account.AccountCURDService
 	Validation validation.Validation
 }
 
-func NewAccountHandler(svc account.AccountCURDService, vld validation.Validation) *AccountHndlr {
-	return &AccountHndlr{Service: svc, Validation: vld}
+func NewAccountHdlr(svc account.AccountCURDService, vld validation.Validation) *AccountHdlr {
+	return &AccountHdlr{Service: svc, Validation: vld}
 }
 
-func (a *AccountHndlr) Create(req *accountproto.CreateRequest) (*accountproto.CreateResponse, error) {
+func (a *AccountHdlr) Create(req *accountproto.CreateRequest) (*accountproto.CreateResponse, error) {
 
 	reqValidation := request.ToRequestCreate(req)
 
@@ -34,7 +34,7 @@ func (a *AccountHndlr) Create(req *accountproto.CreateRequest) (*accountproto.Cr
 	return res.ToProto(), nil
 }
 
-func (a *AccountHndlr) Update(req *accountproto.UpdateRequest) (*accountproto.UpdateResponse, error) {
+func (a *AccountHdlr) Update(req *accountproto.UpdateRequest) (*accountproto.UpdateResponse, error) {
 	reqValidation := request.ToRequestUpdate(req)
 
 	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
@@ -49,7 +49,7 @@ func (a *AccountHndlr) Update(req *accountproto.UpdateRequest) (*accountproto.Up
 	return res.ToProto(), nil
 }
 
-func (a *AccountHndlr) Delete(req *accountproto.DeleteRequest) (*accountproto.DeleteResponse, error) {
+func (a *AccountHdlr) Delete(req *accountproto.DeleteRequest) (*accountproto.DeleteResponse, error) {
 	reqValidation := request.ToRequestDelete(req)
 
 	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
@@ -64,7 +64,7 @@ func (a *AccountHndlr) Delete(req *accountproto.DeleteRequest) (*accountproto.De
 	return res.ToProto(), nil
 }
 
-func (a *AccountHndlr) Read(req *accountproto.ReadRequest) (*accountproto.ReadResponse, error) {
+func (a *AccountHdlr) Read(req *accountproto.ReadRequest) (*accountproto.ReadResponse, error) {
 	reqValidation := request.ToRequestRead(req)
 
 	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
@@ -79,4 +79,4 @@ func (a *AccountHndlr) Read(req *accountproto.ReadRequest) (*accountproto.ReadRe
 	return res.ToProto(), nil
 }
 
-var _ account.AccountCURDHandler = &AccountHndlr{}
+var _ account.AccountCURDHandler = &AccountHdlr{}

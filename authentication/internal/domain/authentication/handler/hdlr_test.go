@@ -27,7 +27,7 @@ func (s *TestAuthenticationHandlerSuite) SetupSuite() {
 	mocksSVC := new(mocks.AuthenticatorService)
 	s.mocksSVC = mocksSVC
 
-	s.handler = handler.NewAuthenticationHandler(mocksSVC, validate.NewValidate(validator.New()))
+	s.handler = handler.NewAuthenticationHdlr(mocksSVC, validate.NewValidate(validator.New()))
 }
 
 func (s *TestAuthenticationHandlerSuite) TestLogin() {
@@ -45,7 +45,7 @@ func (s *TestAuthenticationHandlerSuite) TestLogin() {
 				Token: "token",
 
 				Code: statuscode.SUCCESSFUL,
-				Msg:  messages.LOGIN_IS_SUCCESSFUL,
+				Msg:  messages.SUCCESS_LOGIN,
 				Data: models.AccountFiltered{
 					Email:     "test@email.com",
 					FirstName: "test",
@@ -55,7 +55,7 @@ func (s *TestAuthenticationHandlerSuite) TestLogin() {
 			},
 
 			wantErr: false,
-			wantMsg: messages.LOGIN_IS_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_LOGIN,
 		},
 	}
 
@@ -89,7 +89,7 @@ func (s *TestAuthenticationHandlerSuite) TestRegister() {
 			res: response.RegisterResponse{
 				Token: "token",
 				Code:  statuscode.SUCCESSFUL,
-				Msg:   messages.LOGIN_IS_SUCCESSFUL,
+				Msg:   messages.SUCCESS_LOGIN,
 				Data: models.AccountFiltered{
 					Email:     "test@email.com",
 					FirstName: "test",
@@ -99,7 +99,7 @@ func (s *TestAuthenticationHandlerSuite) TestRegister() {
 				},
 			},
 			wantErr: false,
-			wantMsg: messages.LOGIN_IS_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_LOGIN,
 		},
 	}
 

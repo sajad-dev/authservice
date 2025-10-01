@@ -27,7 +27,7 @@ func (s *TestAccountCURDHandlerSuite) SetupSuite() {
 	mocksSVC := new(mocks.AccountCURDService)
 	s.mocksSVC = mocksSVC
 
-	s.handler = handler.NewAccountHandler(mocksSVC, validate.NewValidate(validator.New()))
+	s.handler = handler.NewAccountHdlr(mocksSVC, validate.NewValidate(validator.New()))
 }
 
 func (s *TestAccountCURDHandlerSuite) TestCreate() {
@@ -43,10 +43,10 @@ func (s *TestAccountCURDHandlerSuite) TestCreate() {
 			req:  &accountproto.CreateRequest{Username: "test", Email: "test@example.com"},
 			res: response.CreateResponse{
 				Code: statuscode.SUCCESSFUL,
-				Msg:  messages.CREATE_ACCOUNT_SUCCESSFUL,
+				Msg:  messages.SUCCESS_ACCOUNT_CREATED,
 			},
 			wantErr: false,
-			wantMsg: messages.CREATE_ACCOUNT_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_ACCOUNT_CREATED,
 		},
 	}
 
@@ -79,10 +79,10 @@ func (s *TestAccountCURDHandlerSuite) TestUpdate() {
 			req:  &accountproto.UpdateRequest{Username: "test", Email: "update@example.com"},
 			res: response.UpdateResponse{
 				Code: statuscode.SUCCESSFUL,
-				Msg:  messages.UPDATE_ACCOUNT_SUCCESSFUL,
+				Msg:  messages.SUCCESS_ACCOUNT_UPDATED,
 			},
 			wantErr: false,
-			wantMsg: messages.UPDATE_ACCOUNT_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_ACCOUNT_UPDATED,
 		},
 	}
 
@@ -115,10 +115,10 @@ func (s *TestAccountCURDHandlerSuite) TestDelete() {
 			req:  &accountproto.DeleteRequest{Id: 0},
 			res: response.DeleteResponse{
 				Code: statuscode.SUCCESSFUL,
-				Msg:  messages.DELETE_ACCOUNT_SUCCESSFUL,
+				Msg:  messages.SUCCESS_ACCOUNT_DELETED,
 			},
 			wantErr: false,
-			wantMsg: messages.DELETE_ACCOUNT_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_ACCOUNT_DELETED,
 		},
 	}
 
@@ -151,14 +151,14 @@ func (s *TestAccountCURDHandlerSuite) TestRead() {
 			req:  &accountproto.ReadRequest{Id: 0},
 			res: response.ReadResponse{
 				Code: statuscode.SUCCESSFUL,
-				Msg:  messages.READ_ACCOUNT_SUCCESSFUL,
+				Msg:  messages.SUCCESS_ACCOUNT_RETRIEVED,
 				Data: models.AccountFiltered{
 					Username: "test",
 					Email:    "test@example.com",
 				},
 			},
 			wantErr: false,
-			wantMsg: messages.READ_ACCOUNT_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_ACCOUNT_RETRIEVED,
 		},
 	}
 

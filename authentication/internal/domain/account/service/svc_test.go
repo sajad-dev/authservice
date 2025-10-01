@@ -61,7 +61,7 @@ func (s *TestAccountSuite) TestCreate() {
 				Password: "pass",
 			},
 			wantErr: false,
-			wantMsg: messages.CREATE_ACCOUNT_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_ACCOUNT_CREATED,
 		},
 	}
 
@@ -95,7 +95,7 @@ func (s *TestAccountSuite) TestUpdate() {
 				Password: "pass",
 			},
 			wantErr: false,
-			wantMsg: messages.UPDATE_ACCOUNT_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_ACCOUNT_UPDATED,
 		},
 	}
 
@@ -126,7 +126,7 @@ func (s *TestAccountSuite) TestRead() {
 				Id: 1,
 			},
 			wantErr: false,
-			wantMsg: messages.READ_ACCOUNT_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_ACCOUNT_RETRIEVED,
 		},
 	}
 
@@ -158,7 +158,7 @@ func (s *TestAccountSuite) TestDelete() {
 				Id: 1,
 			},
 			wantErr: false,
-			wantMsg: messages.DELETE_ACCOUNT_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_ACCOUNT_DELETED,
 		},
 	}
 

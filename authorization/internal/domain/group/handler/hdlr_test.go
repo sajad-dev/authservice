@@ -16,7 +16,7 @@ import (
 
 type GroupHandlerSuite struct {
 	suite.Suite
-	handler  *handler.GroupHndlr
+	handler  *handler.GroupHdlr
 	mocksSvc *mocks.GroupService
 }
 
@@ -24,7 +24,7 @@ func (s *GroupHandlerSuite) SetupSuite() {
 	mocksSvc := new(mocks.GroupService)
 	s.mocksSvc = mocksSvc
 
-	s.handler = handler.NewGroupHndlr(mocksSvc, validate.NewValidate(validator.New()))
+	s.handler = handler.NewGroupHdlr(mocksSvc, validate.NewValidate(validator.New()))
 }
 
 func (s *GroupHandlerSuite) TestCreate() {

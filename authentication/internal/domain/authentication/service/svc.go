@@ -36,7 +36,7 @@ type AuthenticationSvc struct {
 	Hashing hashing.Hashing
 }
 
-func NewAuthService(repo authentication.AuthenticatorRepository, cry crypto.Crypto, hashing hashing.Hashing) *AuthenticationSvc {
+func NewAuthenticationSvc(repo authentication.AuthenticatorRepository, cry crypto.Crypto, hashing hashing.Hashing) *AuthenticationSvc {
 	return &AuthenticationSvc{
 		Repo:    repo,
 		crypto:  cry,

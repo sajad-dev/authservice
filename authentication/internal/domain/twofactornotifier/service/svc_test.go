@@ -41,7 +41,7 @@ func (s *TestTwoFactorNotifierSuite) SetupSuite() {
 		return code.Account.Email == "test@email.com"
 	})).Return(nil)
 
-	s.twoFactorNotifierService = service.NewTwoFactorNotifierService(
+	s.twoFactorNotifierService = service.NewTwoFactorNotifierSvc(
 		s.repoMock,
 		s.crypto,
 	)
@@ -57,7 +57,7 @@ func (s *TestTwoFactorNotifierSuite) TestEmailNotifierService() {
 		{
 			name:        "Success",
 			token:       "valid-token",
-			wantMessage: messages.EMAIL_TWO_FACTORT_SUCCESSFUL,
+			wantMessage: messages.SUCCESS_SEND_EMAIL_TWO_FACTOR,
 			wantErr:     false,
 		},
 	}

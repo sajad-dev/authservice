@@ -8,21 +8,21 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/globalerr"
 )
 
-type TwoFactorHndlr struct {
+type TwoFactorHdlr struct {
 	twofactorproto.UnimplementedTwofactoryServer
 	Service    twofactor.TwoFactorService
 	Validation validation.Validation
 }
 
-func NewTwoFactorHandler(svc twofactor.TwoFactorService, vld validation.Validation) *TwoFactorHndlr {
+func NewTwoFactorHdlr(svc twofactor.TwoFactorService, vld validation.Validation) *TwoFactorHdlr {
 
-	return &TwoFactorHndlr{
+	return &TwoFactorHdlr{
 		Service:    svc,
 		Validation: vld,
 	}
 }
 
-func (a *TwoFactorHndlr) Email(req *twofactorproto.EmailRequest) (*twofactorproto.TwoFactorResponse, error) {
+func (a *TwoFactorHdlr) Email(req *twofactorproto.EmailRequest) (*twofactorproto.TwoFactorResponse, error) {
 
 	reqValidation := request.ToRequestEmail(req)
 
@@ -38,7 +38,7 @@ func (a *TwoFactorHndlr) Email(req *twofactorproto.EmailRequest) (*twofactorprot
 	return res.ToProto(), nil
 }
 
-func (a *TwoFactorHndlr) Google(req *twofactorproto.GoogleRequest) (*twofactorproto.TwoFactorResponse, error) {
+func (a *TwoFactorHdlr) Google(req *twofactorproto.GoogleRequest) (*twofactorproto.TwoFactorResponse, error) {
 
 	reqValidation := request.ToRequestGoogle(req)
 
@@ -54,4 +54,4 @@ func (a *TwoFactorHndlr) Google(req *twofactorproto.GoogleRequest) (*twofactorpr
 	return res.ToProto(), nil
 }
 
-var _ twofactor.TwoFactorHandler = &TwoFactorHndlr{}
+var _ twofactor.TwoFactorHandler = &TwoFactorHdlr{}

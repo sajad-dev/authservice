@@ -15,7 +15,7 @@ import (
 
 type PolicyHandlerSuite struct {
 	suite.Suite
-	handler  *PolicyHndlr
+	handler  *PolicyHdlr
 	mocksSvc *mocks.PolicyService
 }
 
@@ -23,7 +23,7 @@ func (s *PolicyHandlerSuite) SetupSuite() {
 	mocksSvc := new(mocks.PolicyService)
 	s.mocksSvc = mocksSvc
 
-	s.handler = NewPolicyHndlr(mocksSvc, validate.NewValidate(validator.New()))
+	s.handler = NewPolicyHdlr(mocksSvc, validate.NewValidate(validator.New()))
 }
 
 func (s *PolicyHandlerSuite) TestCreate() {

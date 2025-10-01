@@ -41,7 +41,7 @@ func (s *TestForgetPasswordSuite) SetupSuite() {
 	s.repoMock.On("FindById", 0).Return(account, nil)
 	s.repoMock.On("Update", mock.Anything).Return(nil)
 
-	s.service = service.NewForgetPasswordService(
+	s.service = service.NewForgetPasswordSvc(
 		s.repoMock,
 		s.hash,
 		s.crypto,
@@ -61,7 +61,7 @@ func (s *TestForgetPasswordSuite) TestForgetPassword() {
 				Email: "test@email.com",
 			},
 			wantErr: false,
-			wantMsg: messages.FORGET_PASSWORD_SEND_MAIL_IS_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_PASSWORD_RESET_EMAIL,
 		},
 	}
 
@@ -100,7 +100,7 @@ func (s *TestForgetPasswordSuite) TestResetPassword() {
 				Password: "newpassword",
 				Token:    token},
 			wantErr: false,
-			wantMsg: messages.RESET_PASSWORD_IS_SUCCESSFUL,
+			wantMsg: messages.SUCCESS_PASSWORD_RESET,
 		},
 	}
 

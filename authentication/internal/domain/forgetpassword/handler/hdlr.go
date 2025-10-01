@@ -9,21 +9,21 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/globalerr"
 )
 
-type ForgetPasswordHndlr struct {
+type ForgetPasswordHdlr struct {
 	forgetpasswordproto.UnimplementedForgetPasswordServer
 	Service    forgetpassword.ForgetPasswordService
 	Validation validation.Validation
 }
 
-func NewForgetPasswordHandler(svc forgetpassword.ForgetPasswordService, vld validation.Validation) *ForgetPasswordHndlr {
+func NewForgetPasswordHdlr(svc forgetpassword.ForgetPasswordService, vld validation.Validation) *ForgetPasswordHdlr {
 
-	return &ForgetPasswordHndlr{
+	return &ForgetPasswordHdlr{
 		Service:    svc,
 		Validation: vld,
 	}
 }
 
-func (a *ForgetPasswordHndlr) Forget(req *forgetpasswordproto.ForgetRequest) (*forgetpasswordproto.ForgetResponse, error) {
+func (a *ForgetPasswordHdlr) Forget(req *forgetpasswordproto.ForgetRequest) (*forgetpasswordproto.ForgetResponse, error) {
 
 	reqValidation := request.ToRequestForget(req)
 
@@ -39,7 +39,7 @@ func (a *ForgetPasswordHndlr) Forget(req *forgetpasswordproto.ForgetRequest) (*f
 	return res.ToProto(), nil
 }
 
-func (a *ForgetPasswordHndlr) Reset(req *forgetpasswordproto.ResetRequest) (*forgetpasswordproto.ResetResponse, error) {
+func (a *ForgetPasswordHdlr) Reset(req *forgetpasswordproto.ResetRequest) (*forgetpasswordproto.ResetResponse, error) {
 
 	reqValidation := request.ToRequestReset(req)
 
@@ -55,4 +55,4 @@ func (a *ForgetPasswordHndlr) Reset(req *forgetpasswordproto.ResetRequest) (*for
 	return res.ToProto(), nil
 }
 
-var _ forgetpassword.ForgetPasswordHandler = &ForgetPasswordHndlr{}
+var _ forgetpassword.ForgetPasswordHandler = &ForgetPasswordHdlr{}
