@@ -1,71 +1,81 @@
 package service
 
 import (
-	"github.com/sajad-dev/authservice/authorization/internal/domain/group"
-	"github.com/sajad-dev/authservice/authorization/internal/domain/group/dto/gen/request"
-	"github.com/sajad-dev/authservice/authorization/internal/domain/group/dto/gen/response"
+	"strings"
+
+	"github.com/sajad-dev/authservice/authorization/internal/domain/authorize"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/authorize/dto/request"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/authorize/dto/response"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/crypto"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/constants/statuscode"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs"
 )
 
 type AuthorizeSvc struct {
-	Repo group.AuthorizeRepository
+	Repo   authorize.AuthorizeRepository
+	Crypto crypto.Crypto
 }
 
-func NewAuthorizeSvc(repo group.AuthorizeRepository) *AuthorizeSvc {
+func NewAuthorizeSvc(repo authorize.AuthorizeRepository, crp crypto.Crypto) *AuthorizeSvc {
 	return &AuthorizeSvc{
-		Repo: repo,
+		Repo:   repo,
+		Crypto: crp,
 	}
 }
 
-func (a *AuthorizeSvc) Create(req request.CreateRequest) (response.Response, error) {
-	ok, err := a.Repo.Create(req.Subject, req.Authorize)
-	if err != nil {
-		return response.Response{}, errs.Err(err)
-	}
+func (a AuthorizeSvc) _verifyJWT(token string) (crypto.DataClaims, error) {
+	return a.Crypto.Validate(token)
+}
 
+func (a *AuthorizeSvc) Check(req request.AuthorizeRequest) (response.AuthorizeResponse, error) {
+	authorization, ok := req.Headers["authorization"]
 	if !ok {
-		return response.Response{
-			Msg:  messages.ERR_ADD_POLICY_FAILED,
-			Code: statuscode.VALIDATION_ERR,
-		}, errs.Err(err)
+		return response.AuthorizeResponse{
+			Code: statuscode.PERMISSION_DENIED,
+			Msg:  messages.ERR_FORBIDDEN,
+		}, nil
 	}
 
-	return response.Response{
-		Msg:  messages.SUCCESS_POLICY_ADDED,
-		Code: statuscode.SUCCESSFUL,
-	}, nil
-}
-
-func (a *AuthorizeSvc) Delete(req request.DeleteRequest) (response.Response, error) {
-	ok, err := a.Repo.Delete(req.Subject, req.Authorize)
+	extracted := strings.Fields(authorization)
+	if len(extracted) != 2 || extracted[0] != "Bearer" {
+		return response.AuthorizeResponse{
+			Code: statuscode.PERMISSION_DENIED,
+			Msg:  messages.ERR_FORBIDDEN,
+		}, nil
 	}
 
-	if !ok {
-		return response.Response{
-			Msg:  messages.ERR_ADD_POLICY_FAILED,
-			Code: statuscode.VALIDATION_ERR,
-		}, errs.Err(err)
-	}
-
-	return response.Response{
-		Msg:  messages.SUCCESS_POLICY_ADDED,
-		Code: statuscode.SUCCESSFUL,
-	}, nil
-}
-
-func (a *AuthorizeSvc) GetAll() (response.GetAllResponse, error) {
-	_, err := a.Repo.GetAll()
+	claims, err := a._verifyJWT(extracted[1])
 	if err != nil {
-		return response.GetAllResponse{}, errs.Err(err)
+		return response.AuthorizeResponse{}, errs.Err(err)
 	}
 
-	return response.GetAllResponse{
-		Msg:  messages.SUCCESS_POLICY_ADDED,
+	user, ok := claims["user"]
+	if !ok {
+		return response.AuthorizeResponse{
+			Code: statuscode.PERMISSION_DENIED,
+			Msg:  messages.ERR_FORBIDDEN,
+		}, nil
+	}
+
+	ok, err = a.Repo.Check(user, req.Path, req.Method)
+	if !ok {
+		return response.AuthorizeResponse{
+			Code: statuscode.PERMISSION_DENIED,
+			Msg:  messages.ERR_FORBIDDEN,
+		}, nil
+
+	}
+
+	if err != nil {
+		return response.AuthorizeResponse{}, errs.Err(err)
+	}
+
+	return response.AuthorizeResponse{
 		Code: statuscode.SUCCESSFUL,
+		Msg:  messages.SUCCESS_VERIFY,
 	}, nil
+
 }
 
-var _ group.AuthorizeService = &AuthorizeSvc{}
-
+var _ authorize.AuthorizeService = &AuthorizeSvc{}

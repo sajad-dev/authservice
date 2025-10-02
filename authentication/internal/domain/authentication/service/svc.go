@@ -106,7 +106,7 @@ func (a *AuthenticationSvc) Login(req request.LoginRequest) (response.LoginRespo
 	} else {
 		msg = messages.SUCCESS_LOGIN
 		claims = map[string]string{
-			"id": strconv.Itoa(int(table.ID)),
+			"user": strconv.Itoa(int(table.ID)),
 		}
 	}
 

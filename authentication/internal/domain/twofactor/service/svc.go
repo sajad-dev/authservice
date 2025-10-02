@@ -73,7 +73,7 @@ func (s *TwoFactorSvc) Google(req request.GoogleRequest) (response.TwoFactorResp
 	}
 
 	claimsCreate := map[string]string{
-		"id": strconv.Itoa(int(idInt)),
+		"user": strconv.Itoa(int(idInt)),
 	}
 
 	cry, err := s._createJWT(claimsCreate)
@@ -96,7 +96,7 @@ func (s *TwoFactorSvc) Email(req request.EmailRequest) (response.TwoFactorRespon
 	}
 
 	claims := map[string]string{
-		"id": strconv.Itoa(int(table[0].AccountID)),
+		"user": strconv.Itoa(int(table[0].AccountID)),
 	}
 
 	cry, err := s._createJWT(claims)

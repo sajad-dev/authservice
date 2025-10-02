@@ -33,4 +33,8 @@ func (c *Casbin) GetAllGroup() ([][]string, error) {
 	return c.enforcer.GetGroupingPolicy()
 }
 
+func (c *Casbin) Verify (policy ...interface{}) (bool,error) {
+	return c.enforcer.Enforce(policy...)
+}
+
 var _ authorize.Authorize = &Casbin{}
