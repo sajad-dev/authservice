@@ -2,8 +2,6 @@ package handler
 
 import (
 	"context"
-	"log"
-	"strings"
 
 	authz "github.com/envoyproxy/go-control-plane/envoy/service/auth/v3"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/authorize"
@@ -12,7 +10,7 @@ import (
 )
 
 type AuthorizeHdlr struct {
-	Service    authorize.AuthorizeService
+	Service authorize.AuthorizeService
 }
 
 func NewAuthorizeHdlr(svc authorize.AuthorizeService) *AuthorizeHdlr {
@@ -20,13 +18,13 @@ func NewAuthorizeHdlr(svc authorize.AuthorizeService) *AuthorizeHdlr {
 }
 
 func (a *AuthorizeHdlr) Check(ctx context.Context, req *authz.CheckRequest) (*authz.CheckResponse, error) {
-	authorization := req.Attributes.Request.Http.Headers["authorization"]
-	log.Println(authorization)
+	// authorization := req.Attributes.Request.Http.Headers["authorization"]
+	// log.Println(authorization)
 
-	// role := req.Attributes.ContextExtensions["role"]
+	// // role := req.Attributes.ContextExtensions["role"]
 
-	extracted := strings.Fields(authorization)
-	if len(extracted) == 2 && extracted[0] == "Bearer" {
+	// extracted := strings.Fields(authorization)
+	if true {
 		return &authz.CheckResponse{
 			HttpResponse: &authz.CheckResponse_OkResponse{},
 			Status: &status.Status{
@@ -35,7 +33,7 @@ func (a *AuthorizeHdlr) Check(ctx context.Context, req *authz.CheckRequest) (*au
 		}, nil
 	}
 
-	return &auth.CheckResponse{
+	return &authz.CheckResponse{
 		Status: &status.Status{
 			Code: int32(code.Code_PERMISSION_DENIED),
 		},

@@ -1,0 +1,43 @@
+services:
+  account:
+    build:
+      context: ./account      
+      dockerfile: Dockerfile
+    container_name: account_service
+    ports:
+      - "3000:3000"             
+    environment:
+      - ENVIRONMENT=production
+    networks:
+      - app_network
+    restart: unless-stopped
+  ext_authz-grpc-service: 
+    build: 
+      context: ./authorization
+      dockerfile : Dockerfile
+    ports:
+      - "3001:3001"             
+    networks:
+      - app_network
+    restart: unless-stopped
+  envoy:
+    image: envoyproxy/envoy:v1.34-latest
+    container_name: envoy_proxy
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml:ro
+      # - ./envoyz.yaml:/etc/envoy/envoyz.yaml:ro
+    depends_on:
+      - account                
+      - ext_authz-grpc-service
+    networks:
+      - app_network
+    restart: unless-stopped
+
+networks:
+  app_network:
+    driver: bridge
+
+

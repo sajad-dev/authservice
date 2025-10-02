@@ -9,6 +9,12 @@ type Casbin struct {
 	enforcer *authz.Enforcer
 }
 
+func NewCasbin(enf *authz.Enforcer) *Casbin {
+	return &Casbin{
+		enforcer: enf,
+	}
+}
+
 func (c *Casbin) AddPolicy(policy ...interface{}) (bool, error) {
 	return c.enforcer.AddPolicy(policy...)
 }
@@ -33,7 +39,7 @@ func (c *Casbin) GetAllGroup() ([][]string, error) {
 	return c.enforcer.GetGroupingPolicy()
 }
 
-func (c *Casbin) Verify (policy ...interface{}) (bool,error) {
+func (c *Casbin) Verify(policy ...interface{}) (bool, error) {
 	return c.enforcer.Enforce(policy...)
 }
 
