@@ -7,7 +7,7 @@ import (
 
 func main() {
 	conf := config.NewConfig()
-	err := grpcserver.NewGrpc(*conf).Run()
+	err := grpcserver.NewGrpc(conf).Run()
 	if err != nil {
 		panic(err)
 	}

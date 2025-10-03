@@ -1,0 +1,25 @@
+services:
+  authorization:
+    build :
+      context: ./authorization      
+      dockerfile: Dockerfile
+    container_name: authorization_service
+    networks:
+      - app_network
+    restart: unless-stopped
+  db:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: authorization
+    networks:
+      - app_network
+networks:
+  app_network:
+    driver: bridge
+

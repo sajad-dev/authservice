@@ -32,7 +32,7 @@ func (g *Grpc) Run() error {
 
 	err = bootstrap.NewBootstrap(g.Config).Boot(gc)
 
-	log.Printf("Run server at port %d \n", g.Config.GRPC_PORT)
+	log.Printf("Run server at port %s \n", g.Config.GRPC_PORT)
 
 	gc.Serve(lis)
 
