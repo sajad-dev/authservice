@@ -23,7 +23,7 @@ func NewGrpc(config config.AppConfig) *Grpc {
 }
 
 func (g *Grpc) Run() error {
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", g.Config.GRPC_PORT))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", g.Config.GRPC_PORT))
 	if err != nil {
 		return errs.Err(err)
 	}
@@ -32,9 +32,11 @@ func (g *Grpc) Run() error {
 
 	err = bootstrap.NewBootstrap(g.Config).Boot(gc)
 
-	log.Printf("Run server at port %d \n", g.GRPC_PORT)
+	log.Printf("Run server at port %d \n", g.Config.GRPC_PORT)
 
 	gc.Serve(lis)
+
+	return nil
 }
 
 var _ http.Http = &Grpc{}

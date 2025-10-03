@@ -3,6 +3,7 @@ package config
 type AppConfig struct {
 	APP_NAME          string
 	DESCRIPTION       string
+	GRPC_PORT         string
 	AUTHOR            string
 	DEBUG             string
 	JWT               string
@@ -14,54 +15,8 @@ type AppConfig struct {
 	MODEL_CONF        string
 }
 
-type AppConfigOption func(*AppConfig)
-
-func WithAppName(name string) AppConfigOption {
-	return func(c *AppConfig) { c.APP_NAME = name }
-}
-
-func WithModelConf (path string) AppConfigOption {
-	return func(c *AppConfig) { c.MODEL_CONF = path }
-}
-
-func WithDescription(desc string) AppConfigOption {
-	return func(c *AppConfig) { c.DESCRIPTION = desc }
-}
-
-func WithAuthor(author string) AppConfigOption {
-	return func(c *AppConfig) { c.AUTHOR = author }
-}
-
-func WithDebug(debug string) AppConfigOption {
-	return func(c *AppConfig) { c.DEBUG = debug }
-}
-
-func WithJWT(jwt string) AppConfigOption {
-	return func(c *AppConfig) { c.JWT = jwt }
-}
-
-func WithDatabaseName(name string) AppConfigOption {
-	return func(c *AppConfig) { c.DATABASE_NAME = name }
-}
-
-func WithDatabaseUser(user string) AppConfigOption {
-	return func(c *AppConfig) { c.DATABASE_USER = user }
-}
-
-func WithDatabasePassword(password string) AppConfigOption {
-	return func(c *AppConfig) { c.DATABASE_PASSWORD = password }
-}
-
-func WithDatabasePort(port string) AppConfigOption {
-	return func(c *AppConfig) { c.DATABASE_PORT = port }
-}
-
-func WithDatabaseHost(host string) AppConfigOption {
-	return func(c *AppConfig) { c.DATABASE_HOST = host }
-}
-
-func NewAppConfig(opts ...AppConfigOption) *AppConfig {
-	cfg := &AppConfig{
+func NewAppConfig() *AppConfig {
+	return &AppConfig{
 		APP_NAME:          "GOLANG_APP",
 		DESCRIPTION:       "",
 		AUTHOR:            "Sajad pourajam",
@@ -73,9 +28,6 @@ func NewAppConfig(opts ...AppConfigOption) *AppConfig {
 		MODEL_CONF:        "../../casbin/model.conf",
 		DATABASE_PORT:     "3306",
 		DATABASE_HOST:     "127.0.0.1",
+		GRPC_PORT:         "3000",
 	}
-	for _, opt := range opts {
-		opt(cfg)
-	}
-	return cfg
 }

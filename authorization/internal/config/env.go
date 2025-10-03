@@ -1,23 +1,16 @@
 package config
 
 import (
-	"fmt"
 	"os"
 	"reflect"
-
-	"github.com/joho/godotenv"
+	"sync"
 )
 
-var Config = &AppConfig{}
+var instanse = AppConfig{}
+var once sync.Once
 
-// func BootConfig(address string, opts ...AppConfigOption) *AppConfig {
-func BootConfig( opts ...AppConfigOption) *AppConfig {
-	// err := godotenv.Load(address)
-	// if err != nil {
-	// 	panic(fmt.Sprintf("Config error: %s", err))
-	// }
-
-	cfg := NewAppConfig(opts...)
+func _setConfigs() AppConfig {
+	cfg := NewAppConfig()
 
 	v := reflect.ValueOf(cfg).Elem()
 	t := v.Type()
@@ -32,6 +25,13 @@ func BootConfig( opts ...AppConfigOption) *AppConfig {
 		}
 	}
 
-	Config = cfg
-	return cfg
+	return *cfg
+}
+
+func NewConfig() AppConfig {
+	once.Do(func() {
+		instanse = _setConfigs()
+	})
+
+	return instanse
 }
