@@ -6,32 +6,33 @@ import (
 	"net"
 
 	"github.com/sajad-dev/authservice/authorization/internal/bootstrap"
+	"github.com/sajad-dev/authservice/authorization/internal/config"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/http"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs"
 	"google.golang.org/grpc"
 )
 
 type Grpc struct {
-	Port int
+	Config config.AppConfig
 }
 
-func NewGrpc(port int) *Grpc {
+func NewGrpc(config config.AppConfig) *Grpc {
 	return &Grpc{
-		Port: port,
+		Config: config,
 	}
 }
 
-func (g *Grpc) Run() {
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", g.Port))
+func (g *Grpc) Run() error {
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", g.Config.GRPC_PORT))
 	if err != nil {
-		panic(errs.Err(err))
+		return errs.Err(err)
 	}
 
 	gc := grpc.NewServer()
 
-	bootstrap.Boot(gc)
+	err = bootstrap.NewBootstrap(g.Config).Boot(gc)
 
-	log.Printf("Run server at port %d \n",g.Port)
+	log.Printf("Run server at port %d \n", g.GRPC_PORT)
 
 	gc.Serve(lis)
 }

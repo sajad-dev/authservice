@@ -48,7 +48,7 @@ func (j JWT) Validate(tokenString string) (crypto.DataClaims, error) {
 	})
 
 	if err != nil {
-		return nil, err
+		return nil, errs.Err(err)
 	}
 
 	if !token.Valid {

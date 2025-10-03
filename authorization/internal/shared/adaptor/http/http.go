@@ -1,5 +1,5 @@
 package http
 
 type Http interface {
-	Run()
+	Run() error
 }

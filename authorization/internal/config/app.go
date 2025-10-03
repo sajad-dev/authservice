@@ -11,12 +11,17 @@ type AppConfig struct {
 	DATABASE_PASSWORD string
 	DATABASE_PORT     string
 	DATABASE_HOST     string
+	MODEL_CONF        string
 }
 
 type AppConfigOption func(*AppConfig)
 
 func WithAppName(name string) AppConfigOption {
 	return func(c *AppConfig) { c.APP_NAME = name }
+}
+
+func WithModelConf (path string) AppConfigOption {
+	return func(c *AppConfig) { c.MODEL_CONF = path }
 }
 
 func WithDescription(desc string) AppConfigOption {
@@ -65,6 +70,7 @@ func NewAppConfig(opts ...AppConfigOption) *AppConfig {
 		DATABASE_NAME:     "GOLANG_APP",
 		DATABASE_USER:     "root",
 		DATABASE_PASSWORD: "root",
+		MODEL_CONF:        "../../casbin/model.conf",
 		DATABASE_PORT:     "3306",
 		DATABASE_HOST:     "127.0.0.1",
 	}
@@ -73,4 +79,3 @@ func NewAppConfig(opts ...AppConfigOption) *AppConfig {
 	}
 	return cfg
 }
-

@@ -10,11 +10,12 @@ import (
 
 var Config = &AppConfig{}
 
-func BootConfig(address string, opts ...AppConfigOption) *AppConfig {
-	err := godotenv.Load(address)
-	if err != nil {
-		panic(fmt.Sprintf("Config error: %s", err))
-	}
+// func BootConfig(address string, opts ...AppConfigOption) *AppConfig {
+func BootConfig( opts ...AppConfigOption) *AppConfig {
+	// err := godotenv.Load(address)
+	// if err != nil {
+	// 	panic(fmt.Sprintf("Config error: %s", err))
+	// }
 
 	cfg := NewAppConfig(opts...)
 

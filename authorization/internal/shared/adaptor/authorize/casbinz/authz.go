@@ -1,4 +1,4 @@
-package casbin
+package casbinz
 
 import (
 	authz "github.com/casbin/casbin/v2"
