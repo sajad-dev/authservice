@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"context"
+
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/request"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/policyproto"
@@ -18,7 +20,7 @@ func NewPolicyHdlr(svc policy.PolicyService, vld validation.Validation) *PolicyH
 	return &PolicyHdlr{Service: svc, Validation: vld}
 }
 
-func (a *PolicyHdlr) Create(req *policyproto.CreateRequest) (*policyproto.Response, error) {
+func (a *PolicyHdlr) Create(ctx context.Context,req *policyproto.CreateRequest) (*policyproto.Response, error) {
 
 	reqValidation := request.ToRequestCreate(req)
 
@@ -34,7 +36,7 @@ func (a *PolicyHdlr) Create(req *policyproto.CreateRequest) (*policyproto.Respon
 	return res.ToProto(), nil
 }
 
-func (a *PolicyHdlr) Delete(req *policyproto.DeleteRequest) (*policyproto.Response, error) {
+func (a *PolicyHdlr) Delete(ctx context.Context,req *policyproto.DeleteRequest) (*policyproto.Response, error) {
 
 	reqValidation := request.ToRequestDelete(req)
 
@@ -50,7 +52,7 @@ func (a *PolicyHdlr) Delete(req *policyproto.DeleteRequest) (*policyproto.Respon
 	return res.ToProto(), nil
 }
 
-func (a *PolicyHdlr) GetAll(req *policyproto.GetAllRequest) (*policyproto.GetAllResponse, error) {
+func (a *PolicyHdlr) GetAll(ctx context.Context,req *policyproto.GetAllRequest) (*policyproto.GetAllResponse, error) {
 	res, err := a.Service.GetAll()
 	if err = globalerr.ServerErr(err); err != nil {
 		return nil, err

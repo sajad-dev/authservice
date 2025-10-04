@@ -2,16 +2,31 @@ package bootstrap
 
 import (
 	authz "github.com/envoyproxy/go-control-plane/envoy/service/auth/v3"
+	"github.com/go-playground/validator"
 	"github.com/jinzhu/gorm"
 	"github.com/sajad-dev/authservice/authorization/internal/config"
-	"github.com/sajad-dev/authservice/authorization/internal/domain/authorize/handler"
-	"github.com/sajad-dev/authservice/authorization/internal/domain/authorize/repository"
-	"github.com/sajad-dev/authservice/authorization/internal/domain/authorize/service"
+
+	authorizehdlr "github.com/sajad-dev/authservice/authorization/internal/domain/authorize/handler"
+	authorizerepo "github.com/sajad-dev/authservice/authorization/internal/domain/authorize/repository"
+	authorizesvc "github.com/sajad-dev/authservice/authorization/internal/domain/authorize/service"
+
+	grouphdlr "github.com/sajad-dev/authservice/authorization/internal/domain/group/handler"
+	grouprepo "github.com/sajad-dev/authservice/authorization/internal/domain/group/repository"
+	groupsvc "github.com/sajad-dev/authservice/authorization/internal/domain/group/service"
+
+	policyhdlr "github.com/sajad-dev/authservice/authorization/internal/domain/policy/handler"
+	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/policyproto"
+	policyrepo "github.com/sajad-dev/authservice/authorization/internal/domain/policy/repository"
+	policysvc "github.com/sajad-dev/authservice/authorization/internal/domain/policy/service"
+
+	"github.com/sajad-dev/authservice/authorization/internal/domain/group/groupproto"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/authorize"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/authorize/casbinz"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/crypto/hs256"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/setupdb"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/setupdb/postgres"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/validation"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/validation/validate"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs"
 
 	"google.golang.org/grpc"
@@ -43,12 +58,26 @@ func (b *Bootstrap) _setupDB() setupdb.SetupDB[*gorm.DB] {
 	)
 }
 
-func registerGrpc(gc *grpc.Server, repoDB authorize.Authorize) {
-	authz.RegisterAuthorizationServer(gc, handler.NewAuthorizeHdlr(
-		service.NewAuthorizeSvc(
-			repository.NewAuthorizeRepo(repoDB),
-			hs256.NewJWT([]byte("hi")),
+func (b *Bootstrap) registerGrpc(gc *grpc.Server, repoDB authorize.Authorize, vld validation.Validation) {
+	authz.RegisterAuthorizationServer(gc, authorizehdlr.NewAuthorizeHdlr(
+		authorizesvc.NewAuthorizeSvc(
+			authorizerepo.NewAuthorizeRepo(repoDB),
+			hs256.NewJWT([]byte(b.Config.JWT)),
 		),
+	))
+
+	groupproto.RegisterGroupServer(gc, grouphdlr.NewGroupHdlr(
+		groupsvc.NewGroupSvc(
+			grouprepo.NewGroupRepo(repoDB),
+		),
+		vld,
+	))
+
+	policyproto.RegisterPolicyServer(gc, policyhdlr.NewPolicyHdlr(
+		policysvc.NewPolicySvc(
+			policyrepo.NewPolicyRepo(repoDB),
+		),
+		vld,
 	))
 }
 
@@ -63,7 +92,9 @@ func (b *Bootstrap) Boot(gc *grpc.Server) error {
 		return errs.Err(err)
 	}
 
-	registerGrpc(gc, en)
+	vld := validate.NewValidate(validator.New())
+
+	b.registerGrpc(gc, en, vld)
 
 	return nil
 }

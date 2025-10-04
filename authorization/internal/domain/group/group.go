@@ -1,15 +1,17 @@
 package group
 
 import (
+	"context"
+
 	"github.com/sajad-dev/authservice/authorization/internal/domain/group/dto/gen/request"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/group/dto/gen/response"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/group/groupproto"
 )
 
 type GroupHandler interface {
-	Create(req *groupproto.CreateRequest) (*groupproto.Response, error)
-	Delete(req *groupproto.DeleteRequest) (*groupproto.Response, error)
-	GetAll(req *groupproto.GetAllRequest) (*groupproto.GetAllResponse, error)
+	Create(ctx context.Context, req *groupproto.CreateRequest) (*groupproto.Response, error)
+	Delete(ctx context.Context, req *groupproto.DeleteRequest) (*groupproto.Response, error)
+	GetAll(ctx context.Context, req *groupproto.GetAllRequest) (*groupproto.GetAllResponse, error)
 }
 
 type GroupService interface {

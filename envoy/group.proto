@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package group;
+
+import "google/api/annotations.proto";
+
+service Group {
+  rpc Create (CreateRequest) returns (Response) {
+    option (google.api.http) = {
+      get: "/"
+    };
+  }
+}
+
+message CreateRequest {
+      string subject = 1;
+      string Group = 2;
+}
+
+message Response {
+  int32 code = 1;
+  string msg = 2;
+}
+

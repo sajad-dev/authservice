@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"context"
+
 	"github.com/sajad-dev/authservice/authorization/internal/domain/group"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/group/dto/gen/request"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/group/groupproto"
@@ -18,7 +20,7 @@ func NewGroupHdlr(svc group.GroupService, vld validation.Validation) *GroupHdlr 
 	return &GroupHdlr{Service: svc, Validation: vld}
 }
 
-func (a *GroupHdlr) Create(req *groupproto.CreateRequest) (*groupproto.Response, error) {
+func (a *GroupHdlr) Create(ctx context.Context, req *groupproto.CreateRequest) (*groupproto.Response, error) {
 
 	reqValidation := request.ToRequestCreate(req)
 
@@ -34,7 +36,7 @@ func (a *GroupHdlr) Create(req *groupproto.CreateRequest) (*groupproto.Response,
 	return res.ToProto(), nil
 }
 
-func (a *GroupHdlr) Delete(req *groupproto.DeleteRequest) (*groupproto.Response, error) {
+func (a *GroupHdlr) Delete(ctx context.Context, req *groupproto.DeleteRequest) (*groupproto.Response, error) {
 
 	reqValidation := request.ToRequestDelete(req)
 
@@ -50,7 +52,7 @@ func (a *GroupHdlr) Delete(req *groupproto.DeleteRequest) (*groupproto.Response,
 	return res.ToProto(), nil
 }
 
-func (a *GroupHdlr) GetAll(req *groupproto.GetAllRequest) (*groupproto.GetAllResponse, error) {
+func (a *GroupHdlr) GetAll(ctx context.Context, req *groupproto.GetAllRequest) (*groupproto.GetAllResponse, error) {
 	res, err := a.Service.GetAll()
 	if err = globalerr.ServerErr(err); err != nil {
 		return nil, err
@@ -60,4 +62,3 @@ func (a *GroupHdlr) GetAll(req *groupproto.GetAllRequest) (*groupproto.GetAllRes
 }
 
 var _ group.GroupHandler = &GroupHdlr{}
-

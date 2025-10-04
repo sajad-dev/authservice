@@ -6,7 +6,7 @@ import (
 	"sync"
 )
 
-var instanse = AppConfig{}
+var Config = AppConfig{}
 var once sync.Once
 
 func _setConfigs() AppConfig {
@@ -30,8 +30,8 @@ func _setConfigs() AppConfig {
 
 func NewConfig() AppConfig {
 	once.Do(func() {
-		instanse = _setConfigs()
+		Config = _setConfigs()
 	})
 
-	return instanse
+	return Config
 }

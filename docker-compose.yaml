@@ -1,12 +1,19 @@
+version: "3.9"
+
 services:
   authorization:
-    build :
-      context: ./authorization      
+    build:
+      context: ./authorization
       dockerfile: Dockerfile
     container_name: authorization_service
     networks:
       - app_network
     restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
   db:
     image: postgres:latest
     container_name: postgres
@@ -19,6 +26,22 @@ services:
       POSTGRES_DB: authorization
     networks:
       - app_network
+
+  envoy:
+    image: envoyproxy/envoy:v1.34-latest
+    container_name: envoy_proxy
+    ports:
+      - "8080:8080"
+      - "8001:8001"
+    volumes:
+      - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml:ro
+      - ./envoy/group.pb:/etc/envoy/group.pb:ro 
+    depends_on:
+      - authorization
+    networks:
+      - app_network
+    restart: unless-stopped
+
 networks:
   app_network:
     driver: bridge

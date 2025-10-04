@@ -1,15 +1,17 @@
 package policy
 
 import (
+	"context"
+
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/request"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/response"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/policyproto"
 )
 
 type PolicyHandler interface {
-	Create(req *policyproto.CreateRequest) (*policyproto.Response, error)
-	Delete(req *policyproto.DeleteRequest) (*policyproto.Response, error)
-	GetAll(req *policyproto.GetAllRequest) (*policyproto.GetAllResponse, error)
+	Create(ctx context.Context,req *policyproto.CreateRequest) (*policyproto.Response, error)
+	Delete(ctx context.Context,req *policyproto.DeleteRequest) (*policyproto.Response, error)
+	GetAll(ctx context.Context,req *policyproto.GetAllRequest) (*policyproto.GetAllResponse, error)
 }
 
 type PolicyService interface {
