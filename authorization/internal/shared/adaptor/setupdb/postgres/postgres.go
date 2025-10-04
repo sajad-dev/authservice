@@ -3,10 +3,9 @@ package postgres
 import (
 	"fmt"
 
-	"github.com/jinzhu/gorm"
+	gormadapter "github.com/casbin/gorm-adapter/v2"
 	_ "github.com/lib/pq"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/setupdb"
-	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs"
 )
 
 type SetupPostgres struct {
@@ -27,30 +26,17 @@ func NewSetupPostgres(port string, username string, password string, host string
 	}
 }
 
-func (d *SetupPostgres) Connection() (*gorm.DB, error) {
-	dsn := fmt.Sprintf("Connecting with DSN: host=%q user=%q password=%q dbname=%q port=%q sslmode=disable\n",
-		d.Host, d.Username, d.Password, "postgres", d.Port)
-	db, err := gorm.Open("postgres", dsn)
+func (d *SetupPostgres) Connection() (*gormadapter.Adapter, error) {
+	fmt.Printf("user=%s password=%s host=%s port=%s dbname=%s sslmode=disable \n", d.Username, d.Password, d.Host, d.Port, d.DbName)
+	adapter, err := gormadapter.NewAdapter(
+		"postgres",
+		fmt.Sprintf("user=%s password=%s host=%s port=%s dbname=%s sslmode=disable", d.Username, d.Password, d.Host, d.Port, d.DbName),
+	)
+
 	if err != nil {
-		return nil, errs.Err(err)
+		return nil, err
 	}
-
-	var exists bool
-	db.Raw("SELECT EXISTS(SELECT 1 FROM pg_database WHERE datname = ?)", d.DbName).Scan(&exists)
-
-	if !exists {
-		err = db.Exec(fmt.Sprintf("CREATE DATABASE %s", d.DbName)).Error
-		if err != nil {
-			return nil, errs.Err(err)
-		}
-	}
-
-	dsn = fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", d.Host, d.Username, d.Password, d.DbName, d.Port)
-	db, err = gorm.Open("postgres", dsn)
-	if err != nil {
-		return nil, errs.Err(err)
-	}
-	return db, nil
+	return adapter, nil
 }
 
-var _ setupdb.SetupDB[*gorm.DB] = &SetupPostgres{}
+var _ setupdb.SetupDB[*gormadapter.Adapter] = &SetupPostgres{}

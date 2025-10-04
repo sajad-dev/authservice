@@ -24,7 +24,7 @@ static_resources:
               domains: ["*"]
               routes:
               - match:
-                  prefix: /group.Group  # protos is packege name
+                  prefix: /groupproto.Group  # protos is packege name
                 route:
                   cluster: authorization_service
                   timeout: 60s
@@ -34,7 +34,7 @@ static_resources:
               "@type": type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder
               proto_descriptor: /etc/envoy/group.pb #proto address
               services:
-              - group.Group # protos is packege name
+              - groupproto.Group # protos is packege name
               print_options:
                 add_whitespace: true
                 always_print_primitive_fields: true

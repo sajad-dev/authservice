@@ -5,18 +5,14 @@ import (
 
 	"github.com/casbin/casbin/v2"
 	gormadapter "github.com/casbin/gorm-adapter/v2"
-	"github.com/jinzhu/gorm"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs"
 )
 
 var instanse *casbin.Enforcer
 var once sync.Once
 
-func _newInstanse(db *gorm.DB, model string) (*casbin.Enforcer, error) {
-	adapter, err := gormadapter.NewAdapterByDB(db)
-	if err != nil {
-		return nil, errs.Err(err)
-	}
+func _newInstanse(adapter *gormadapter.Adapter,model string) (*casbin.Enforcer, error) {
+
 
 	enforcer, err := casbin.NewEnforcer(model, adapter)
 	if err != nil {
@@ -27,10 +23,10 @@ func _newInstanse(db *gorm.DB, model string) (*casbin.Enforcer, error) {
 
 }
 
-func CreateInstanse(db *gorm.DB, model string) (*casbin.Enforcer, error) {
+func CreateInstanse(adapter *gormadapter.Adapter,model string) (*casbin.Enforcer, error) {
 	var err error
 	once.Do(func() {
-		instanse, err = _newInstanse(db, model)
+		instanse, err = _newInstanse(adapter,model)
 	})
 
 	return instanse, err

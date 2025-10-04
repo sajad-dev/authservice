@@ -5,6 +5,8 @@ services:
     build:
       context: ./authorization
       dockerfile: Dockerfile
+    env_file:
+      - ./authorization/.env
     container_name: authorization_service
     networks:
       - app_network
@@ -16,14 +18,14 @@ services:
 
   db:
     image: postgres:latest
-    container_name: postgres
+    container_name: postgres_db
     restart: always
     ports:
       - "5432:5432"
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: authorization
+      # POSTGRES_DB: authorization
     networks:
       - app_network
 

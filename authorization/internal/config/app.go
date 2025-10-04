@@ -33,7 +33,7 @@ func NewAppConfig() *AppConfig {
 		AUTHOR:            "Sajad pourajam",
 		DEBUG:             "true",
 		JWT:               "",
-		DATABASE_NAME:     "GOLANG_APP",
+		DATABASE_NAME:     "authorization",
 		DATABASE_USER:     "root",
 		DATABASE_PASSWORD: "root",
 		MODEL_CONF:        fmt.Sprintf("%s/casbin/model.conf", root),

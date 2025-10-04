@@ -1,9 +1,11 @@
 package bootstrap
 
 import (
+	"log"
+
+	gormadapter "github.com/casbin/gorm-adapter/v2"
 	authz "github.com/envoyproxy/go-control-plane/envoy/service/auth/v3"
 	"github.com/go-playground/validator"
-	"github.com/jinzhu/gorm"
 	"github.com/sajad-dev/authservice/authorization/internal/config"
 
 	authorizehdlr "github.com/sajad-dev/authservice/authorization/internal/domain/authorize/handler"
@@ -40,15 +42,17 @@ func NewBootstrap(cnf config.AppConfig) *Bootstrap {
 	return &Bootstrap{Config: cnf}
 }
 
-func (b *Bootstrap) _casbinInstanse(db *gorm.DB) (authorize.Authorize, error) {
-	en, err := casbinz.CreateInstanse(db, b.Config.MODEL_CONF)
+func (b *Bootstrap) _casbinInstanse(adapter *gormadapter.Adapter) (authorize.Authorize, error) {
+	log.Println("Boot GRPC")
+
+	en, err := casbinz.CreateInstanse(adapter, b.Config.MODEL_CONF)
 	if err != nil {
 		return nil, errs.Err(err)
 	}
 	return casbinz.NewCasbin(en), nil
 }
 
-func (b *Bootstrap) _setupDB() setupdb.SetupDB[*gorm.DB] {
+func (b *Bootstrap) _setupDB() setupdb.SetupDB[*gormadapter.Adapter] {
 	return postgres.NewSetupPostgres(
 		b.Config.DATABASE_PORT,
 		b.Config.DATABASE_USER,
