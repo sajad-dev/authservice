@@ -1,0 +1,20 @@
+[
+  {
+    "name": "a",
+    "endpoints": [
+      {
+        "address": "a",
+        "port": 8080
+      }
+    ]
+  },
+  {
+    "name": "b",
+    "endpoints": [
+      {
+        "address": "b",
+        "port": 8080
+      }
+    ]
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "version_info": "1",
+  "resources": [],
+  "type_url": "type.googleapis.com/envoy.config.cluster.v3.Cluster",
+  "nonce": "1",
+  "control_plane": {
+    "identifier": "go-xds-server"
+  }
+}

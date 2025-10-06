@@ -1,53 +1,10 @@
-package handler
+package main
 
 import (
 	"log"
 
 	"github.com/gin-gonic/gin"
 )
-
-func Clusters(ctx *gin.Context) {
-	log.Println("Cluster")
-
-	response := map[string]interface{}{
-		"version_info": "1",
-		"resources": []map[string]interface{}{
-			{
-				"@type":           "type.googleapis.com/envoy.config.cluster.v3.Cluster",
-				"name":            "service_cluster",
-				"type":            "STRICT_DNS",
-				"connect_timeout": "1s",
-				"lb_policy":       "ROUND_ROBIN",
-				"load_assignment": map[string]interface{}{
-					"cluster_name": "service_cluster",
-					"endpoints": []map[string]interface{}{
-						{
-							"lb_endpoints": []map[string]interface{}{
-								{
-									"endpoint": map[string]interface{}{
-										"address": map[string]interface{}{
-											"socket_address": map[string]interface{}{
-												"address":    "service",
-												"port_value": 8080,
-											},
-										},
-									},
-								},
-							},
-						},
-					},
-				},
-			},
-		},
-		"type_url": "type.googleapis.com/envoy.config.cluster.v3.Cluster",
-		"nonce":    "1",
-		"control_plane": map[string]interface{}{
-			"identifier": "go-xds-server",
-		},
-	}
-
-	ctx.JSON(200, response)
-}
 
 func Listeners(ctx *gin.Context) {
 	log.Println("Listeners")
@@ -93,10 +50,8 @@ func Listeners(ctx *gin.Context) {
 									},
 									"http_filters": []map[string]interface{}{
 										{
-											"name": "envoy.filters.http.router",
-											"typed_config": map[string]interface{}{ // ✅ اضافه شد
-												"@type": "type.googleapis.com/envoy.extensions.filters.http.router.v3.Router",
-											},
+											"name":         "envoy.filters.http.router",
+											"typed_config": map[string]interface{}{"@type": "type.googleapis.com/envoy.extensions.filters.http.router.v3.Router"},
 										},
 									},
 								},
