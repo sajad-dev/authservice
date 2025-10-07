@@ -1,6 +1,7 @@
 {
   "listeners": [
     {
+      "@type": "type.googleapis.com/envoy.config.listener.v3.Listener",
       "name": "listener_0",
       "address": {
         "socket_address": {

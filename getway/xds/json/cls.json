@@ -1,19 +1,10 @@
 [
   {
-    "name": "a",
+    "name": "authorization_service",
     "endpoints": [
       {
-        "address": "a",
-        "port": 8080
-      }
-    ]
-  },
-  {
-    "name": "b",
-    "endpoints": [
-      {
-        "address": "b",
-        "port": 8080
+        "address": "authorization_service",
+        "port": 3000
       }
     ]
   }

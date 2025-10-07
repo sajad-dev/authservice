@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package groupproto;
+
+import "google/api/annotations.proto";
+
+service Group {
+  rpc Create (CreateRequest) returns (Response) {
+    option (google.api.http) = {
+      get: "/"
+    };
+  }
+
+  // rpc Delete (DeleteRequest) returns (Response) {
+  //   option (google.api.http) = {
+  //     delete: "/group"
+  //   };
+  // }
+
+  // rpc GetAll (GetAllRequest) returns (GetAllResponse) {
+  //   option (google.api.http) = {
+  //     get: "/"
+  //   };
+  // }
+}
+
+message Response {
+  int32 code = 1;
+  string msg = 2;
+}
+
+message GroupList {
+  repeated string group = 1;
+}
+
+message GetAllResponse {
+  int32 code = 1;
+  string msg = 2;
+  repeated GroupList data = 3;
+}
+
+message CreateRequest {
+  string subject = 1;
+  string Group = 2;
+}
+
+message DeleteRequest {
+  string subject = 1;
+  string Group = 2;
+}
+
+message GetAllRequest {
+}
+

@@ -16,6 +16,17 @@ services:
     depends_on:
       - db
 
+  xds:
+    build:
+      context: ./getway/xds
+      dockerfile: Dockerfile
+    container_name: xds
+    networks:
+      - app_network
+    restart: unless-stopped
+    ports:
+      - "8082:8082"
+
   db:
     image: postgres:latest
     container_name: postgres_db
@@ -34,12 +45,13 @@ services:
     container_name: envoy_proxy
     ports:
       - "8080:8080"
-      - "8001:8001"
+      - "8081:8081"
     volumes:
-      - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml:ro
-      - ./envoy/group.pb:/etc/envoy/group.pb:ro 
+      - ./getway/envoy.yaml:/etc/envoy/envoy.yaml:ro
+      - ./getway/group.pb:/etc/envoy/group.pb:ro
     depends_on:
       - authorization
+      - xds
     networks:
       - app_network
     restart: unless-stopped

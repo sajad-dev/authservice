@@ -6,12 +6,27 @@ import (
 )
 
 type Cluster struct {
-	Type           string         `json:"@type"`
-	Name           string         `json:"name"`
-	ClusterType    string         `json:"type"`
-	ConnectTimeout string         `json:"connect_timeout"`
-	LbPolicy       string         `json:"lb_policy"`
-	LoadAssignment LoadAssignment `json:"load_assignment"`
+	Type                          string                         `json:"@type"`
+	Name                          string                         `json:"name"`
+	ClusterType                   string                         `json:"type"`
+	ConnectTimeout                string                         `json:"connect_timeout"`
+	LbPolicy                      string                         `json:"lb_policy"`
+	DNSLookupFamily               string                         `json:"dns_lookup_family,omitempty"`
+	TypedExtensionProtocolOptions *TypedExtensionProtocolOptions `json:"typed_extension_protocol_options,omitempty"`
+	LoadAssignment                LoadAssignment                 `json:"load_assignment"`
+}
+
+type TypedExtensionProtocolOptions struct {
+	HttpProtocolOptions *HttpProtocolOptionsWrapper `json:"envoy.extensions.upstreams.http.v3.HttpProtocolOptions"`
+}
+
+type HttpProtocolOptionsWrapper struct {
+	Type               string              `json:"@type"`
+	ExplicitHttpConfig *ExplicitHttpConfig `json:"explicit_http_config"`
+}
+
+type ExplicitHttpConfig struct {
+	Http2ProtocolOptions map[string]interface{} `json:"http2_protocol_options"`
 }
 
 type LoadAssignment struct {
@@ -55,17 +70,17 @@ type Service struct {
 func Clusters(ctx *gin.Context) {
 	cls, err := handler.GetJson[Cluster]("json/cls_static.json")
 	if err != nil {
-		ctx.JSON(500, gin.H{"error": err.Error()})
+		ctx.JSON(500, gin.H{"error cls static": err.Error()})
 		return
 	}
 	svcArray, err := handler.GetJson[[]Service]("json/cls.json")
 	if err != nil {
-		ctx.JSON(500, gin.H{"error": err.Error()})
+		ctx.JSON(500, gin.H{"error cls": err.Error()})
 		return
 	}
 	discoveryResponse, err := handler.GetJson[handler.DiscoveryResponse[Cluster]]("json/discovery_response.json")
 	if err != nil {
-		ctx.JSON(500, gin.H{"error": err.Error()})
+		ctx.JSON(500, gin.H{"error discovery": err.Error()})
 		return
 	}
 	var clsArray []Cluster

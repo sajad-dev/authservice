@@ -1,9 +1,9 @@
 {
-  "pb": "",
+  "pb": "/etc/envoy/group.pb",
   "routes": [
     {
-      "prefix": "",
-      "cluster": ""
+      "prefix": "groupproto.Group",
+      "cluster": "authorization_service"
     }
   ]
 }

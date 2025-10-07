@@ -24,13 +24,13 @@ dynamic_resources:
     api_config_source:
       api_type: REST
       cluster_names: [xds_cluster]
-      refresh_delay: 10s 
+      refresh_delay: 3600s 
 
   cds_config:
     api_config_source:
       api_type: REST
       cluster_names: [xds_cluster]
-      refresh_delay: 10s 
+      refresh_delay: 3600s 
 
 node:
   id: test-node

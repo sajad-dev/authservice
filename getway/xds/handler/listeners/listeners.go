@@ -11,6 +11,7 @@ type Config struct {
 
 type Listener struct {
 	Name         string        `json:"name"`
+	Type        string       `json:"@type"`
 	Address      Address       `json:"address"`
 	FilterChains []FilterChain `json:"filter_chains"`
 }
@@ -168,5 +169,6 @@ func Listeners(ctx *gin.Context) {
 	}
 
 	discoveryResponse.Resources = lds.Listeners
+	discoveryResponse.TypeURL = "type.googleapis.com/envoy.config.listener.v3.Listener"
 	ctx.JSON(200, discoveryResponse)
 }
