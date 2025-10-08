@@ -10,10 +10,10 @@ import (
 )
 
 type AccountCURDHandler interface {
-	Create(ctx *context.Context, req *accountproto.CreateRequest) (*accountproto.CreateResponse, error)
-	Update(ctx *context.Context, req *accountproto.UpdateRequest) (*accountproto.UpdateResponse, error)
-	Delete(ctx *context.Context, req *accountproto.DeleteRequest) (*accountproto.DeleteResponse, error)
-	Read(ctx *context.Context, req *accountproto.ReadRequest) (*accountproto.ReadResponse, error)
+	Create(ctx context.Context, req *accountproto.CreateRequest) (*accountproto.CreateResponse, error)
+	Update(ctx context.Context, req *accountproto.UpdateRequest) (*accountproto.UpdateResponse, error)
+	Delete(ctx context.Context, req *accountproto.DeleteRequest) (*accountproto.DeleteResponse, error)
+	Read(ctx context.Context, req *accountproto.ReadRequest) (*accountproto.ReadResponse, error)
 }
 
 type AccountCURDService interface {

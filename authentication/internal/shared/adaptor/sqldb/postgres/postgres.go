@@ -13,6 +13,12 @@ type Postgres[M any] struct {
 	DB *gorm.DB
 }
 
+func NewPostgres[T any](db *gorm.DB) *Postgres[T] {
+	return &Postgres[T]{
+		DB: db,
+	}
+}
+
 func (p *Postgres[M]) Create(params M) error {
 	return p.DB.Create(params).Error
 }
@@ -35,7 +41,7 @@ func (p *Postgres[M]) Save(params M) error {
 
 func (p *Postgres[M]) GetByID(id int) (M, error) {
 	var params M
-	err := p.DB.First(&params,id).Error
+	err := p.DB.First(&params, id).Error
 	return params, err
 }
 
@@ -49,6 +55,10 @@ func (p *Postgres[M]) RemoveExpierd(column string, id int) error {
 	return p.DB.Where(fmt.Sprintf("%s = ?", column), id).
 		Or("expired_at < ?", time.Now()).
 		Delete(&params).Error
+}
+
+func (p *Postgres[M]) Table(tablename string) *gorm.DB {
+	return p.DB.Table(tablename)
 }
 
 var _ sqldb.SqlDB[struct{}] = &Postgres[struct{}]{}

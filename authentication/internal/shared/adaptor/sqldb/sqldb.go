@@ -1,5 +1,7 @@
 package sqldb
 
+import "gorm.io/gorm"
+
 type SqlDB[M any] interface {
 	Create(params M) error
 	Where(params M) ([]M, error)
@@ -8,4 +10,5 @@ type SqlDB[M any] interface {
 	GetByID(id int) (M, error)
 	Delete(id int) error
 	RemoveExpierd(column string, id int) error
+	Table(string) *gorm.DB
 }

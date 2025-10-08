@@ -6,21 +6,22 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/accountproto"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/dto/gen/request"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/globalerr"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 )
 
 type AccountHdlr struct {
 	accountproto.UnimplementedAccountServer
 	Service    account.AccountCURDService
-	Validation validation.Validation
+	Validation validation.Validation[*models.Accounts]
 }
 
-func NewAccountHdlr(svc account.AccountCURDService, vld validation.Validation) *AccountHdlr {
+func NewAccountHdlr(svc account.AccountCURDService, vld validation.Validation[*models.Accounts]) *AccountHdlr {
 	return &AccountHdlr{Service: svc, Validation: vld}
 }
 
-func (a *AccountHdlr) Create(ctx *context.Context, req *accountproto.CreateRequest) (*accountproto.CreateResponse, error) {
+func (a *AccountHdlr) Create(ctx context.Context, req *accountproto.CreateRequest) (*accountproto.CreateResponse, error) {
 
 	reqValidation := request.ToRequestCreate(req)
 
@@ -36,7 +37,7 @@ func (a *AccountHdlr) Create(ctx *context.Context, req *accountproto.CreateReque
 	return res.ToProto(), nil
 }
 
-func (a *AccountHdlr) Update(ctx *context.Context, req *accountproto.UpdateRequest) (*accountproto.UpdateResponse, error) {
+func (a *AccountHdlr) Update(ctx context.Context, req *accountproto.UpdateRequest) (*accountproto.UpdateResponse, error) {
 	reqValidation := request.ToRequestUpdate(req)
 
 	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
@@ -51,7 +52,7 @@ func (a *AccountHdlr) Update(ctx *context.Context, req *accountproto.UpdateReque
 	return res.ToProto(), nil
 }
 
-func (a *AccountHdlr) Delete(ctx *context.Context, req *accountproto.DeleteRequest) (*accountproto.DeleteResponse, error) {
+func (a *AccountHdlr) Delete(ctx context.Context, req *accountproto.DeleteRequest) (*accountproto.DeleteResponse, error) {
 	reqValidation := request.ToRequestDelete(req)
 
 	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
@@ -66,7 +67,7 @@ func (a *AccountHdlr) Delete(ctx *context.Context, req *accountproto.DeleteReque
 	return res.ToProto(), nil
 }
 
-func (a *AccountHdlr) Read(ctx *context.Context, req *accountproto.ReadRequest) (*accountproto.ReadResponse, error) {
+func (a *AccountHdlr) Read(ctx context.Context, req *accountproto.ReadRequest) (*accountproto.ReadResponse, error) {
 	reqValidation := request.ToRequestRead(req)
 
 	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
