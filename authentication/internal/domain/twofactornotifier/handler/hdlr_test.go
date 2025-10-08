@@ -1,17 +1,18 @@
 package handler_test
 
 import (
+	"context"
 	"testing"
 
-	"github.com/go-playground/validator/v10"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/dto/gen/response"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/handler"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/mocks"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/twofactornotifierproto"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
+	mockdb "github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb/mocks"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/statuscode"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 )
@@ -26,7 +27,9 @@ func (s *TestTwoFactorNotifierHandlerSuite) SetupSuite() {
 	mocksSVC := new(mocks.TwoFactorNotifierService)
 	s.mocksSVC = mocksSVC
 
-	s.handler = handler.NewTwoFactorNotifierHdlr(mocksSVC, validate.NewValidate(validator.New()))
+	mockDB := &mockdb.SqlDBGlobal{}
+
+	s.handler = handler.NewTwoFactorNotifierHdlr(mocksSVC, validation.NewValidator(mockDB))
 }
 
 func (s *TestTwoFactorNotifierHandlerSuite) TestNotifierEmail() {
@@ -53,7 +56,7 @@ func (s *TestTwoFactorNotifierHandlerSuite) TestNotifierEmail() {
 		s.Run(tt.name, func() {
 			s.mocksSVC.On("NotifierEmail", mock.Anything).Return(tt.res, nil)
 
-			resp, err := s.handler.NotifierEmail(tt.req)
+			resp, err := s.handler.NotifierEmail(context.Background(),tt.req)
 			if !tt.wantErr {
 				s.NoError(err)
 			} else {

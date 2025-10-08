@@ -1,17 +1,19 @@
 package handler_test
 
 import (
+	"context"
 	"testing"
 
-	"github.com/go-playground/validator/v10"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword/dto/gen/response"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword/forgetpasswordproto"
+	mockdb "github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb/mocks"
+
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword/handler"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword/mocks"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/statuscode"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 )
@@ -26,7 +28,10 @@ func (s *TestForgetPasswordHandlerSuite) SetupSuite() {
 	mocksSVC := new(mocks.ForgetPasswordService)
 	s.mocksSVC = mocksSVC
 
-	s.handler = handler.NewForgetPasswordHdlr(mocksSVC, validate.NewValidate(validator.New()))
+	mockDB := &mockdb.SqlDBGlobal{}
+
+
+	s.handler = handler.NewForgetPasswordHdlr(mocksSVC, validation.NewValidator(mockDB))
 }
 
 func (s *TestForgetPasswordHandlerSuite) TestForget() {
@@ -53,7 +58,7 @@ func (s *TestForgetPasswordHandlerSuite) TestForget() {
 		s.Run(tt.name, func() {
 			s.mocksSVC.On("Forget", mock.Anything).Return(tt.res, nil)
 
-			resp, err := s.handler.Forget(tt.req)
+			resp, err := s.handler.Forget(context.Background(),tt.req)
 			if !tt.wantErr {
 				s.NoError(err)
 			} else {
@@ -75,7 +80,7 @@ func (s *TestForgetPasswordHandlerSuite) TestReset() {
 	}{
 		{
 			name: "Success",
-			req:  &forgetpasswordproto.ResetRequest{Token: "token", Password: "123456", PasswordConfirmation: "123456"},
+			req:  &forgetpasswordproto.ResetRequest{Token: "token", Password: "12345678", PasswordConfirmation: "12345678"},
 			res: response.ResetResponse{
 				Code: statuscode.SUCCESSFUL,
 				Msg:  messages.SUCCESS_PASSWORD_RESET,
@@ -89,7 +94,7 @@ func (s *TestForgetPasswordHandlerSuite) TestReset() {
 		s.Run(tt.name, func() {
 			s.mocksSVC.On("Reset", mock.Anything).Return(tt.res, nil)
 
-			resp, err := s.handler.Reset(tt.req)
+			resp, err := s.handler.Reset(context.Background(),tt.req)
 			if !tt.wantErr {
 				s.NoError(err)
 			} else {

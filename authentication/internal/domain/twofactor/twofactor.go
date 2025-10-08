@@ -10,8 +10,8 @@ import (
 )
 
 type TwoFactorHandler interface {
-	Email(ctx *context.Context, req *twofactorproto.EmailRequest) (*twofactorproto.TwoFactorResponse, error)
-	Google(ctx *context.Context, req *twofactorproto.GoogleRequest) (*twofactorproto.TwoFactorResponse, error)
+	Email(ctx context.Context, req *twofactorproto.EmailRequest) (*twofactorproto.TwoFactorResponse, error)
+	Google(ctx context.Context, req *twofactorproto.GoogleRequest) (*twofactorproto.TwoFactorResponse, error)
 }
 
 type TwoFactorService interface {

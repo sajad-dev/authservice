@@ -10,7 +10,7 @@ import (
 )
 
 type TwoFactorNotifierHandler interface {
-	NotifierEmail(ctx *context.Context, req *twofactornotifierproto.NotifierEmailRequest) (*twofactornotifierproto.TwoFactorNotifierResponse, error)
+	NotifierEmail(ctx context.Context, req *twofactornotifierproto.NotifierEmailRequest) (*twofactornotifierproto.TwoFactorNotifierResponse, error)
 }
 
 type TwoFactorNotifierService interface {

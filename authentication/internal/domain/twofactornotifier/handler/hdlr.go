@@ -25,7 +25,7 @@ func NewTwoFactorNotifierHdlr(svc twofactornotifier.TwoFactorNotifierService, vl
 	}
 }
 
-func (a *TwoFactorNotifierHdlr) NotifierEmail(ctx *context.Context, req *twofactornotifierproto.NotifierEmailRequest) (*twofactornotifierproto.TwoFactorNotifierResponse, error) {
+func (a *TwoFactorNotifierHdlr) NotifierEmail(ctx context.Context, req *twofactornotifierproto.NotifierEmailRequest) (*twofactornotifierproto.TwoFactorNotifierResponse, error) {
 
 	reqValidation := request.ToRequestNotifierEmail(req)
 

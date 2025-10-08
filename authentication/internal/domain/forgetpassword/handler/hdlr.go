@@ -25,7 +25,7 @@ func NewForgetPasswordHdlr(svc forgetpassword.ForgetPasswordService, vld validat
 	}
 }
 
-func (a *ForgetPasswordHdlr) Forget(ctx *context.Context, req *forgetpasswordproto.ForgetRequest) (*forgetpasswordproto.ForgetResponse, error) {
+func (a *ForgetPasswordHdlr) Forget(ctx context.Context, req *forgetpasswordproto.ForgetRequest) (*forgetpasswordproto.ForgetResponse, error) {
 
 	reqValidation := request.ToRequestForget(req)
 
@@ -41,7 +41,7 @@ func (a *ForgetPasswordHdlr) Forget(ctx *context.Context, req *forgetpasswordpro
 	return res.ToProto(), nil
 }
 
-func (a *ForgetPasswordHdlr) Reset(ctx *context.Context, req *forgetpasswordproto.ResetRequest) (*forgetpasswordproto.ResetResponse, error) {
+func (a *ForgetPasswordHdlr) Reset(ctx context.Context, req *forgetpasswordproto.ResetRequest) (*forgetpasswordproto.ResetResponse, error) {
 
 	reqValidation := request.ToRequestReset(req)
 

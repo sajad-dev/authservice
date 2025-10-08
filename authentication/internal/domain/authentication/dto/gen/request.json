@@ -15,7 +15,7 @@
             "To": "Username",
             "Type": "string",
             "From": "Username",
-            "Validations": "required,exists=accounts",
+            "Validations": "required",
             "Json": "username"
           },
           {

@@ -1,17 +1,18 @@
 package handler_test
 
 import (
+	"context"
 	"testing"
 
-	"github.com/go-playground/validator/v10"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor"
-	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor/twofactorproto"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor/dto/gen/response"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor/handler"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor/mocks"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
+	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor/twofactorproto"
+	mockdb "github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb/mocks"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/statuscode"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 )
@@ -25,8 +26,9 @@ type TestTwoFactorHandlerSuite struct {
 func (s *TestTwoFactorHandlerSuite) SetupSuite() {
 	mocksSVC := new(mocks.TwoFactorService)
 	s.mocksSVC = mocksSVC
+	mockDB := &mockdb.SqlDBGlobal{}
 
-	s.handler = handler.NewTwoFactorHdlr(mocksSVC, validate.NewValidate(validator.New()))
+	s.handler = handler.NewTwoFactorHdlr(mocksSVC, validation.NewValidator(mockDB))
 }
 
 func (s *TestTwoFactorHandlerSuite) TestEmail() {
@@ -53,7 +55,7 @@ func (s *TestTwoFactorHandlerSuite) TestEmail() {
 		s.Run(tt.name, func() {
 			s.mocksSVC.On("Email", mock.Anything).Return(tt.res, nil)
 
-			resp, err := s.handler.Email(tt.req)
+			resp, err := s.handler.Email(context.Background(), tt.req)
 			if !tt.wantErr {
 				s.NoError(err)
 			} else {
@@ -89,7 +91,7 @@ func (s *TestTwoFactorHandlerSuite) TestGoogle() {
 		s.Run(tt.name, func() {
 			s.mocksSVC.On("Google", mock.Anything).Return(tt.res, nil)
 
-			resp, err := s.handler.Google(tt.req)
+			resp, err := s.handler.Google(context.Background(), tt.req)
 			if !tt.wantErr {
 				s.NoError(err)
 			} else {
@@ -104,4 +106,3 @@ func (s *TestTwoFactorHandlerSuite) TestGoogle() {
 func TestTwoFactorHandlerSuite_Run(t *testing.T) {
 	suite.Run(t, new(TestTwoFactorHandlerSuite))
 }
-

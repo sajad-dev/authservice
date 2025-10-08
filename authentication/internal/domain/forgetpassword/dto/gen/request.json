@@ -15,7 +15,7 @@
             "To": "Email",
             "Type": "string",
             "From": "Email",
-            "Validations": "required,exists=accounts",
+            "Validations": "required",
             "Json": "email"
           }
         ]

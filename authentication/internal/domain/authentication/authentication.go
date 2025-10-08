@@ -10,8 +10,8 @@ import (
 )
 
 type AuthenticatorHandler interface {
-	Login(ctx *context.Context, req *authenticationproto.LoginRequest) (*authenticationproto.LoginResponse, error)
-	Register(ctx *context.Context,req *authenticationproto.RegisterRequest) (*authenticationproto.RegisterResponse, error)
+	Login(ctx context.Context, req *authenticationproto.LoginRequest) (*authenticationproto.LoginResponse, error)
+	Register(ctx context.Context,req *authenticationproto.RegisterRequest) (*authenticationproto.RegisterResponse, error)
 }
 type AuthenticatorService interface {
 	Login(req request.LoginRequest) (response.LoginResponse, error)

@@ -5,7 +5,7 @@ import (
 )
 
 type ForgetRequest struct {
-	Email string `json:"email" validate:"required,exists=accounts"`
+	Email string `json:"email" validate:"required"`
 } 
 
 func ToRequestForget(pd *forgetpasswordproto.ForgetRequest) *ForgetRequest {

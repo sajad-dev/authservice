@@ -10,8 +10,8 @@ import (
 )
 
 type ForgetPasswordHandler interface {
-	Forget(ctx *context.Context, req *forgetpasswordproto.ForgetRequest) (*forgetpasswordproto.ForgetResponse, error)
-	Reset(ctx *context.Context, req *forgetpasswordproto.ResetRequest) (*forgetpasswordproto.ResetResponse, error)
+	Forget(ctx context.Context, req *forgetpasswordproto.ForgetRequest) (*forgetpasswordproto.ForgetResponse, error)
+	Reset(ctx context.Context, req *forgetpasswordproto.ResetRequest) (*forgetpasswordproto.ResetResponse, error)
 }
 
 type ForgetPasswordService interface {

@@ -24,7 +24,7 @@ func NewTwoFactorHdlr(svc twofactor.TwoFactorService, vld validation.Validation)
 	}
 }
 
-func (a *TwoFactorHdlr) Email(ctx *context.Context, req *twofactorproto.EmailRequest) (*twofactorproto.TwoFactorResponse, error) {
+func (a *TwoFactorHdlr) Email(ctx context.Context, req *twofactorproto.EmailRequest) (*twofactorproto.TwoFactorResponse, error) {
 
 	reqValidation := request.ToRequestEmail(req)
 
@@ -40,7 +40,7 @@ func (a *TwoFactorHdlr) Email(ctx *context.Context, req *twofactorproto.EmailReq
 	return res.ToProto(), nil
 }
 
-func (a *TwoFactorHdlr) Google(ctx *context.Context, req *twofactorproto.GoogleRequest) (*twofactorproto.TwoFactorResponse, error) {
+func (a *TwoFactorHdlr) Google(ctx context.Context, req *twofactorproto.GoogleRequest) (*twofactorproto.TwoFactorResponse, error) {
 
 	reqValidation := request.ToRequestGoogle(req)
 
