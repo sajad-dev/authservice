@@ -34,6 +34,7 @@ func ServerErr(errParametr error) error {
 		return nil
 	}
 }
+
 func ValidationErr(errParametr error) error {
 	if errParametr != nil {
 		if validationErr, ok := errParametr.(validator.ValidationErrors); ok {

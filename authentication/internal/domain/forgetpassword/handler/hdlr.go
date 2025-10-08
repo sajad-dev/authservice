@@ -7,7 +7,7 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword/dto/gen/request"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword/forgetpasswordproto"
 
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/validation"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/globalerr"
 )
 
@@ -29,7 +29,7 @@ func (a *ForgetPasswordHdlr) Forget(ctx *context.Context, req *forgetpasswordpro
 
 	reqValidation := request.ToRequestForget(req)
 
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
 		return nil, err
 	}
 
@@ -45,7 +45,7 @@ func (a *ForgetPasswordHdlr) Reset(ctx *context.Context, req *forgetpasswordprot
 
 	reqValidation := request.ToRequestReset(req)
 
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
 		return nil, err
 	}
 

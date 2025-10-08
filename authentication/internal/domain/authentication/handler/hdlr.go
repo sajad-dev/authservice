@@ -6,7 +6,7 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/domain/authentication"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/authentication/authenticationproto"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/authentication/dto/gen/request"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/validation"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/globalerr"
 )
 
@@ -28,7 +28,7 @@ func (a *AuthenticationHdlr) Login(ctx *context.Context, req *authenticationprot
 
 	reqValidation := request.ToRequestLogin(req)
 
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
 		return nil, err
 	}
 
@@ -44,7 +44,7 @@ func (a *AuthenticationHdlr) Register(ctx *context.Context, req *authenticationp
 
 	reqValidation := request.ToRequestRegister(req)
 
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
 		return nil, err
 	}
 

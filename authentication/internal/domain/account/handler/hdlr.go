@@ -6,7 +6,7 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/accountproto"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/dto/gen/request"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/validation"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/globalerr"
 )
 
@@ -24,7 +24,7 @@ func (a *AccountHdlr) Create(ctx *context.Context, req *accountproto.CreateReque
 
 	reqValidation := request.ToRequestCreate(req)
 
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
 		return nil, err
 	}
 
@@ -39,7 +39,7 @@ func (a *AccountHdlr) Create(ctx *context.Context, req *accountproto.CreateReque
 func (a *AccountHdlr) Update(ctx *context.Context, req *accountproto.UpdateRequest) (*accountproto.UpdateResponse, error) {
 	reqValidation := request.ToRequestUpdate(req)
 
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
 		return nil, err
 	}
 
@@ -54,7 +54,7 @@ func (a *AccountHdlr) Update(ctx *context.Context, req *accountproto.UpdateReque
 func (a *AccountHdlr) Delete(ctx *context.Context, req *accountproto.DeleteRequest) (*accountproto.DeleteResponse, error) {
 	reqValidation := request.ToRequestDelete(req)
 
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
 		return nil, err
 	}
 
@@ -69,7 +69,7 @@ func (a *AccountHdlr) Delete(ctx *context.Context, req *accountproto.DeleteReque
 func (a *AccountHdlr) Read(ctx *context.Context, req *accountproto.ReadRequest) (*accountproto.ReadResponse, error) {
 	reqValidation := request.ToRequestRead(req)
 
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
 		return nil, err
 	}
 

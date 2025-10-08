@@ -9,7 +9,7 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/dto/gen/response"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/handler"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/mocks"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/validation/validate"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/validation/validate"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/statuscode"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/models"

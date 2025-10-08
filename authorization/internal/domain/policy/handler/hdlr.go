@@ -6,7 +6,7 @@ import (
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/request"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/policyproto"
-	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/validation"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/validation"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs/globalerr"
 )
 
@@ -24,7 +24,7 @@ func (a *PolicyHdlr) Create(ctx context.Context,req *policyproto.CreateRequest) 
 
 	reqValidation := request.ToRequestCreate(req)
 
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
 		return nil, err
 	}
 
@@ -40,7 +40,7 @@ func (a *PolicyHdlr) Delete(ctx context.Context,req *policyproto.DeleteRequest) 
 
 	reqValidation := request.ToRequestDelete(req)
 
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
 		return nil, err
 	}
 

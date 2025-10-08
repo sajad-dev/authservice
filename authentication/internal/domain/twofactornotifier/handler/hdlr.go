@@ -7,7 +7,7 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/dto/gen/request"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/twofactornotifierproto"
 
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/validation"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/globalerr"
 )
 
@@ -29,7 +29,7 @@ func (a *TwoFactorNotifierHdlr) NotifierEmail(ctx *context.Context, req *twofact
 
 	reqValidation := request.ToRequestNotifierEmail(req)
 
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
 		return nil, err
 	}
 

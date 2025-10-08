@@ -27,8 +27,8 @@ import (
 	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/crypto/hs256"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/setupdb"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/setupdb/postgres"
-	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/validation"
-	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/validation/validate"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/validation"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/validation/validate"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs"
 
 	"google.golang.org/grpc"

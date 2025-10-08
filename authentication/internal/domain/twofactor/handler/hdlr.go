@@ -6,7 +6,7 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor/dto/gen/request"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor/twofactorproto"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/validation"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/globalerr"
 )
 
@@ -28,7 +28,7 @@ func (a *TwoFactorHdlr) Email(ctx *context.Context, req *twofactorproto.EmailReq
 
 	reqValidation := request.ToRequestEmail(req)
 
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
 		return nil, err
 	}
 
@@ -44,7 +44,7 @@ func (a *TwoFactorHdlr) Google(ctx *context.Context, req *twofactorproto.GoogleR
 
 	reqValidation := request.ToRequestGoogle(req)
 
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
 		return nil, err
 	}
 

@@ -6,7 +6,7 @@ import (
 	"github.com/sajad-dev/authservice/authorization/internal/domain/group"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/group/dto/gen/request"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/group/groupproto"
-	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/validation"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/validation"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs/globalerr"
 )
 
@@ -24,7 +24,7 @@ func (a *GroupHdlr) Create(ctx context.Context, req *groupproto.CreateRequest) (
 
 	reqValidation := request.ToRequestCreate(req)
 
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
 		return nil, err
 	}
 
@@ -40,7 +40,7 @@ func (a *GroupHdlr) Delete(ctx context.Context, req *groupproto.DeleteRequest) (
 
 	reqValidation := request.ToRequestDelete(req)
 
-	if err := globalerr.ValidationErr(a.Validation.Validate(reqValidation)); err != nil {
+	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
 		return nil, err
 	}
 

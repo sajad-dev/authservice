@@ -9,7 +9,7 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/handler"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/mocks"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/twofactornotifierproto"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/validation/validate"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/validation/validate"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/statuscode"
 	"github.com/stretchr/testify/mock"
