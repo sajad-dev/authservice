@@ -3,7 +3,7 @@ package handler
 import (
 	"testing"
 
-	"github.com/go-playground/validator"
+	"github.com/go-playground/validator/v10"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/response"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/mocks"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/policyproto"

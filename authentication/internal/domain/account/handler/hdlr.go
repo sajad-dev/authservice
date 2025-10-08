@@ -2,22 +2,22 @@ package handler
 
 import (
 	"context"
+	"log"
 
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/accountproto"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/dto/gen/request"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/globalerr"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 )
 
 type AccountHdlr struct {
 	accountproto.UnimplementedAccountServer
 	Service    account.AccountCURDService
-	Validation validation.Validation[*models.Accounts]
+	Validation validation.Validation
 }
 
-func NewAccountHdlr(svc account.AccountCURDService, vld validation.Validation[*models.Accounts]) *AccountHdlr {
+func NewAccountHdlr(svc account.AccountCURDService, vld validation.Validation) *AccountHdlr {
 	return &AccountHdlr{Service: svc, Validation: vld}
 }
 
@@ -26,6 +26,7 @@ func (a *AccountHdlr) Create(ctx context.Context, req *accountproto.CreateReques
 	reqValidation := request.ToRequestCreate(req)
 
 	if err := globalerr.ValidationErr(a.Validation.Verify(reqValidation)); err != nil {
+		log.Println(err)
 		return nil, err
 	}
 

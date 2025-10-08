@@ -1,31 +1,21 @@
 package rule
 
 import (
-	"fmt"
-
-	"github.com/go-playground/validator"
+	"github.com/go-playground/validator/v10"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb"
 )
 
-func Unique[T any](fl validator.FieldLevel, db sqldb.SqlDB[T]) bool {
+func Unique(fl validator.FieldLevel, db sqldb.SqlDBGlobal) bool {
 	fieldName := fl.FieldName()
 	table := fl.Param()
 
-	var exists bool
-	db.Table(table).Where(fmt.Sprintf("%s = ?", fieldName), fl.Field().String()).Find(&exists)
+	return !db.Exists(table, fieldName, fl.Field().String())
 
-	return !exists
 }
 
-
-func Exists[T any](fl validator.FieldLevel, db sqldb.SqlDB[T]) bool {
+func Exists(fl validator.FieldLevel, db sqldb.SqlDBGlobal) bool {
 	fieldName := fl.FieldName()
 	table := fl.Param()
 
-	var exists bool
-	db.Table(table).Where(fmt.Sprintf("%s = ?", fieldName), fl.Field().String()).Find(&exists)
-
-	return exists
+	return db.Exists(table, fieldName, fl.Field().String())
 }
-
-

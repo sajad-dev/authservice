@@ -2,6 +2,7 @@ package globalerr
 
 import (
 	"errors"
+	"log"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/messages"
@@ -36,12 +37,16 @@ func ServerErr(errParametr error) error {
 }
 func ValidationErr(errParametr error) error {
 	if errParametr != nil {
-		if validationErr, ok := errParametr.(validator.ValidationErrors); ok {
+
+		validationErr, ok := errParametr.(validator.ValidationErrors)
+		if ok {
 			errMessage, err := grpcerr.ErrorsWithDetails(
 				&errorsproto.ErrorDetail{Message: validationErr.Error()},
 				messages.ERR_VALIDATION,
 				codes.InvalidArgument,
 			)
+			log.Println(validationErr)
+
 			if err != nil {
 				return WithDetailsErr(err, errParametr)
 			}

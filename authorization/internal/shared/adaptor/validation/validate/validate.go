@@ -1,6 +1,6 @@
 package validate
 
-import "github.com/go-playground/validator"
+import "github.com/go-playground/validator/v10"
 
 type Validate struct {
 	Validation *validator.Validate

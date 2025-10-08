@@ -3,16 +3,17 @@ package handler_test
 import (
 	"testing"
 
-	"github.com/go-playground/validator"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/accountproto"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/dto/gen/response"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/handler"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/mocks"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
+	mockdb "github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb/mocks"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
+
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/statuscode"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 )
@@ -27,7 +28,12 @@ func (s *TestAccountCURDHandlerSuite) SetupSuite() {
 	mocksSVC := new(mocks.AccountCURDService)
 	s.mocksSVC = mocksSVC
 
-	s.handler = handler.NewAccountHdlr(mocksSVC, validate.NewValidate(validator.New()))
+	mockDB := &mockdb.SqlDBGlobal{}
+
+	mockDB.On("Exists", mock.Anything, "Id", mock.Anything).Return(true)
+	mockDB.On("Exists", mock.Anything, mock.Anything, mock.Anything).Return(false)
+
+	s.handler = handler.NewAccountHdlr(mocksSVC, validation.NewValidator(mockDB))
 }
 
 func (s *TestAccountCURDHandlerSuite) TestCreate() {
@@ -40,7 +46,15 @@ func (s *TestAccountCURDHandlerSuite) TestCreate() {
 	}{
 		{
 			name: "Success",
-			req:  &accountproto.CreateRequest{Username: "test", Email: "test@example.com"},
+			req: &accountproto.CreateRequest{
+				Username:             "test1",
+				Email:                "test@example.com",
+				FirstName:            "Sajad",
+				LastName:             "Poorajam",
+				TwoFactor:            []string{},
+				Password:             "MyStrongPassword123!",
+				PasswordConfirmation: "MyStrongPassword123!",
+			},
 			res: response.CreateResponse{
 				Code: statuscode.SUCCESSFUL,
 				Msg:  messages.SUCCESS_ACCOUNT_CREATED,
@@ -54,7 +68,7 @@ func (s *TestAccountCURDHandlerSuite) TestCreate() {
 		s.Run(tt.name, func() {
 			s.mocksSVC.On("Create", mock.Anything).Return(tt.res, nil)
 
-			resp, err := s.handler.Create(tt.req)
+			resp, err := s.handler.Create(nil, tt.req)
 			if !tt.wantErr {
 				s.NoError(err)
 			} else {
@@ -76,7 +90,15 @@ func (s *TestAccountCURDHandlerSuite) TestUpdate() {
 	}{
 		{
 			name: "Success",
-			req:  &accountproto.UpdateRequest{Username: "test", Email: "update@example.com"},
+			req: &accountproto.UpdateRequest{
+				Id:                   1,
+				Username:             "test1",
+				Email:                "test@example.com",
+				FirstName:            "Sajad",
+				LastName:             "Poorajam",
+				TwoFactor:            []string{},
+				Password:             "MyStrongPassword123!",
+				PasswordConfirmation: "MyStrongPassword123!"},
 			res: response.UpdateResponse{
 				Code: statuscode.SUCCESSFUL,
 				Msg:  messages.SUCCESS_ACCOUNT_UPDATED,
@@ -90,7 +112,7 @@ func (s *TestAccountCURDHandlerSuite) TestUpdate() {
 		s.Run(tt.name, func() {
 			s.mocksSVC.On("Update", mock.Anything).Return(tt.res, nil)
 
-			resp, err := s.handler.Update(tt.req)
+			resp, err := s.handler.Update(nil, tt.req)
 			if !tt.wantErr {
 				s.NoError(err)
 			} else {
@@ -112,7 +134,7 @@ func (s *TestAccountCURDHandlerSuite) TestDelete() {
 	}{
 		{
 			name: "Success",
-			req:  &accountproto.DeleteRequest{Id: 0},
+			req:  &accountproto.DeleteRequest{Id: 1},
 			res: response.DeleteResponse{
 				Code: statuscode.SUCCESSFUL,
 				Msg:  messages.SUCCESS_ACCOUNT_DELETED,
@@ -126,7 +148,7 @@ func (s *TestAccountCURDHandlerSuite) TestDelete() {
 		s.Run(tt.name, func() {
 			s.mocksSVC.On("Delete", mock.Anything).Return(tt.res, nil)
 
-			resp, err := s.handler.Delete(tt.req)
+			resp, err := s.handler.Delete(nil, tt.req)
 			if !tt.wantErr {
 				s.NoError(err)
 			} else {
@@ -148,7 +170,7 @@ func (s *TestAccountCURDHandlerSuite) TestRead() {
 	}{
 		{
 			name: "Success",
-			req:  &accountproto.ReadRequest{Id: 0},
+			req:  &accountproto.ReadRequest{Id: 1},
 			res: response.ReadResponse{
 				Code: statuscode.SUCCESSFUL,
 				Msg:  messages.SUCCESS_ACCOUNT_RETRIEVED,
@@ -166,7 +188,7 @@ func (s *TestAccountCURDHandlerSuite) TestRead() {
 		s.Run(tt.name, func() {
 			s.mocksSVC.On("Read", mock.Anything).Return(tt.res, nil)
 
-			resp, err := s.handler.Read(tt.req)
+			resp, err := s.handler.Read(nil, tt.req)
 			if !tt.wantErr {
 				s.NoError(err)
 			} else {

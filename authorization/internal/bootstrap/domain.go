@@ -5,7 +5,7 @@ import (
 
 	gormadapter "github.com/casbin/gorm-adapter/v2"
 	authz "github.com/envoyproxy/go-control-plane/envoy/service/auth/v3"
-	"github.com/go-playground/validator"
+	"github.com/go-playground/validator/v10"
 	"github.com/sajad-dev/authservice/authorization/internal/config"
 
 	authorizehdlr "github.com/sajad-dev/authservice/authorization/internal/domain/authorize/handler"

@@ -3,7 +3,7 @@ package handler_test
 import (
 	"testing"
 
-	"github.com/go-playground/validator"
+	"github.com/go-playground/validator/v10"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword/dto/gen/response"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword/forgetpasswordproto"

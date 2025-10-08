@@ -57,8 +57,6 @@ func (p *Postgres[M]) RemoveExpierd(column string, id int) error {
 		Delete(&params).Error
 }
 
-func (p *Postgres[M]) Table(tablename string) *gorm.DB {
-	return p.DB.Table(tablename)
-}
+
 
 var _ sqldb.SqlDB[struct{}] = &Postgres[struct{}]{}

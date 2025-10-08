@@ -1,47 +1,42 @@
 package validation
 
 import (
-	"sync"
-
-	"github.com/go-playground/validator"
+	"github.com/go-playground/validator/v10"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/validation/rule"
 )
 
-type Validation[T any] struct {
+type Validation struct {
 	Vld *validator.Validate
-	DB  sqldb.SqlDB[T]
+	DB  sqldb.SqlDBGlobal
 }
 
-var (
-	vld  *validator.Validate
-	once *sync.Once
-)
+// var (
+// // Vld  *validator.Validate
+// // once *sync.Once
+// )
 
-func (v *Validation[T]) _registerRule(vld *validator.Validate) {
+func (v *Validation) _registerRule(vld *validator.Validate) {
 	vld.RegisterValidation("unique", func(fl validator.FieldLevel) bool {
-		return rule.Unique[T](fl, v.DB)
+		return rule.Unique(fl, v.DB)
 
 	})
 	vld.RegisterValidation("exists", func(fl validator.FieldLevel) bool {
-		return rule.Exists[T](fl, v.DB)
+		return rule.Exists(fl, v.DB)
 	})
 
 }
 
-func NewValidator[T any](db sqldb.SqlDB[T]) Validation[T] {
-	vlda := Validation[T]{}
-	vlda.DB = db
+func NewValidator(db sqldb.SqlDBGlobal) Validation {
+	vld := Validation{}
+	vld.DB = db
 
-	once.Do(func() {
-		vld = validator.New()
-		vlda._registerRule(vld)
-		vlda.Vld = vld
-	})
+	vld.Vld = validator.New()
+	vld._registerRule(vld.Vld)
 
-	return vlda
+	return vld
 }
 
-func (v Validation[T]) Verify(req any) error {
+func (v Validation) Verify(req any) error {
 	return v.Vld.Struct(req)
 }

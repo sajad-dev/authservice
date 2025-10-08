@@ -3,7 +3,7 @@ package handler_test
 import (
 	"testing"
 
-	"github.com/go-playground/validator"
+	"github.com/go-playground/validator/v10"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor/twofactorproto"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor/dto/gen/response"
