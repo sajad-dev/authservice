@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"context"
+
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor/dto/gen/request"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor/twofactorproto"
@@ -22,7 +24,7 @@ func NewTwoFactorHdlr(svc twofactor.TwoFactorService, vld validation.Validation)
 	}
 }
 
-func (a *TwoFactorHdlr) Email(req *twofactorproto.EmailRequest) (*twofactorproto.TwoFactorResponse, error) {
+func (a *TwoFactorHdlr) Email(ctx *context.Context, req *twofactorproto.EmailRequest) (*twofactorproto.TwoFactorResponse, error) {
 
 	reqValidation := request.ToRequestEmail(req)
 
@@ -38,7 +40,7 @@ func (a *TwoFactorHdlr) Email(req *twofactorproto.EmailRequest) (*twofactorproto
 	return res.ToProto(), nil
 }
 
-func (a *TwoFactorHdlr) Google(req *twofactorproto.GoogleRequest) (*twofactorproto.TwoFactorResponse, error) {
+func (a *TwoFactorHdlr) Google(ctx *context.Context, req *twofactorproto.GoogleRequest) (*twofactorproto.TwoFactorResponse, error) {
 
 	reqValidation := request.ToRequestGoogle(req)
 

@@ -1,6 +1,8 @@
 package account
 
 import (
+	"context"
+
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/accountproto"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/dto/gen/request"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/dto/gen/response"
@@ -8,10 +10,10 @@ import (
 )
 
 type AccountCURDHandler interface {
-	Create(req *accountproto.CreateRequest) (*accountproto.CreateResponse, error)
-	Update(req *accountproto.UpdateRequest) (*accountproto.UpdateResponse, error)
-	Delete(req *accountproto.DeleteRequest) (*accountproto.DeleteResponse, error)
-	Read(req *accountproto.ReadRequest) (*accountproto.ReadResponse, error)
+	Create(ctx *context.Context, req *accountproto.CreateRequest) (*accountproto.CreateResponse, error)
+	Update(ctx *context.Context, req *accountproto.UpdateRequest) (*accountproto.UpdateResponse, error)
+	Delete(ctx *context.Context, req *accountproto.DeleteRequest) (*accountproto.DeleteResponse, error)
+	Read(ctx *context.Context, req *accountproto.ReadRequest) (*accountproto.ReadResponse, error)
 }
 
 type AccountCURDService interface {

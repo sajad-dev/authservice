@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"context"
+
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/dto/gen/request"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/twofactornotifierproto"
@@ -23,7 +25,7 @@ func NewTwoFactorNotifierHdlr(svc twofactornotifier.TwoFactorNotifierService, vl
 	}
 }
 
-func (a *TwoFactorNotifierHdlr) NotifierEmail(req *twofactornotifierproto.NotifierEmailRequest) (*twofactornotifierproto.TwoFactorNotifierResponse, error) {
+func (a *TwoFactorNotifierHdlr) NotifierEmail(ctx *context.Context, req *twofactornotifierproto.NotifierEmailRequest) (*twofactornotifierproto.TwoFactorNotifierResponse, error) {
 
 	reqValidation := request.ToRequestNotifierEmail(req)
 

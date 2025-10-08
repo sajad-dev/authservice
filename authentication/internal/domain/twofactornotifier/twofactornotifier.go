@@ -1,6 +1,8 @@
 package twofactornotifier
 
 import (
+	"context"
+
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/dto/gen/request"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/dto/gen/response"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/twofactornotifierproto"
@@ -8,7 +10,7 @@ import (
 )
 
 type TwoFactorNotifierHandler interface {
-	NotifierEmail(req *twofactornotifierproto.NotifierEmailRequest) (*twofactornotifierproto.TwoFactorNotifierResponse, error)
+	NotifierEmail(ctx *context.Context, req *twofactornotifierproto.NotifierEmailRequest) (*twofactornotifierproto.TwoFactorNotifierResponse, error)
 }
 
 type TwoFactorNotifierService interface {

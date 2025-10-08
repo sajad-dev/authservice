@@ -1,6 +1,8 @@
 package forgetpassword
 
 import (
+	"context"
+
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword/dto/gen/request"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword/dto/gen/response"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword/forgetpasswordproto"
@@ -8,8 +10,8 @@ import (
 )
 
 type ForgetPasswordHandler interface {
-	Forget(req *forgetpasswordproto.ForgetRequest) (*forgetpasswordproto.ForgetResponse, error)
-	Reset(req *forgetpasswordproto.ResetRequest) (*forgetpasswordproto.ResetResponse, error)
+	Forget(ctx *context.Context, req *forgetpasswordproto.ForgetRequest) (*forgetpasswordproto.ForgetResponse, error)
+	Reset(ctx *context.Context, req *forgetpasswordproto.ResetRequest) (*forgetpasswordproto.ResetResponse, error)
 }
 
 type ForgetPasswordService interface {

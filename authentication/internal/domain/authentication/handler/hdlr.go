@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"context"
+
 	"github.com/sajad-dev/authservice/authentication/internal/domain/authentication"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/authentication/authenticationproto"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/authentication/dto/gen/request"
@@ -22,7 +24,7 @@ func NewAuthenticationHdlr(svc authentication.AuthenticatorService, vld validati
 	}
 }
 
-func (a *AuthenticationHdlr) Login(req *authenticationproto.LoginRequest) (*authenticationproto.LoginResponse, error) {
+func (a *AuthenticationHdlr) Login(ctx *context.Context, req *authenticationproto.LoginRequest) (*authenticationproto.LoginResponse, error) {
 
 	reqValidation := request.ToRequestLogin(req)
 
@@ -38,7 +40,7 @@ func (a *AuthenticationHdlr) Login(req *authenticationproto.LoginRequest) (*auth
 	return res.ToProto(), nil
 }
 
-func (a *AuthenticationHdlr) Register(req *authenticationproto.RegisterRequest) (*authenticationproto.RegisterResponse, error) {
+func (a *AuthenticationHdlr) Register(ctx *context.Context, req *authenticationproto.RegisterRequest) (*authenticationproto.RegisterResponse, error) {
 
 	reqValidation := request.ToRequestRegister(req)
 

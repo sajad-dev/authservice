@@ -1,6 +1,8 @@
 package authentication
 
 import (
+	"context"
+
 	"github.com/sajad-dev/authservice/authentication/internal/domain/authentication/authenticationproto"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/authentication/dto/gen/request"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/authentication/dto/gen/response"
@@ -8,8 +10,8 @@ import (
 )
 
 type AuthenticatorHandler interface {
-	Login(req *authenticationproto.LoginRequest) (*authenticationproto.LoginResponse, error)
-	Register(req *authenticationproto.RegisterRequest) (*authenticationproto.RegisterResponse, error)
+	Login(ctx *context.Context, req *authenticationproto.LoginRequest) (*authenticationproto.LoginResponse, error)
+	Register(ctx *context.Context,req *authenticationproto.RegisterRequest) (*authenticationproto.RegisterResponse, error)
 }
 type AuthenticatorService interface {
 	Login(req request.LoginRequest) (response.LoginResponse, error)

@@ -1,6 +1,8 @@
 package twofactor
 
 import (
+	"context"
+
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor/dto/gen/request"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor/dto/gen/response"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactor/twofactorproto"
@@ -8,8 +10,8 @@ import (
 )
 
 type TwoFactorHandler interface {
-	Email(req *twofactorproto.EmailRequest) (*twofactorproto.TwoFactorResponse, error)
-	Google(req *twofactorproto.GoogleRequest) (*twofactorproto.TwoFactorResponse, error)
+	Email(ctx *context.Context, req *twofactorproto.EmailRequest) (*twofactorproto.TwoFactorResponse, error)
+	Google(ctx *context.Context, req *twofactorproto.GoogleRequest) (*twofactorproto.TwoFactorResponse, error)
 }
 
 type TwoFactorService interface {

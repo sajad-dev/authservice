@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"context"
+
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword/dto/gen/request"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword/forgetpasswordproto"
@@ -23,7 +25,7 @@ func NewForgetPasswordHdlr(svc forgetpassword.ForgetPasswordService, vld validat
 	}
 }
 
-func (a *ForgetPasswordHdlr) Forget(req *forgetpasswordproto.ForgetRequest) (*forgetpasswordproto.ForgetResponse, error) {
+func (a *ForgetPasswordHdlr) Forget(ctx *context.Context, req *forgetpasswordproto.ForgetRequest) (*forgetpasswordproto.ForgetResponse, error) {
 
 	reqValidation := request.ToRequestForget(req)
 
@@ -39,7 +41,7 @@ func (a *ForgetPasswordHdlr) Forget(req *forgetpasswordproto.ForgetRequest) (*fo
 	return res.ToProto(), nil
 }
 
-func (a *ForgetPasswordHdlr) Reset(req *forgetpasswordproto.ResetRequest) (*forgetpasswordproto.ResetResponse, error) {
+func (a *ForgetPasswordHdlr) Reset(ctx *context.Context, req *forgetpasswordproto.ResetRequest) (*forgetpasswordproto.ResetResponse, error) {
 
 	reqValidation := request.ToRequestReset(req)
 
