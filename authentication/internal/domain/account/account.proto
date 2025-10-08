@@ -23,6 +23,8 @@ message CreateRequest {
   string last_name =5;
   repeated string two_factor = 6;
   string password = 7;
+  string password_confirmation = 8;
+
 }
 
 
@@ -38,6 +40,7 @@ message UpdateRequest {
   repeated string two_factor = 6;
   int32 id =7;
   string password = 8;
+  string password_confirmation = 9;
 }
 
 message DeleteResponse {

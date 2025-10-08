@@ -5,13 +5,14 @@ import (
 )
 
 type UpdateRequest struct {
-	Id int32 `json:"id" validate:""`
-	FirstName string `json:"first_name" validate:""`
-	LastName string `json:"last_name" validate:""`
-	Email string `json:"email" validate:""`
-	Username string `json:"username" validate:""`
-	TwoFactor []string `json:"two_factor" validate:""`
-	Password string `json:"password" validate:""`
+	Id int32 `json:"id" validate:"required,exists=accounts"`
+	FirstName string `json:"first_name" validate:"required,max=64"`
+	LastName string `json:"last_name" validate:"required,max=64"`
+	Email string `json:"email" validate:"required,max=256,unique=accounts"`
+	Username string `json:"username" validate:"required,max=256,unique=accounts"`
+	TwoFactor []string `json:"two_factor" validate:"required,max=3,dive"`
+	Password string `json:"password" validate:"required,min=8"`
+	PasswordConfirmation string `json:"password_confirmation" validate:"required,eqfield=Password"`
 } 
 
 func ToRequestUpdate(pd *accountproto.UpdateRequest) *UpdateRequest {
@@ -23,6 +24,7 @@ func ToRequestUpdate(pd *accountproto.UpdateRequest) *UpdateRequest {
 		Username: pd.Username,
 		TwoFactor: pd.TwoFactor,
 		Password: pd.Password,
+		PasswordConfirmation: pd.PasswordConfirmation,
 	}
 }
 

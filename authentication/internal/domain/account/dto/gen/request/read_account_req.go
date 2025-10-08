@@ -5,7 +5,7 @@ import (
 )
 
 type ReadRequest struct {
-	Id int32 `json:"id" validate:""`
+	Id int32 `json:"id" validate:"required,exists=accounts"`
 } 
 
 func ToRequestRead(pd *accountproto.ReadRequest) *ReadRequest {

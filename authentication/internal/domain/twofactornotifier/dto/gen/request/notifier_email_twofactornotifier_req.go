@@ -5,7 +5,7 @@ import (
 )
 
 type NotifierEmailRequest struct {
-	Token string `json:"token" validate:""`
+	Token string `json:"token" validate:"required"`
 } 
 
 func ToRequestNotifierEmail(pd *twofactornotifierproto.NotifierEmailRequest) *NotifierEmailRequest {

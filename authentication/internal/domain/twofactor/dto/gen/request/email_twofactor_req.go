@@ -5,7 +5,7 @@ import (
 )
 
 type EmailRequest struct {
-	Code int32 `json:"code" validate:""`
+	Code int32 `json:"code" validate:"required"`
 } 
 
 func ToRequestEmail(pd *twofactorproto.EmailRequest) *EmailRequest {

@@ -5,8 +5,8 @@ import (
 )
 
 type GoogleRequest struct {
-	Token string `json:"token" validate:""`
-	Code int32 `json:"code" validate:""`
+	Token string `json:"token" validate:"required"`
+	Code int32 `json:"code" validate:"required"`
 } 
 
 func ToRequestGoogle(pd *twofactorproto.GoogleRequest) *GoogleRequest {

@@ -15,7 +15,7 @@
             "To": "Email",
             "Type": "string",
             "From": "Email",
-            "Validations": "",
+            "Validations": "required,exists=accounts",
             "Json": "email"
           }
         ]
@@ -32,21 +32,21 @@
             "To": "Token",
             "Type": "string",
             "From": "Token",
-            "Validations": "",
+            "Validations": "required",
             "Json": "token"
           },
           {
             "To": "PasswordConfirmation",
             "Type": "string",
             "From": "PasswordConfirmation",
-            "Validations": "",
+            "Validations": "required,eqfield=Password",
             "Json": "password_confirmation"
           },
           {
             "To": "Password",
             "Type": "string",
             "From": "Password",
-            "Validations": "",
+            "Validations": "required,min=8",
             "Json": "password"
           }
         ]

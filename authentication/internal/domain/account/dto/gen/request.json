@@ -15,43 +15,50 @@
             "To": "FirstName",
             "Type": "string",
             "From": "FirstName",
-            "Validations": "",
+            "Validations": "required,max=64",
             "Json": "first_name"
           },
           {
             "To": "LastName",
             "Type": "string",
             "From": "LastName",
-            "Validations": "",
+            "Validations": "required,max=64",
             "Json": "last_name"
           },
           {
             "To": "Email",
             "Type": "string",
             "From": "Email",
-            "Validations": "",
+            "Validations": "required,max=256,unique=accounts",
             "Json": "email"
           },
           {
             "To": "Username",
             "Type": "string",
             "From": "Username",
-            "Validations": "",
+            "Validations": "required,max=256,unique=accounts",
             "Json": "username"
           },
           {
             "To": "TwoFactor",
             "Type": "[]string",
             "From": "TwoFactor",
-            "Validations": "",
+            "Validations": "required,max=3,dive",
             "Json": "two_factor"
           },
           {
             "To": "Password",
             "Type": "string",
             "From": "Password",
-            "Validations": "",
+            "Validations": "required,min=8",
             "Json": "password"
+          },
+          {
+            "To": "PasswordConfirmation",
+            "Type": "string",
+            "From": "PasswordConfirmation",
+            "Validations": "required,eqfield=Password",
+            "Json": "password_confirmation"
           }
         ]
       }
@@ -67,7 +74,7 @@
             "To": "Id",
             "Type": "int32",
             "From": "Id",
-            "Validations": "",
+            "Validations": "required,exists=accounts",
             "Json": "id"
           }
         ]
@@ -84,7 +91,7 @@
             "To": "Id",
             "Type": "int32",
             "From": "Id",
-            "Validations": "",
+            "Validations": "required,exists=accounts",
             "Json": "id"
           }
         ]
@@ -101,50 +108,57 @@
             "To": "Id",
             "Type": "int32",
             "From": "Id",
-            "Validations": "",
+            "Validations": "required,exists=accounts",
             "Json": "id"
           },
           {
             "To": "FirstName",
             "Type": "string",
             "From": "FirstName",
-            "Validations": "",
+            "Validations": "required,max=64",
             "Json": "first_name"
           },
           {
             "To": "LastName",
             "Type": "string",
             "From": "LastName",
-            "Validations": "",
+            "Validations": "required,max=64",
             "Json": "last_name"
           },
           {
             "To": "Email",
             "Type": "string",
             "From": "Email",
-            "Validations": "",
+            "Validations": "required,max=256,unique=accounts",
             "Json": "email"
           },
           {
             "To": "Username",
             "Type": "string",
             "From": "Username",
-            "Validations": "",
+            "Validations": "required,max=256,unique=accounts",
             "Json": "username"
           },
           {
             "To": "TwoFactor",
             "Type": "[]string",
             "From": "TwoFactor",
-            "Validations": "",
+            "Validations": "required,max=3,dive",
             "Json": "two_factor"
           },
           {
             "To": "Password",
             "Type": "string",
             "From": "Password",
-            "Validations": "",
+            "Validations": "required,min=8",
             "Json": "password"
+          },
+          {
+            "To": "PasswordConfirmation",
+            "Type": "string",
+            "From": "PasswordConfirmation",
+            "Validations": "required,eqfield=Password",
+            "Json": "password_confirmation"
           }
         ]
       }

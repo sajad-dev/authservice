@@ -15,7 +15,7 @@
             "To": "Code",
             "Type": "int32",
             "From": "Code",
-            "Validations": "",
+            "Validations": "required",
             "Json": "code"
           }
         ]
@@ -32,14 +32,14 @@
             "To": "Token",
             "Type": "string",
             "From": "Token",
-            "Validations": "",
+            "Validations": "required",
             "Json": "token"
           },
           {
             "To": "Code",
             "Type": "int32",
             "From": "Code",
-            "Validations": "",
+            "Validations": "required",
             "Json": "code"
           }
         ]

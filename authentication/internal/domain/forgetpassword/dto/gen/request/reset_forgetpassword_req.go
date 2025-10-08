@@ -5,9 +5,9 @@ import (
 )
 
 type ResetRequest struct {
-	Token string `json:"token" validate:""`
-	PasswordConfirmation string `json:"password_confirmation" validate:""`
-	Password string `json:"password" validate:""`
+	Token string `json:"token" validate:"required"`
+	PasswordConfirmation string `json:"password_confirmation" validate:"required,eqfield=Password"`
+	Password string `json:"password" validate:"required,min=8"`
 } 
 
 func ToRequestReset(pd *forgetpasswordproto.ResetRequest) *ResetRequest {

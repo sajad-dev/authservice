@@ -5,7 +5,7 @@ import (
 )
 
 type DeleteRequest struct {
-	Id int32 `json:"id" validate:""`
+	Id int32 `json:"id" validate:"required,exists=accounts"`
 } 
 
 func ToRequestDelete(pd *accountproto.DeleteRequest) *DeleteRequest {

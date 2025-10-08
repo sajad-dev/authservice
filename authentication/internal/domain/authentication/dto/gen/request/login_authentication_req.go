@@ -5,8 +5,8 @@ import (
 )
 
 type LoginRequest struct {
-	Username string `json:"username" validate:""`
-	Password string `json:"password" validate:""`
+	Username string `json:"username" validate:"required,exists=accounts"`
+	Password string `json:"password" validate:"required"`
 } 
 
 func ToRequestLogin(pd *authenticationproto.LoginRequest) *LoginRequest {

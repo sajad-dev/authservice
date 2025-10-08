@@ -21,7 +21,12 @@ var (
 func (v *Validation[T]) _registerRule(vld *validator.Validate) {
 	vld.RegisterValidation("unique", func(fl validator.FieldLevel) bool {
 		return rule.Unique[T](fl, v.DB)
+
 	})
+	vld.RegisterValidation("exists", func(fl validator.FieldLevel) bool {
+		return rule.Exists[T](fl, v.DB)
+	})
+
 }
 
 func NewValidator[T any](db sqldb.SqlDB[T]) Validation[T] {
