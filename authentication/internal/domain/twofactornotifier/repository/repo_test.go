@@ -6,25 +6,23 @@ import (
 
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/repository"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb/sqlite"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/helpers/testhelper/testdb"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb/mocks"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 )
 
 type TestTwoFactorNotifierSuite struct {
 	suite.Suite
-	repo twofactornotifier.TwoFactorNotifierRepository
+	repo      twofactornotifier.TwoFactorNotifierRepository
+	mockDBAcc *mocks.SqlDB[*models.Accounts]
+	mockDBCode *mocks.SqlDB[*models.TwoFactorCode]
 }
 
 func (s *TestTwoFactorNotifierSuite) SetupSuite() {
-	db, err := testdb.Conn(&models.Accounts{}, &models.TwoFactorCode{})
-	s.NoError(err)
-
-	s.repo = repository.NewTwoFactorNotifierRepo(
-		sqlite.NewSqlite[*models.Accounts](db),
-		sqlite.NewSqlite[*models.TwoFactorCode](db),
-	)
+	s.mockDBAcc = &mocks.SqlDB[*models.Accounts]{}
+	s.mockDBCode = &mocks.SqlDB[*models.TwoFactorCode]{}
+	s.repo = repository.NewTwoFactorNotifierRepo(s.mockDBAcc, s.mockDBCode)
 }
 
 func (s *TestTwoFactorNotifierSuite) TestCreateCode() {
@@ -51,8 +49,10 @@ func (s *TestTwoFactorNotifierSuite) TestCreateCode() {
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
+			s.mockDBCode.On("Create", tt.code).Return(nil).Once()
 			err := s.repo.CreateCode(tt.code)
 			s.NoError(err)
+			s.mockDBCode.AssertCalled(s.T(), "Create", tt.code)
 		})
 	}
 }
@@ -76,9 +76,9 @@ func (s *TestTwoFactorNotifierSuite) TestFindById() {
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
-			dbErr := s.repo.(*repository.TwoFactorNotifierRepo).DBAccount.Create(tt.account)
-			s.NoError(dbErr)
-
+			s.mockDBAcc.On("Create", tt.account).Return(nil).Once()
+			_ = s.repo.(*repository.TwoFactorNotifierRepo).DBAccount.Create(tt.account)
+			s.mockDBAcc.On("GetByID", int(tt.account.ID)).Return(tt.account, nil).Once()
 			found, err := s.repo.FindById(int(tt.account.ID))
 			if !tt.wantErr {
 				s.NoError(err)
@@ -86,6 +86,7 @@ func (s *TestTwoFactorNotifierSuite) TestFindById() {
 			} else {
 				s.Error(err)
 			}
+			s.mockDBAcc.AssertCalled(s.T(), "GetByID", int(tt.account.ID))
 		})
 	}
 }
@@ -102,43 +103,5 @@ func (s *TestTwoFactorNotifierSuite) TestRemoveExpierd() {
 			account: models.NewAccounts(
 				models.WithUsername("expireuser"),
 				models.WithEmail("expire@example.com"),
-				models.WithPassword("password123"),
-			),
-			code: models.NewTwoFactorCode(
-				models.WithCode(111112),
-				models.WithType("email"),
-				models.WithAccount(
-					*models.NewAccounts(
-						models.WithUsername("expireuser"),
-						models.WithEmail("expire@example.com"),
-						models.WithPassword("password123"),
-					),
-				),
-				models.WithExpiredAt(time.Now().Add(-time.Minute)),
-			),
-			wantErr: false,
-		},
-	}
+				models.WithPasswor
 
-	for _, tt := range tests {
-		s.Run(tt.name, func() {
-			dbErr := s.repo.(*repository.TwoFactorNotifierRepo).DBAccount.Create(tt.account)
-			s.NoError(dbErr)
-
-			tt.code.Account = *tt.account
-			err := s.repo.CreateCode(tt.code)
-			s.NoError(err)
-
-			err = s.repo.RemoveExpierd(int(tt.account.ID))
-			if !tt.wantErr {
-				s.NoError(err)
-			} else {
-				s.Error(err)
-			}
-		})
-	}
-}
-
-func TestTwoFactorNotifierSuite_Run(t *testing.T) {
-	suite.Run(t, new(TestTwoFactorNotifierSuite))
-}

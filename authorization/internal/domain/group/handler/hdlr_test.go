@@ -8,7 +8,7 @@ import (
 	"github.com/sajad-dev/authservice/authorization/internal/domain/group/groupproto"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/group/handler"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/group/mocks"
-	"github.com/sajad-dev/authservice/authorization/internal/shared/validation/validate"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/validation"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/constants/statuscode"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"

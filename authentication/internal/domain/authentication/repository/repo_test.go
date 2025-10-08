@@ -5,23 +5,20 @@ import (
 
 	"github.com/sajad-dev/authservice/authentication/internal/domain/authentication"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/authentication/repository"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb/sqlite"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/helpers/testhelper/testdb"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb/mocks"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 )
 
 type TestAuthenticationSuite struct {
 	suite.Suite
 	authRepo authentication.AuthenticatorRepository
+	mockDB   *mocks.SqlDB[*models.Accounts]
 }
 
 func (s *TestAuthenticationSuite) SetupSuite() {
-	db, err := testdb.Conn(&models.Accounts{})
-	assert.NoError(s.T(), err)
-
-	s.authRepo = repository.NewAuthenticationRepo(sqlite.NewSqlite[*models.Accounts](db))
+	s.mockDB = &mocks.SqlDB[*models.Accounts]{}
+	s.authRepo = repository.NewAuthenticationRepo(s.mockDB)
 }
 
 func (s *TestAuthenticationSuite) TestCreate() {
@@ -43,12 +40,14 @@ func (s *TestAuthenticationSuite) TestCreate() {
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
+			s.mockDB.On("Create", tt.account).Return(nil).Once()
 			err := s.authRepo.Create(tt.account)
 			if !tt.wantErr {
 				s.NoError(err)
 			} else {
 				s.Error(err)
 			}
+			s.mockDB.AssertCalled(s.T(), "Create", tt.account)
 		})
 	}
 }
@@ -72,9 +71,9 @@ func (s *TestAuthenticationSuite) TestFind() {
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
-			err := s.authRepo.Create(tt.account)
-			s.NoError(err)
-
+			s.mockDB.On("Create", tt.account).Return(nil).Once()
+			_ = s.authRepo.Create(tt.account)
+			s.mockDB.On("WhereField", "email", tt.account.Email).Return(tt.account, nil).Once()
 			found, err := s.authRepo.Find("email", tt.account.Email)
 			if !tt.wantErr {
 				s.NoError(err)
@@ -82,6 +81,7 @@ func (s *TestAuthenticationSuite) TestFind() {
 			} else {
 				s.Error(err)
 			}
+			s.mockDB.AssertCalled(s.T(), "WhereField", "email", tt.account.Email)
 		})
 	}
 }

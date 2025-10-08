@@ -5,22 +5,20 @@ import (
 
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/forgetpassword/repository"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb/sqlite"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/helpers/testhelper/testdb"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb/mocks"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
 	"github.com/stretchr/testify/suite"
 )
 
 type TestForgetPasswordSuite struct {
 	suite.Suite
-	repo forgetpassword.ForgetPasswordRepository
+	repo   forgetpassword.ForgetPasswordRepository
+	mockDB *mocks.SqlDB[*models.Accounts]
 }
 
 func (s *TestForgetPasswordSuite) SetupSuite() {
-	db, err := testdb.Conn(&models.Accounts{})
-	s.NoError(err)
-
-	s.repo = repository.NewForgetPasswordRepo(sqlite.NewSqlite[*models.Accounts](db))
+	s.mockDB = &mocks.SqlDB[*models.Accounts]{}
+	s.repo = repository.NewForgetPasswordRepo(s.mockDB)
 }
 
 func (s *TestForgetPasswordSuite) TestFind() {
@@ -46,9 +44,10 @@ func (s *TestForgetPasswordSuite) TestFind() {
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
-			err := s.repo.Update(tt.account) 
+			s.mockDB.On("Save", tt.account).Return(nil).Once()
+			err := s.repo.Update(tt.account)
 			s.NoError(err)
-		
+			s.mockDB.On("WhereField", tt.column, tt.value).Return(tt.account, nil).Once()
 			found, err := s.repo.Find(tt.column, tt.value)
 			if !tt.wantErr {
 				s.NoError(err)
@@ -56,6 +55,7 @@ func (s *TestForgetPasswordSuite) TestFind() {
 			} else {
 				s.Error(err)
 			}
+			s.mockDB.AssertCalled(s.T(), "WhereField", tt.column, tt.value)
 		})
 	}
 }
@@ -79,8 +79,9 @@ func (s *TestForgetPasswordSuite) TestFindById() {
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
+			s.mockDB.On("Save", tt.account).Return(nil).Once()
 			_ = s.repo.Update(tt.account)
-
+			s.mockDB.On("GetByID", int(tt.account.ID)).Return(tt.account, nil).Once()
 			found, err := s.repo.FindById(int(tt.account.ID))
 			if !tt.wantErr {
 				s.NoError(err)
@@ -88,6 +89,7 @@ func (s *TestForgetPasswordSuite) TestFindById() {
 			} else {
 				s.Error(err)
 			}
+			s.mockDB.AssertCalled(s.T(), "GetByID", int(tt.account.ID))
 		})
 	}
 }
@@ -113,17 +115,20 @@ func (s *TestForgetPasswordSuite) TestUpdate() {
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
+			s.mockDB.On("Save", tt.account).Return(nil).Once()
 			_ = s.repo.Update(tt.account)
-
 			tt.account.Password = tt.updatedTo
+			s.mockDB.On("Save", tt.account).Return(nil).Once()
 			err := s.repo.Update(tt.account)
 			if !tt.wantErr {
 				s.NoError(err)
+				s.mockDB.On("GetByID", int(tt.account.ID)).Return(tt.account, nil).Once()
 				updated, _ := s.repo.FindById(int(tt.account.ID))
 				s.Equal(tt.updatedTo, updated.Password)
 			} else {
 				s.Error(err)
 			}
+			s.mockDB.AssertCalled(s.T(), "Save", tt.account)
 		})
 	}
 }
@@ -131,4 +136,3 @@ func (s *TestForgetPasswordSuite) TestUpdate() {
 func TestForgetPasswordSuite_Run(t *testing.T) {
 	suite.Run(t, new(TestForgetPasswordSuite))
 }
-

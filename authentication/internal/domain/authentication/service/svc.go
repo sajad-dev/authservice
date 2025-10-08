@@ -145,7 +145,7 @@ func (a *AuthenticationSvc) Register(req request.RegisterRequest) (response.Regi
 	}
 
 	claims := map[string]string{
-		"id": strconv.Itoa(int(table.ID)),
+		"user": strconv.Itoa(int(table.ID)),
 	}
 
 	crp, err := a._createJWT(claims)

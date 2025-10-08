@@ -1,0 +1,12 @@
+server:
+  port: 3001
+
+database:
+  user: "root"
+  password: "root"
+  dbname : "authorize"
+  port : 5432
+  host : "127.0.0.1"
+
+debug : true
+confug_model : "casbin/model.conf"

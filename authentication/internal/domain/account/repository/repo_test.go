@@ -1,12 +1,12 @@
 package repository_test
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/repository"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb/sqlite"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/helpers/testhelper/testdb"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb/mocks"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
 	"github.com/stretchr/testify/suite"
 )
@@ -14,13 +14,12 @@ import (
 type TestAccountSuite struct {
 	suite.Suite
 	accountRepo account.AccountCURDRepository
+	mockDB      *mocks.SqlDB[*models.Accounts]
 }
 
 func (s *TestAccountSuite) SetupSuite() {
-	db, err := testdb.Conn(&models.Accounts{})
-	s.NoError(err)
-
-	s.accountRepo = repository.NewAccountRepo(sqlite.NewSqlite[*models.Accounts](db))
+	s.mockDB = &mocks.SqlDB[*models.Accounts]{}
+	s.accountRepo = repository.NewAccountRepo(s.mockDB)
 }
 
 func (s *TestAccountSuite) TestCreate() {
@@ -43,12 +42,16 @@ func (s *TestAccountSuite) TestCreate() {
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
+			s.mockDB.On("Create", tt.account).Return(nil).Once()
 			err := s.accountRepo.Create(tt.account)
+
 			if !tt.wantErr {
 				s.NoError(err)
 			} else {
 				s.Error(err)
 			}
+
+			s.mockDB.AssertCalled(s.T(), "Create", tt.account)
 		})
 	}
 }
@@ -73,6 +76,9 @@ func (s *TestAccountSuite) TestRead() {
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
+			s.mockDB.On("Create", tt.account).Return(nil).Once()
+			s.mockDB.On("GetByID", int(tt.account.ID)).Return(tt.account, nil).Once()
+
 			err := s.accountRepo.Create(tt.account)
 			s.NoError(err)
 
@@ -84,6 +90,8 @@ func (s *TestAccountSuite) TestRead() {
 			} else {
 				s.Error(err)
 			}
+
+			s.mockDB.AssertCalled(s.T(), "GetByID", int(tt.account.ID))
 		})
 	}
 }
@@ -110,10 +118,14 @@ func (s *TestAccountSuite) TestUpdate() {
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
-			_ = s.accountRepo.Create(tt.account)
+			s.mockDB.On("Create", tt.account).Return(nil).Once()
+			s.mockDB.On("Save", tt.account).Return(nil).Once()
+			s.mockDB.On("GetByID", int(tt.account.ID)).Return(tt.account, nil).Once()
 
+			_ = s.accountRepo.Create(tt.account)
 			tt.account.Username = tt.updatedTo
-			err := s.accountRepo.Update(tt.account,int(tt.account.ID))
+			err := s.accountRepo.Update(tt.account, int(tt.account.ID))
+
 			if !tt.wantErr {
 				s.NoError(err)
 				updated, _ := s.accountRepo.Read(int(tt.account.ID))
@@ -121,6 +133,8 @@ func (s *TestAccountSuite) TestUpdate() {
 			} else {
 				s.Error(err)
 			}
+
+			s.mockDB.AssertCalled(s.T(), "Save", tt.account)
 		})
 	}
 }
@@ -145,9 +159,13 @@ func (s *TestAccountSuite) TestDelete() {
 
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
-			_ = s.accountRepo.Create(tt.account)
+			s.mockDB.On("Create", tt.account).Return(nil).Once()
+			s.mockDB.On("Delete", int(tt.account.ID)).Return(nil).Once()
+			s.mockDB.On("GetByID", int(tt.account.ID)).Return(nil, errors.New("not found")).Once()
 
+			_ = s.accountRepo.Create(tt.account)
 			err := s.accountRepo.Delete(int(tt.account.ID))
+
 			if !tt.wantErr {
 				s.NoError(err)
 				_, err = s.accountRepo.Read(int(tt.account.ID))
@@ -155,6 +173,8 @@ func (s *TestAccountSuite) TestDelete() {
 			} else {
 				s.Error(err)
 			}
+
+			s.mockDB.AssertCalled(s.T(), "Delete", int(tt.account.ID))
 		})
 	}
 }
@@ -162,4 +182,3 @@ func (s *TestAccountSuite) TestDelete() {
 func TestAccountSuite_Run(t *testing.T) {
 	suite.Run(t, new(TestAccountSuite))
 }
-

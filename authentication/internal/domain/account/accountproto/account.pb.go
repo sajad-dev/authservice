@@ -74,15 +74,16 @@ func (x *CreateResponse) GetMsg() string {
 }
 
 type CreateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
-	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
-	FirstName     string                 `protobuf:"bytes,4,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
-	LastName      string                 `protobuf:"bytes,5,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
-	TwoFactor     []string               `protobuf:"bytes,6,rep,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
-	Password      string                 `protobuf:"bytes,7,opt,name=password,proto3" json:"password,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Username             string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Email                string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
+	FirstName            string                 `protobuf:"bytes,4,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
+	LastName             string                 `protobuf:"bytes,5,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
+	TwoFactor            []string               `protobuf:"bytes,6,rep,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
+	Password             string                 `protobuf:"bytes,7,opt,name=password,proto3" json:"password,omitempty"`
+	PasswordConfirmation string                 `protobuf:"bytes,8,opt,name=password_confirmation,json=passwordConfirmation,proto3" json:"password_confirmation,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *CreateRequest) Reset() {
@@ -157,6 +158,13 @@ func (x *CreateRequest) GetPassword() string {
 	return ""
 }
 
+func (x *CreateRequest) GetPasswordConfirmation() string {
+	if x != nil {
+		return x.PasswordConfirmation
+	}
+	return ""
+}
+
 type UpdateResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
@@ -210,16 +218,17 @@ func (x *UpdateResponse) GetMsg() string {
 }
 
 type UpdateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
-	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
-	FirstName     string                 `protobuf:"bytes,4,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
-	LastName      string                 `protobuf:"bytes,5,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
-	TwoFactor     []string               `protobuf:"bytes,6,rep,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
-	Id            int32                  `protobuf:"varint,7,opt,name=id,proto3" json:"id,omitempty"`
-	Password      string                 `protobuf:"bytes,8,opt,name=password,proto3" json:"password,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Username             string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Email                string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
+	FirstName            string                 `protobuf:"bytes,4,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
+	LastName             string                 `protobuf:"bytes,5,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
+	TwoFactor            []string               `protobuf:"bytes,6,rep,name=two_factor,json=twoFactor,proto3" json:"two_factor,omitempty"`
+	Id                   int32                  `protobuf:"varint,7,opt,name=id,proto3" json:"id,omitempty"`
+	Password             string                 `protobuf:"bytes,8,opt,name=password,proto3" json:"password,omitempty"`
+	PasswordConfirmation string                 `protobuf:"bytes,9,opt,name=password_confirmation,json=passwordConfirmation,proto3" json:"password_confirmation,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *UpdateRequest) Reset() {
@@ -297,6 +306,13 @@ func (x *UpdateRequest) GetId() int32 {
 func (x *UpdateRequest) GetPassword() string {
 	if x != nil {
 		return x.Password
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetPasswordConfirmation() string {
+	if x != nil {
+		return x.PasswordConfirmation
 	}
 	return ""
 }
@@ -592,7 +608,7 @@ const file_internal_domain_account_account_proto_rawDesc = "" +
 	"%internal/domain/account/account.proto\x12\faccountproto\"6\n" +
 	"\x0eCreateResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
-	"\x03msg\x18\x02 \x01(\tR\x03msg\"\xb8\x01\n" +
+	"\x03msg\x18\x02 \x01(\tR\x03msg\"\xed\x01\n" +
 	"\rCreateRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1d\n" +
@@ -601,10 +617,11 @@ const file_internal_domain_account_account_proto_rawDesc = "" +
 	"\tlast_name\x18\x05 \x01(\tR\blastName\x12\x1d\n" +
 	"\n" +
 	"two_factor\x18\x06 \x03(\tR\ttwoFactor\x12\x1a\n" +
-	"\bpassword\x18\a \x01(\tR\bpassword\"6\n" +
+	"\bpassword\x18\a \x01(\tR\bpassword\x123\n" +
+	"\x15password_confirmation\x18\b \x01(\tR\x14passwordConfirmation\"6\n" +
 	"\x0eUpdateResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
-	"\x03msg\x18\x02 \x01(\tR\x03msg\"\xc8\x01\n" +
+	"\x03msg\x18\x02 \x01(\tR\x03msg\"\xfd\x01\n" +
 	"\rUpdateRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1d\n" +
@@ -614,7 +631,8 @@ const file_internal_domain_account_account_proto_rawDesc = "" +
 	"\n" +
 	"two_factor\x18\x06 \x03(\tR\ttwoFactor\x12\x0e\n" +
 	"\x02id\x18\a \x01(\x05R\x02id\x12\x1a\n" +
-	"\bpassword\x18\b \x01(\tR\bpassword\"6\n" +
+	"\bpassword\x18\b \x01(\tR\bpassword\x123\n" +
+	"\x15password_confirmation\x18\t \x01(\tR\x14passwordConfirmation\"6\n" +
 	"\x0eDeleteResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\"\x1f\n" +

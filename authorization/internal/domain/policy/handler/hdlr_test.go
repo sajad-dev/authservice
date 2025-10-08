@@ -7,7 +7,7 @@ import (
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/dto/gen/response"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/mocks"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/policy/policyproto"
-	"github.com/sajad-dev/authservice/authorization/internal/shared/validation/validate"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/validation"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/constants/statuscode"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
