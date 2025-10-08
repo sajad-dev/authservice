@@ -33,6 +33,6 @@ dynamic_resources:
       refresh_delay: 3600s 
 
 node:
-  id: test-node
-  cluster: test-cluster
+  id: node
+  cluster: cluster
 

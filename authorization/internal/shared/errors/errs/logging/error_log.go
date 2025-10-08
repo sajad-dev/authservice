@@ -8,7 +8,7 @@ import (
 )
 
 func CheckDebugTrueOrNot() {
-	if config.Config.DEBUG == "false" {
+	if !config.Cfg.Debug {
 		file, err := os.OpenFile("../../storage/log/", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 		if err != nil {
 			panic(err)

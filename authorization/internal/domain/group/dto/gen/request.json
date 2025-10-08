@@ -15,14 +15,14 @@
             "To": "Subject",
             "Type": "string",
             "From": "Subject",
-            "Validations": "",
+            "Validations": "required,max=64",
             "Json": "subject"
           },
           {
             "To": "Group",
             "Type": "string",
             "From": "Group",
-            "Validations": "",
+            "Validations": "required,max=64",
             "Json": "group"
           }
         ]
@@ -39,14 +39,14 @@
             "To": "Subject",
             "Type": "string",
             "From": "Subject",
-            "Validations": "",
+            "Validations": "required,max=64",
             "Json": "subject"
           },
           {
             "To": "Group",
             "Type": "string",
             "From": "Group",
-            "Validations": "",
+            "Validations": "required,max=64",
             "Json": "group"
           }
         ]

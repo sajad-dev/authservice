@@ -35,17 +35,17 @@ import (
 )
 
 type Bootstrap struct {
-	Config config.AppConfig
+	Config config.Config
 }
 
-func NewBootstrap(cnf config.AppConfig) *Bootstrap {
+func NewBootstrap(cnf config.Config) *Bootstrap {
 	return &Bootstrap{Config: cnf}
 }
 
 func (b *Bootstrap) _casbinInstanse(adapter *gormadapter.Adapter) (authorize.Authorize, error) {
 	log.Println("Boot GRPC")
 
-	en, err := casbinz.CreateInstanse(adapter, b.Config.MODEL_CONF)
+	en, err := casbinz.CreateInstanse(adapter, b.Config.ConfigModel)
 	if err != nil {
 		return nil, errs.Err(err)
 	}
@@ -54,19 +54,19 @@ func (b *Bootstrap) _casbinInstanse(adapter *gormadapter.Adapter) (authorize.Aut
 
 func (b *Bootstrap) _setupDB() setupdb.SetupDB[*gormadapter.Adapter] {
 	return postgres.NewSetupPostgres(
-		b.Config.DATABASE_PORT,
-		b.Config.DATABASE_USER,
-		b.Config.DATABASE_PASSWORD,
-		b.Config.DATABASE_HOST,
-		b.Config.DATABASE_NAME,
+		b.Config.Database.Port,
+		b.Config.Database.User,
+		b.Config.Database.Password,
+		b.Config.Database.Host,
+		b.Config.Database.DbName,
 	)
 }
 
-func (b *Bootstrap) registerGrpc(gc *grpc.Server, repoDB authorize.Authorize, vld validation.Validation) {
+func (b *Bootstrap) _registerGrpc(gc *grpc.Server, repoDB authorize.Authorize, vld validation.Validation) {
 	authz.RegisterAuthorizationServer(gc, authorizehdlr.NewAuthorizeHdlr(
 		authorizesvc.NewAuthorizeSvc(
 			authorizerepo.NewAuthorizeRepo(repoDB),
-			hs256.NewJWT([]byte(b.Config.JWT)),
+			hs256.NewJWT([]byte(b.Config.SecretKey)),
 		),
 	))
 
@@ -98,7 +98,7 @@ func (b *Bootstrap) Boot(gc *grpc.Server) error {
 
 	vld := validate.NewValidate(validator.New())
 
-	b.registerGrpc(gc, en, vld)
+	b._registerGrpc(gc, en, vld)
 
 	return nil
 }

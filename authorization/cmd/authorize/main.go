@@ -6,8 +6,11 @@ import (
 )
 
 func main() {
-	conf := config.NewConfig()
-	err := grpcserver.NewGrpc(conf).Run()
+	err := config.NewConfig()
+	if err != nil {
+		panic(err)
+	}
+	err = grpcserver.NewGrpc(config.Cfg).Run()
 	if err != nil {
 		panic(err)
 	}

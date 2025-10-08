@@ -13,17 +13,17 @@ import (
 )
 
 type Grpc struct {
-	Config config.AppConfig
+	Config config.Config
 }
 
-func NewGrpc(config config.AppConfig) *Grpc {
+func NewGrpc(config config.Config) *Grpc {
 	return &Grpc{
 		Config: config,
 	}
 }
 
 func (g *Grpc) Run() error {
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", g.Config.GRPC_PORT))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", g.Config.Server.Port))
 	if err != nil {
 		return errs.Err(err)
 	}
@@ -35,7 +35,7 @@ func (g *Grpc) Run() error {
 		return err
 	}
 
-	log.Printf("Run server at port %s \n", g.Config.GRPC_PORT)
+	log.Printf("Run server at port %d \n", g.Config.Server.Port)
 
 	gc.Serve(lis)
 

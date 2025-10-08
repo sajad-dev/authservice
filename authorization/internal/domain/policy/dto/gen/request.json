@@ -15,21 +15,21 @@
             "To": "Subject",
             "Type": "string",
             "From": "Subject",
-            "Validations": "",
+            "Validations": "required,max=64",
             "Json": "subject"
           },
           {
             "To": "Object",
             "Type": "string",
             "From": "Object",
-            "Validations": "",
+            "Validations": "required,max=64",
             "Json": "object"
           },
           {
             "To": "Action",
             "Type": "string",
             "From": "Action",
-            "Validations": "",
+            "Validations": "required,max=64",
             "Json": "action"
           }
         ]
@@ -46,21 +46,21 @@
             "To": "Subject",
             "Type": "string",
             "From": "Subject",
-            "Validations": "",
+            "Validations": "required,max=64",
             "Json": "subject"
           },
           {
             "To": "Object",
             "Type": "string",
             "From": "Object",
-            "Validations": "",
+            "Validations": "required,max=64",
             "Json": "object"
           },
           {
             "To": "Action",
             "Type": "string",
             "From": "Action",
-            "Validations": "",
+            "Validations": "required,max=64",
             "Json": "action"
           }
         ]

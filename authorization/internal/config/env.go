@@ -1,37 +1,62 @@
 package config
 
 import (
-	"os"
-	"reflect"
+	"log"
+	"strings"
 	"sync"
+
+	"github.com/spf13/viper"
 )
 
-var Config = AppConfig{}
-var once sync.Once
+type Config struct {
+	Database struct {
+		DbName   string `mapstructure:"dbname"`
+		User     string `mapstructure:"user"`
+		Password string `mapstructure:"password"`
+		Host     string `mapstructure:"host"`
+		Port     int `mapstructure:"port"`
+	} `mapstructure:"database"`
 
-func _setConfigs() AppConfig {
-	cfg := NewAppConfig()
+	Server struct {
+		Port int `mapstructure:"port"`
+	} `mapstructure:"server"`
 
-	v := reflect.ValueOf(cfg).Elem()
-	t := v.Type()
-
-	for i := 0; i < v.NumField(); i++ {
-		field := v.Field(i)
-		fieldType := t.Field(i)
-
-		envValue := os.Getenv(fieldType.Name)
-		if envValue != "" {
-			field.SetString(envValue)
-		}
-	}
-
-	return *cfg
+	Debug bool `mapstructure:"debug"`
+	ConfigModel string `mapstructure:"config_model"`
+	SecretKey string `mapstructure:"secret_key"`
 }
 
-func NewConfig() AppConfig {
+var Cfg = Config{}
+var once sync.Once
+
+func _setConfigs() error {
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath(".")
+
+	if err := viper.ReadInConfig(); err != nil {
+		return err
+	}
+
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	viper.AutomaticEnv()
+
+	var cfg Config
+	if err := viper.Unmarshal(&cfg); err != nil {
+		return err
+	}
+
+	Cfg = cfg
+	log.Println(cfg)
+
+	return nil
+}
+
+func NewConfig() error {
+	var err error
 	once.Do(func() {
-		Config = _setConfigs()
+		err = _setConfigs()
 	})
 
-	return Config
+	return err
 }
