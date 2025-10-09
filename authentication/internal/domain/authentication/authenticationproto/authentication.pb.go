@@ -421,7 +421,7 @@ const file_internal_domain_authentication_authentication_proto_rawDesc = "" +
 	"\bpassword\x18\x05 \x01(\tR\bpassword\x123\n" +
 	"\x15password_confirmation\x18\x06 \x01(\tR\x14passwordConfirmation\x12\x1a\n" +
 	"\bremember\x18\a \x01(\tR\bremember2\xb7\x01\n" +
-	"\fAuthtication\x12N\n" +
+	"\fAuthentication\x12N\n" +
 	"\x05Login\x12!.authenticationproto.LoginRequest\x1a\".authenticationproto.LoginResponse\x12W\n" +
 	"\bRegister\x12$.authenticationproto.RegisterRequest\x1a%.authenticationproto.RegisterResponseB5Z3/internal/domain/authentication/authenticationprotob\x06proto3"
 
@@ -448,10 +448,10 @@ var file_internal_domain_authentication_authentication_proto_goTypes = []any{
 var file_internal_domain_authentication_authentication_proto_depIdxs = []int32{
 	0, // 0: authenticationproto.LoginResponse.data:type_name -> authenticationproto.User
 	0, // 1: authenticationproto.RegisterResponse.data:type_name -> authenticationproto.User
-	2, // 2: authenticationproto.Authtication.Login:input_type -> authenticationproto.LoginRequest
-	4, // 3: authenticationproto.Authtication.Register:input_type -> authenticationproto.RegisterRequest
-	1, // 4: authenticationproto.Authtication.Login:output_type -> authenticationproto.LoginResponse
-	3, // 5: authenticationproto.Authtication.Register:output_type -> authenticationproto.RegisterResponse
+	2, // 2: authenticationproto.Authentication.Login:input_type -> authenticationproto.LoginRequest
+	4, // 3: authenticationproto.Authentication.Register:input_type -> authenticationproto.RegisterRequest
+	1, // 4: authenticationproto.Authentication.Login:output_type -> authenticationproto.LoginResponse
+	3, // 5: authenticationproto.Authentication.Register:output_type -> authenticationproto.RegisterResponse
 	4, // [4:6] is the sub-list for method output_type
 	2, // [2:4] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name

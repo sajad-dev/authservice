@@ -2,38 +2,58 @@ syntax = "proto3";
 
 package policyproto;
 
+import "google/api/annotations.proto";
+
 option go_package = "/internal/domain/policy/policyproto";
 
 service Policy {
-  rpc Create (CreateRequest) returns (Response);
-  rpc Delete (DeleteRequest) returns (Response);
-  rpc GetAll (GetAllRequest) returns (GetAllResponse);
+  rpc Create (CreateRequest) returns (Response) {
+    option (google.api.http) = {
+      post: "/policy"
+      body: "*"
+    };
+  }
+
+  rpc Delete (DeleteRequest) returns (Response) {
+    option (google.api.http) = {
+      delete: "/policy"
+      body: "*"
+    };
+  }
+
+  rpc GetAll (GetAllRequest) returns (GetAllResponse) {
+    option (google.api.http) = {
+      get: "/policy"
+    };
+  }
 }
 
 message Response {
   int32 code = 1;
   string msg = 2;
 }
+
 message PolicyList {
-    repeated string policy = 1;
+  repeated string policy = 1;
 }
+
 message GetAllResponse {
   int32 code = 1;
   string msg = 2;
-  repeated PolicyList data = 3 ;
+  repeated PolicyList data = 3;
 }
 
 message CreateRequest {
-      string subject = 1;
-      string object = 2;
-      string action = 3;
+  string subject = 1;
+  string object = 2;
+  string action = 3;
 }
 
 message DeleteRequest {
-      string subject = 1;
-      string object = 2;
-      string action = 3;
+  string subject = 1;
+  string object = 2;
+  string action = 3;
 }
 
-message GetAllRequest {
-}
+message GetAllRequest {}
+

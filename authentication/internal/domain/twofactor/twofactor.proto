@@ -2,12 +2,26 @@ syntax = "proto3";
 
 package twofactorproto;
 
+import "google/api/annotations.proto";
+
 option go_package = "/internal/domain/twofactor/twofactorproto";
 
-service Twofactory {
-  rpc Email (EmailRequest) returns (TwoFactorResponse);
-  rpc Google (GoogleRequest) returns (TwoFactorResponse);
+service Twofactor {
+  rpc Email (EmailRequest) returns (TwoFactorResponse) {
+    option (google.api.http) = {
+      post: "/twofactor/email"
+      body: "*"
+    };
+  }
+
+  rpc Google (GoogleRequest) returns (TwoFactorResponse) {
+    option (google.api.http) = {
+      post: "/twofactor/google"
+      body: "*"
+    };
+  }
 }
+
 
 message User {
   string username = 1;
@@ -35,3 +49,4 @@ message GoogleRequest {
       string token =1;
       int32 code = 2;
 }
+

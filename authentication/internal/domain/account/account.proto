@@ -2,13 +2,35 @@ syntax = "proto3";
 
 package accountproto;
 
+import "google/api/annotations.proto";
+
 option go_package = "/internal/domain/account/accountproto";
 
 service Account {
-  rpc Create (CreateRequest) returns (CreateResponse);
-  rpc Update (UpdateRequest) returns (UpdateResponse);
-  rpc Delete (DeleteRequest) returns (DeleteResponse);
-  rpc Read (ReadRequest) returns (ReadResponse);
+  rpc Create (CreateRequest) returns (CreateResponse) {
+    option (google.api.http) = {
+      post: "/account"
+    };
+  }
+
+  rpc Update (UpdateRequest) returns (UpdateResponse) {
+    option (google.api.http) = {
+      put: "/account/{id}"
+      body: "*"
+    };
+  }
+
+  rpc Delete (DeleteRequest) returns (DeleteResponse) {
+    option (google.api.http) = {
+      delete: "/account/{id}"
+    };
+  }
+
+  rpc Read (ReadRequest) returns (ReadResponse) {
+    option (google.api.http) = {
+      get: "/account/{id}"
+    };
+  }
 }
 
 
@@ -69,5 +91,6 @@ message ReadResponse {
 message ReadRequest {
     int32 id =8;
 }
+
 
 

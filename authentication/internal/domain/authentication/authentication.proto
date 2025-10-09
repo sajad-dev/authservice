@@ -2,11 +2,24 @@ syntax = "proto3";
 
 package authenticationproto;
 
+import "google/api/annotations.proto";
+
 option go_package = "/internal/domain/authentication/authenticationproto";
 
-service Authtication {
-  rpc Login (LoginRequest) returns (LoginResponse);
-  rpc Register (RegisterRequest) returns (RegisterResponse);
+service Authentication {
+  rpc Login (LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/login"
+      body: "*"
+    };
+  }
+
+  rpc Register (RegisterRequest) returns (RegisterResponse) {
+    option (google.api.http) = {
+      post: "/register"
+      body: "*"
+    };
+  }
 }
 
 message User {
@@ -48,3 +61,4 @@ message RegisterRequest {
   string password_confirmation = 6;
   string remember =7 ;
 }
+

@@ -7,5 +7,14 @@
         "port": 3000
       }
     ]
+  },
+  {
+    "name": "authentication_service",
+    "endpoints": [
+      {
+        "address": "authentication_service",
+        "port": 3001
+      }
+    ]
   }
 ]

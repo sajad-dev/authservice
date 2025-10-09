@@ -4,6 +4,30 @@
     {
       "prefix": "groupproto.Group",
       "cluster": "authorization_service"
+    },
+    {
+      "prefix": "policyproto.Policy",
+      "cluster": "authorization_service"
+    },
+    {
+      "prefix": "accountproto.Account",
+      "cluster": "authentication_service"
+    },
+    {
+      "prefix": "authenticationproto.Authentication",
+      "cluster": "authentication_service"
+    },
+    {
+      "prefix": "forgetpasswordproto.ForgetPassword",
+      "cluster": "authentication_service"
+    },
+    {
+      "prefix": "twofactorproto.Twofactory",
+      "cluster": "authentication_service"
+    },
+    {
+      "prefix": "twofactornotifierproto.TwofactorNotifier",
+      "cluster": "authentication_service"
     }
   ]
 }

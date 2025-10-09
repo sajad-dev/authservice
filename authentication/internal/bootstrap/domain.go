@@ -86,7 +86,7 @@ func (b *Bootstrap) _registerGrpc(gc *grpc.Server) error {
 		vld,
 	))
 
-	authenticationproto.RegisterAuthticationServer(gc, authenticationhdlr.NewAuthenticationHdlr(
+	authenticationproto.RegisterAuthenticationServer(gc, authenticationhdlr.NewAuthenticationHdlr(
 		authenticationsvc.NewAuthenticationSvc(
 			authenticationrepo.NewAuthenticationRepo(db),
 			crp,

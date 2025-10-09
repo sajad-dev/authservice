@@ -11,7 +11,7 @@ import (
 )
 
 type AuthenticationHdlr struct {
-	authenticationproto.UnimplementedAuthticationServer
+	authenticationproto.UnimplementedAuthenticationServer
 	Service    authentication.AuthenticatorService
 	Validation validation.Validation
 }

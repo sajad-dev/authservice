@@ -2,37 +2,44 @@ syntax = "proto3";
 
 package groupproto;
 
+import "google/api/annotations.proto";
+
 option go_package = "/internal/domain/group/groupproto";
 
 service Group {
-  rpc Create (CreateRequest) returns (Response);
-  rpc Delete (DeleteRequest) returns (Response);
-  rpc GetAll (GetAllRequest) returns (GetAllResponse);
+  rpc Create (CreateRequest) returns (Response) {
+    option (google.api.http) = {
+      post: "/group"
+      body: "*"
+    };
+  }
+
+  rpc Delete (DeleteRequest) returns (Response) {
+    option (google.api.http) = {
+      delete: "/group/{id}"
+    };
+  }
+
+  rpc GetAll (GetAllRequest) returns (GetAllResponse) {
+    option (google.api.http) = {
+      get: "/group"
+    };
+  }
 }
+
 
 message Response {
   int32 code = 1;
   string msg = 2;
 }
-message GroupList {
-    repeated string group = 1;
+message PolicyList {
+    repeated string policy = 1;
 }
 message GetAllResponse {
   int32 code = 1;
   string msg = 2;
-  repeated GroupList data = 3 ;
+  repeated PolicyList data = 3 ;
 }
 
 message CreateRequest {
-      string subject = 1;
-      string Group = 2;
-}
-
-message DeleteRequest {
-      string subject = 1;
-      string Group = 2;
-}
-
-message GetAllRequest {
-}
 

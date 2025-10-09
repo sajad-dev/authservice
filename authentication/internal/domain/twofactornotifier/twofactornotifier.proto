@@ -2,11 +2,19 @@ syntax = "proto3";
 
 package twofactornotifierproto;
 
+import "google/api/annotations.proto";
+
 option go_package = "/internal/domain/twofactornotifier/twofactornotifierproto";
 
 service TwofactorNotifier {
-  rpc NotifierEmail (NotifierEmailRequest) returns (TwoFactorNotifierResponse);
+  rpc NotifierEmail (NotifierEmailRequest) returns (TwoFactorNotifierResponse) {
+    option (google.api.http) = {
+      post: "/twofactor/notifier/email"
+      body: "*"
+    };
+  }
 }
+
 
 message TwoFactorNotifierResponse {
   int32 code = 1;
@@ -16,5 +24,6 @@ message TwoFactorNotifierResponse {
 message NotifierEmailRequest {
       string token = 1;
 }
+
 
 
