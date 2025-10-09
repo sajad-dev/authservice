@@ -4,18 +4,18 @@ import (
 	"testing"
 
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/grpcerr"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/grpcerr/errorsproto"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/grpcerr/errautheproto"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc/codes"
 )
 
 func TestErr_GRPXErr_ErrorsWithDetails(t *testing.T) {
 
-	errD, err := grpcerr.ErrorsWithDetails(&errorsproto.ErrorDetail{Message: "This very very very very bad error"}, ":((", codes.InvalidArgument)
+	errD, err := grpcerr.ErrorsWithDetails(&errautheproto.ErrorDetail{Message: "This very very very very bad error"}, ":((", codes.InvalidArgument)
 	assert.NoError(t, err)
 
 	assert.Equal(t, 1, len(errD.Details()))
-	errDetails, ok := errD.Details()[0].(*errorsproto.ErrorDetail)
+	errDetails, ok := errD.Details()[0].(*errautheproto.ErrorDetail)
 	assert.True(t, ok)
 	assert.Equal(t, "This very very very very bad error", errDetails.Message)
 }

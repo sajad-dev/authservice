@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package errorsproto;
+package errauthzproto;
 
-option go_package = "/internal/shared/errors/errs/grpcerr/errorsproto;errorsproto";
+option go_package = "/internal/shared/errors/errs/grpcerr/errauthzproto;errauthzproto";
 
 message ErrorDetail {
     string message = 1;

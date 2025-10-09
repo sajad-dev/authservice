@@ -7,7 +7,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/grpcerr"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/grpcerr/errorsproto"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/grpcerr/errautheproto"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/logging"
 	"google.golang.org/grpc/codes"
 )
@@ -22,7 +22,7 @@ func WithDetailsErr(err error, errParametr error) error {
 func ServerErr(errParametr error) error {
 	if errParametr != nil {
 
-		errMessage, err := grpcerr.ErrorsWithDetails(&errorsproto.ErrorDetail{Message: messages.ERR_INTERNAL_SERVER}, messages.ERR_INTERNAL_SERVER, codes.Internal)
+		errMessage, err := grpcerr.ErrorsWithDetails(&errautheproto.ErrorDetail{Message: messages.ERR_INTERNAL_SERVER}, messages.ERR_INTERNAL_SERVER, codes.Internal)
 
 		logging.ErrLog(errParametr)
 
@@ -41,7 +41,7 @@ func ValidationErr(errParametr error) error {
 		validationErr, ok := errParametr.(validator.ValidationErrors)
 		if ok {
 			errMessage, err := grpcerr.ErrorsWithDetails(
-				&errorsproto.ErrorDetail{Message: validationErr.Error()},
+				&errautheproto.ErrorDetail{Message: validationErr.Error()},
 				messages.ERR_VALIDATION,
 				codes.InvalidArgument,
 			)

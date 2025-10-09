@@ -1,6 +1,6 @@
 module github.com/sajad-dev/authservice/authorization
 
-go 1.24
+go 1.24.0
 
 require (
 	github.com/bmatcuk/doublestar/v4 v4.6.1 // indirect
@@ -55,9 +55,10 @@ require (
 	golang.org/x/sync v0.16.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
 	golang.org/x/text v0.28.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250707201910-8d1bb00bc6a7 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20251007200510-49b9836ed3ff // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20251007200510-49b9836ed3ff // indirect
 	google.golang.org/grpc v1.75.1 // indirect
-	google.golang.org/protobuf v1.36.9 // indirect
+	google.golang.org/protobuf v1.36.10 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/postgres v1.6.0 // indirect
 	gorm.io/gorm v1.31.0 // indirect

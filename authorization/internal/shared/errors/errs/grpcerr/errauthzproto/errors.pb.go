@@ -4,7 +4,7 @@
 // 	protoc        v6.32.1
 // source: internal/shared/errors/errs/grpcerr/errors.proto
 
-package errorsproto
+package errauthzproto
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -69,9 +69,9 @@ var File_internal_shared_errors_errs_grpcerr_errors_proto protoreflect.FileDescr
 
 const file_internal_shared_errors_errs_grpcerr_errors_proto_rawDesc = "" +
 	"\n" +
-	"0internal/shared/errors/errs/grpcerr/errors.proto\x12\verrorsproto\"'\n" +
+	"0internal/shared/errors/errs/grpcerr/errors.proto\x12\rerrauthzproto\"'\n" +
 	"\vErrorDetail\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessageB>Z</internal/shared/errors/errs/grpcerr/errorsproto;errorsprotob\x06proto3"
+	"\amessage\x18\x01 \x01(\tR\amessageBBZ@/internal/shared/errors/errs/grpcerr/errauthzproto;errauthzprotob\x06proto3"
 
 var (
 	file_internal_shared_errors_errs_grpcerr_errors_proto_rawDescOnce sync.Once
@@ -87,7 +87,7 @@ func file_internal_shared_errors_errs_grpcerr_errors_proto_rawDescGZIP() []byte 
 
 var file_internal_shared_errors_errs_grpcerr_errors_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_internal_shared_errors_errs_grpcerr_errors_proto_goTypes = []any{
-	(*ErrorDetail)(nil), // 0: errorsproto.ErrorDetail
+	(*ErrorDetail)(nil), // 0: errauthzproto.ErrorDetail
 }
 var file_internal_shared_errors_errs_grpcerr_errors_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type

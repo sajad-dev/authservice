@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package errautheproto;
+
+option go_package = "/internal/shared/errors/errs/grpcerr/errautheproto;errautheproto";
+
+message ErrorDetail {
+    string message = 1;
+}
+

@@ -11,7 +11,7 @@ type Config struct {
 
 type Listener struct {
 	Name         string        `json:"name"`
-	Type        string       `json:"@type"`
+	Type         string        `json:"@type"`
 	Address      Address       `json:"address"`
 	FilterChains []FilterChain `json:"filter_chains"`
 }
@@ -73,12 +73,13 @@ type HttpFilter struct {
 }
 
 type FilterConfig struct {
-	Type            string        `json:"@type"`
-	ProtoDescriptor string        `json:"proto_descriptor,omitempty"`
-	Services        []string      `json:"services,omitempty"`
-	PrintOptions    *PrintOptions `json:"print_options,omitempty"`
-	GrpcService     *GrpcService  `json:"grpc_service,omitempty"`
-	Timeout         string        `json:"timeout,omitempty"`
+	Type              string        `json:"@type"`
+	ProtoDescriptor   string        `json:"proto_descriptor,omitempty"`
+	Services          []string      `json:"services,omitempty"`
+	PrintOptions      *PrintOptions `json:"print_options,omitempty"`
+	GrpcService       *GrpcService  `json:"grpc_service,omitempty"`
+	Timeout           string        `json:"timeout,omitempty"`
+	ConvertGrpcStatus bool          `json:"convert_grpc_status,omitempty"`
 }
 
 type PrintOptions struct {

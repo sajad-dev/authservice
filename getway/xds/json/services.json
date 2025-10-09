@@ -22,7 +22,7 @@
       "cluster": "authentication_service"
     },
     {
-      "prefix": "twofactorproto.Twofactory",
+      "prefix": "twofactorproto.Twofactor",
       "cluster": "authentication_service"
     },
     {
