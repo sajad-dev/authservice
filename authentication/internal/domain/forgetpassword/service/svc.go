@@ -13,6 +13,7 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/statuscode"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/helpers/timeutil"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/job"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/mail"
 )
 
@@ -20,13 +21,15 @@ type ForgetPasswordSvc struct {
 	Repo    forgetpassword.ForgetPasswordRepository
 	Crypto  crypto.Crypto
 	Hashing hashing.Hashing
+	Job     job.Worker
 }
 
-func NewForgetPasswordSvc(repo forgetpassword.ForgetPasswordRepository, hashing hashing.Hashing, cry crypto.Crypto) *ForgetPasswordSvc {
+func NewForgetPasswordSvc(repo forgetpassword.ForgetPasswordRepository, hashing hashing.Hashing, cry crypto.Crypto,jb job.Worker) *ForgetPasswordSvc {
 	return &ForgetPasswordSvc{
 		Repo:    repo,
 		Crypto:  cry,
 		Hashing: hashing,
+		Job: jb,
 	}
 }
 
@@ -62,7 +65,7 @@ func (a ForgetPasswordSvc) Forget(req request.ForgetRequest) (response.ForgetRes
 		mail.WithTitle(messages.FORGET_PASSWORD_TITLE),
 	)
 
-	err = mail.AddJob()
+	err = mail.AddJob(a.Job)
 	if err != nil {
 		return response.ForgetResponse{}, errs.Err(err)
 	}

@@ -14,6 +14,7 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/statuscode"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/helpers/timeutil"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/job"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
@@ -45,6 +46,7 @@ func (s *TestForgetPasswordSuite) SetupSuite() {
 		s.repoMock,
 		s.hash,
 		s.crypto,
+		job.NewJobs(),
 	)
 }
 

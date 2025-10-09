@@ -43,9 +43,11 @@ func (b *Bootstrap) _registerGrpc(gc *grpc.Server) error {
 	if err != nil {
 		return errs.Err(err)
 	}
-	db := postgres.NewPostgres[*models.Accounts](postgresDb)
 
-	vld := validation.NewValidator[*models.Accounts](db)
+	db := postgres.NewPostgres[*models.Accounts](postgresDb)
+	validationDB := postgres.NewGlobalPostgres(postgresDb)
+
+	vld := validation.NewValidator(validationDB)
 
 	hashing := sha256.NewSha256()
 
@@ -58,7 +60,6 @@ func (b *Bootstrap) _registerGrpc(gc *grpc.Server) error {
 	))
 
 	return nil
-
 
 }
 

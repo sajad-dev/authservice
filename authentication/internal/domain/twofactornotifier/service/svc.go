@@ -15,7 +15,9 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/statuscode"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/helpers/codegenerate"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/job"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/mail"
+
 	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
 )
 
@@ -24,12 +26,14 @@ var TOKEN_NOT_VALID = errors.New("")
 type TwoFactorNotifierSvc struct {
 	Repo   twofactornotifier.TwoFactorNotifierRepository
 	Crypto crypto.Crypto
+	Job    job.Worker
 }
 
-func NewTwoFactorNotifierSvc(repo twofactornotifier.TwoFactorNotifierRepository, cry crypto.Crypto) *TwoFactorNotifierSvc {
+func NewTwoFactorNotifierSvc(repo twofactornotifier.TwoFactorNotifierRepository, cry crypto.Crypto,jb job.Worker) *TwoFactorNotifierSvc {
 	return &TwoFactorNotifierSvc{
 		Repo:   repo,
 		Crypto: cry,
+		Job: jb,
 	}
 }
 
@@ -87,14 +91,14 @@ func (s *TwoFactorNotifierSvc) NotifierEmail(req request.NotifierEmailRequest) (
 		mail.WithSendTo(account.Email),
 		mail.WithTitle(messages.TWO_FACTORY_TITLE),
 	)
-	err = email.AddJob()
+	err = email.AddJob(s.Job)
 	if err != nil {
 		return response.TwoFactorNotifierResponse{}, errs.Err(err)
 	}
 
 	return response.TwoFactorNotifierResponse{
-		Msg: messages.SUCCESS_SEND_EMAIL_TWO_FACTOR,
-		Code:    statuscode.SUCCESSFUL,
+		Msg:  messages.SUCCESS_SEND_EMAIL_TWO_FACTOR,
+		Code: statuscode.SUCCESSFUL,
 	}, nil
 }
 

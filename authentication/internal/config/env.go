@@ -14,16 +14,23 @@ type Config struct {
 		User     string `mapstructure:"user"`
 		Password string `mapstructure:"password"`
 		Host     string `mapstructure:"host"`
-		Port     int `mapstructure:"port"`
+		Port     int    `mapstructure:"port"`
 	} `mapstructure:"database"`
 
 	Server struct {
 		Port int `mapstructure:"port"`
 	} `mapstructure:"server"`
 
-	Debug bool `mapstructure:"debug"`
+	Mail struct {
+		Host     string `mapstructure:"host"`
+		Port     int    `mapstructure:"port"`
+		Email    string `mapstructure:"email"`
+		Password string `mapstructure:"password"`
+	} `mapstructure:"mail"`
+
+	Debug       bool   `mapstructure:"debug"`
 	ConfigModel string `mapstructure:"config_model"`
-	SecretKey string `mapstructure:"secret_key"`
+	SecretKey   string `mapstructure:"secret_key"`
 }
 
 var Cfg = Config{}

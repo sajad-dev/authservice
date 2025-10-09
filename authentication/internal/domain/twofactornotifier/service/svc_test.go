@@ -3,8 +3,8 @@ package service_test
 import (
 	"testing"
 
-	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/mocks"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier"
+	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/mocks"
 
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/dto/gen/request"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/twofactornotifier/service"
@@ -14,6 +14,7 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/hashing/sha256"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/helpers/timeutil"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/job"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
@@ -44,6 +45,7 @@ func (s *TestTwoFactorNotifierSuite) SetupSuite() {
 	s.twoFactorNotifierService = service.NewTwoFactorNotifierSvc(
 		s.repoMock,
 		s.crypto,
+		job.NewJobs(),
 	)
 }
 

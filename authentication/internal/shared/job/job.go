@@ -5,21 +5,21 @@ import (
 	"time"
 )
 
-type TaskFunc func(params ...any)
-
-type Task struct {
-	RunAt time.Time 
-	Run  TaskFunc 
-	Params []any
-}
-
-
 type Jobs struct {
-	Tasks []Task
+	Tasks []*Task
 	Mu    sync.Mutex
 }
 
-func (j *Jobs) Add(task Task) {
+func NewJobs () *Jobs {
+	return &Jobs{}
+}
+
+type Worker interface {
+	Add(task *Task)
+	Run()
+}
+
+func (j *Jobs) Add(task *Task) {
 	j.Mu.Lock()
 	defer j.Mu.Unlock()
 
@@ -44,3 +44,5 @@ func (j *Jobs) Run() {
 
 	}
 }
+
+var _ Worker = &Jobs{}

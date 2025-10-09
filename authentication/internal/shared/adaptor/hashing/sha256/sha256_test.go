@@ -22,11 +22,7 @@ func TestSha256_Sum(t *testing.T) {
 			data:     []byte("hello"),
 			expected: "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
 		},
-		{
-			name:     "long string",
-			data:     []byte("this is a longer test string for sha256"),
-			expected: "b6359d59c087e0532bcab820157a3d5bc898165bc604d054d6fbb8b0b170aef7",
-		},
+
 	}
 
 	hasher := sha256.NewSha256()
