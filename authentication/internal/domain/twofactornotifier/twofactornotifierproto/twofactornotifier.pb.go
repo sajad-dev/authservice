@@ -7,6 +7,7 @@
 package twofactornotifierproto
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -121,14 +122,14 @@ var File_internal_domain_twofactornotifier_twofactornotifier_proto protoreflect.
 
 const file_internal_domain_twofactornotifier_twofactornotifier_proto_rawDesc = "" +
 	"\n" +
-	"9internal/domain/twofactornotifier/twofactornotifier.proto\x12\x16twofactornotifierproto\"A\n" +
+	"9internal/domain/twofactornotifier/twofactornotifier.proto\x12\x16twofactornotifierproto\x1a\x1cgoogle/api/annotations.proto\"A\n" +
 	"\x19TwoFactorNotifierResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\",\n" +
 	"\x14NotifierEmailRequest\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token2\x85\x01\n" +
-	"\x11TwofactorNotifier\x12p\n" +
-	"\rNotifierEmail\x12,.twofactornotifierproto.NotifierEmailRequest\x1a1.twofactornotifierproto.TwoFactorNotifierResponseB;Z9/internal/domain/twofactornotifier/twofactornotifierprotob\x06proto3"
+	"\x05token\x18\x01 \x01(\tR\x05token2\xac\x01\n" +
+	"\x11TwofactorNotifier\x12\x96\x01\n" +
+	"\rNotifierEmail\x12,.twofactornotifierproto.NotifierEmailRequest\x1a1.twofactornotifierproto.TwoFactorNotifierResponse\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/twofactor/notifier/emailB;Z9/internal/domain/twofactornotifier/twofactornotifierprotob\x06proto3"
 
 var (
 	file_internal_domain_twofactornotifier_twofactornotifier_proto_rawDescOnce sync.Once

@@ -105,7 +105,7 @@ func (b *Bootstrap) _registerGrpc(gc *grpc.Server) error {
 		vld,
 	))
 
-	twofactorproto.RegisterTwofactoryServer(gc, twofactorhdlr.NewTwoFactorHdlr(
+	twofactorproto.RegisterTwofactorServer(gc, twofactorhdlr.NewTwoFactorHdlr(
 		twofactorsvc.NewTwoFactorSvc(
 			twofactorrepo.NewTwoFactorRepo(db, dbCode),
 			crp,

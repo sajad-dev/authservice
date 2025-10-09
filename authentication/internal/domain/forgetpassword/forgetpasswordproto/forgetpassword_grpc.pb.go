@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ForgetPassword_Forget_FullMethodName    = "/forgetpasswordproto.ForgetPassword/Forget"
-	ForgetPassword_ResetGRPC_FullMethodName = "/forgetpasswordproto.ForgetPassword/resetGRPC"
+	ForgetPassword_Forget_FullMethodName = "/forgetpasswordproto.ForgetPassword/Forget"
+	ForgetPassword_Reset_FullMethodName  = "/forgetpasswordproto.ForgetPassword/Reset"
 )
 
 // ForgetPasswordClient is the client API for ForgetPassword service.
@@ -28,7 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ForgetPasswordClient interface {
 	Forget(ctx context.Context, in *ForgetRequest, opts ...grpc.CallOption) (*ForgetResponse, error)
-	ResetGRPC(ctx context.Context, in *ResetRequest, opts ...grpc.CallOption) (*ResetResponse, error)
+	Reset(ctx context.Context, in *ResetRequest, opts ...grpc.CallOption) (*ResetResponse, error)
 }
 
 type forgetPasswordClient struct {
@@ -49,10 +49,10 @@ func (c *forgetPasswordClient) Forget(ctx context.Context, in *ForgetRequest, op
 	return out, nil
 }
 
-func (c *forgetPasswordClient) ResetGRPC(ctx context.Context, in *ResetRequest, opts ...grpc.CallOption) (*ResetResponse, error) {
+func (c *forgetPasswordClient) Reset(ctx context.Context, in *ResetRequest, opts ...grpc.CallOption) (*ResetResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ResetResponse)
-	err := c.cc.Invoke(ctx, ForgetPassword_ResetGRPC_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, ForgetPassword_Reset_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (c *forgetPasswordClient) ResetGRPC(ctx context.Context, in *ResetRequest, 
 // for forward compatibility.
 type ForgetPasswordServer interface {
 	Forget(context.Context, *ForgetRequest) (*ForgetResponse, error)
-	ResetGRPC(context.Context, *ResetRequest) (*ResetResponse, error)
+	Reset(context.Context, *ResetRequest) (*ResetResponse, error)
 	mustEmbedUnimplementedForgetPasswordServer()
 }
 
@@ -78,8 +78,8 @@ type UnimplementedForgetPasswordServer struct{}
 func (UnimplementedForgetPasswordServer) Forget(context.Context, *ForgetRequest) (*ForgetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Forget not implemented")
 }
-func (UnimplementedForgetPasswordServer) ResetGRPC(context.Context, *ResetRequest) (*ResetResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ResetGRPC not implemented")
+func (UnimplementedForgetPasswordServer) Reset(context.Context, *ResetRequest) (*ResetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Reset not implemented")
 }
 func (UnimplementedForgetPasswordServer) mustEmbedUnimplementedForgetPasswordServer() {}
 func (UnimplementedForgetPasswordServer) testEmbeddedByValue()                        {}
@@ -120,20 +120,20 @@ func _ForgetPassword_Forget_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ForgetPassword_ResetGRPC_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ForgetPassword_Reset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ResetRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ForgetPasswordServer).ResetGRPC(ctx, in)
+		return srv.(ForgetPasswordServer).Reset(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ForgetPassword_ResetGRPC_FullMethodName,
+		FullMethod: ForgetPassword_Reset_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ForgetPasswordServer).ResetGRPC(ctx, req.(*ResetRequest))
+		return srv.(ForgetPasswordServer).Reset(ctx, req.(*ResetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -150,8 +150,8 @@ var ForgetPassword_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ForgetPassword_Forget_Handler,
 		},
 		{
-			MethodName: "resetGRPC",
-			Handler:    _ForgetPassword_ResetGRPC_Handler,
+			MethodName: "Reset",
+			Handler:    _ForgetPassword_Reset_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

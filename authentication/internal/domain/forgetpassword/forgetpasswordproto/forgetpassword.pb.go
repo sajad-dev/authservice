@@ -7,6 +7,7 @@
 package forgetpasswordproto
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -241,7 +242,7 @@ var File_internal_domain_forgetpassword_forgetpassword_proto protoreflect.FileDe
 
 const file_internal_domain_forgetpassword_forgetpassword_proto_rawDesc = "" +
 	"\n" +
-	"3internal/domain/forgetpassword/forgetpassword.proto\x12\x13forgetpasswordproto\"L\n" +
+	"3internal/domain/forgetpassword/forgetpassword.proto\x12\x13forgetpasswordproto\x1a\x1cgoogle/api/annotations.proto\"L\n" +
 	"\x0eForgetResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\x12\x14\n" +
@@ -254,10 +255,10 @@ const file_internal_domain_forgetpassword_forgetpassword_proto_rawDesc = "" +
 	"\fResetRequest\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x123\n" +
-	"\x15password_confirmation\x18\x03 \x01(\tR\x14passwordConfirmation2\xb7\x01\n" +
-	"\x0eForgetPassword\x12Q\n" +
-	"\x06Forget\x12\".forgetpasswordproto.ForgetRequest\x1a#.forgetpasswordproto.ForgetResponse\x12R\n" +
-	"\tresetGRPC\x12!.forgetpasswordproto.ResetRequest\x1a\".forgetpasswordproto.ResetResponseB5Z3/internal/domain/forgetpassword/forgetpasswordprotob\x06proto3"
+	"\x15password_confirmation\x18\x03 \x01(\tR\x14passwordConfirmation2\xec\x01\n" +
+	"\x0eForgetPassword\x12n\n" +
+	"\x06Forget\x12\".forgetpasswordproto.ForgetRequest\x1a#.forgetpasswordproto.ForgetResponse\"\x1b\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/forget-password\x12j\n" +
+	"\x05Reset\x12!.forgetpasswordproto.ResetRequest\x1a\".forgetpasswordproto.ResetResponse\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/reset-passwordB5Z3/internal/domain/forgetpassword/forgetpasswordprotob\x06proto3"
 
 var (
 	file_internal_domain_forgetpassword_forgetpassword_proto_rawDescOnce sync.Once
@@ -280,9 +281,9 @@ var file_internal_domain_forgetpassword_forgetpassword_proto_goTypes = []any{
 }
 var file_internal_domain_forgetpassword_forgetpassword_proto_depIdxs = []int32{
 	1, // 0: forgetpasswordproto.ForgetPassword.Forget:input_type -> forgetpasswordproto.ForgetRequest
-	3, // 1: forgetpasswordproto.ForgetPassword.resetGRPC:input_type -> forgetpasswordproto.ResetRequest
+	3, // 1: forgetpasswordproto.ForgetPassword.Reset:input_type -> forgetpasswordproto.ResetRequest
 	0, // 2: forgetpasswordproto.ForgetPassword.Forget:output_type -> forgetpasswordproto.ForgetResponse
-	2, // 3: forgetpasswordproto.ForgetPassword.resetGRPC:output_type -> forgetpasswordproto.ResetResponse
+	2, // 3: forgetpasswordproto.ForgetPassword.Reset:output_type -> forgetpasswordproto.ResetResponse
 	2, // [2:4] is the sub-list for method output_type
 	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

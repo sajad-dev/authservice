@@ -19,139 +19,139 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Twofactory_Email_FullMethodName  = "/twofactorproto.Twofactory/Email"
-	Twofactory_Google_FullMethodName = "/twofactorproto.Twofactory/Google"
+	Twofactor_Email_FullMethodName  = "/twofactorproto.Twofactor/Email"
+	Twofactor_Google_FullMethodName = "/twofactorproto.Twofactor/Google"
 )
 
-// TwofactoryClient is the client API for Twofactory service.
+// TwofactorClient is the client API for Twofactor service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type TwofactoryClient interface {
+type TwofactorClient interface {
 	Email(ctx context.Context, in *EmailRequest, opts ...grpc.CallOption) (*TwoFactorResponse, error)
 	Google(ctx context.Context, in *GoogleRequest, opts ...grpc.CallOption) (*TwoFactorResponse, error)
 }
 
-type twofactoryClient struct {
+type twofactorClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewTwofactoryClient(cc grpc.ClientConnInterface) TwofactoryClient {
-	return &twofactoryClient{cc}
+func NewTwofactorClient(cc grpc.ClientConnInterface) TwofactorClient {
+	return &twofactorClient{cc}
 }
 
-func (c *twofactoryClient) Email(ctx context.Context, in *EmailRequest, opts ...grpc.CallOption) (*TwoFactorResponse, error) {
+func (c *twofactorClient) Email(ctx context.Context, in *EmailRequest, opts ...grpc.CallOption) (*TwoFactorResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(TwoFactorResponse)
-	err := c.cc.Invoke(ctx, Twofactory_Email_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Twofactor_Email_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *twofactoryClient) Google(ctx context.Context, in *GoogleRequest, opts ...grpc.CallOption) (*TwoFactorResponse, error) {
+func (c *twofactorClient) Google(ctx context.Context, in *GoogleRequest, opts ...grpc.CallOption) (*TwoFactorResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(TwoFactorResponse)
-	err := c.cc.Invoke(ctx, Twofactory_Google_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Twofactor_Google_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// TwofactoryServer is the server API for Twofactory service.
-// All implementations must embed UnimplementedTwofactoryServer
+// TwofactorServer is the server API for Twofactor service.
+// All implementations must embed UnimplementedTwofactorServer
 // for forward compatibility.
-type TwofactoryServer interface {
+type TwofactorServer interface {
 	Email(context.Context, *EmailRequest) (*TwoFactorResponse, error)
 	Google(context.Context, *GoogleRequest) (*TwoFactorResponse, error)
-	mustEmbedUnimplementedTwofactoryServer()
+	mustEmbedUnimplementedTwofactorServer()
 }
 
-// UnimplementedTwofactoryServer must be embedded to have
+// UnimplementedTwofactorServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedTwofactoryServer struct{}
+type UnimplementedTwofactorServer struct{}
 
-func (UnimplementedTwofactoryServer) Email(context.Context, *EmailRequest) (*TwoFactorResponse, error) {
+func (UnimplementedTwofactorServer) Email(context.Context, *EmailRequest) (*TwoFactorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Email not implemented")
 }
-func (UnimplementedTwofactoryServer) Google(context.Context, *GoogleRequest) (*TwoFactorResponse, error) {
+func (UnimplementedTwofactorServer) Google(context.Context, *GoogleRequest) (*TwoFactorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Google not implemented")
 }
-func (UnimplementedTwofactoryServer) mustEmbedUnimplementedTwofactoryServer() {}
-func (UnimplementedTwofactoryServer) testEmbeddedByValue()                    {}
+func (UnimplementedTwofactorServer) mustEmbedUnimplementedTwofactorServer() {}
+func (UnimplementedTwofactorServer) testEmbeddedByValue()                   {}
 
-// UnsafeTwofactoryServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to TwofactoryServer will
+// UnsafeTwofactorServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TwofactorServer will
 // result in compilation errors.
-type UnsafeTwofactoryServer interface {
-	mustEmbedUnimplementedTwofactoryServer()
+type UnsafeTwofactorServer interface {
+	mustEmbedUnimplementedTwofactorServer()
 }
 
-func RegisterTwofactoryServer(s grpc.ServiceRegistrar, srv TwofactoryServer) {
-	// If the following call pancis, it indicates UnimplementedTwofactoryServer was
+func RegisterTwofactorServer(s grpc.ServiceRegistrar, srv TwofactorServer) {
+	// If the following call pancis, it indicates UnimplementedTwofactorServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&Twofactory_ServiceDesc, srv)
+	s.RegisterService(&Twofactor_ServiceDesc, srv)
 }
 
-func _Twofactory_Email_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Twofactor_Email_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EmailRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TwofactoryServer).Email(ctx, in)
+		return srv.(TwofactorServer).Email(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Twofactory_Email_FullMethodName,
+		FullMethod: Twofactor_Email_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TwofactoryServer).Email(ctx, req.(*EmailRequest))
+		return srv.(TwofactorServer).Email(ctx, req.(*EmailRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Twofactory_Google_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Twofactor_Google_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GoogleRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TwofactoryServer).Google(ctx, in)
+		return srv.(TwofactorServer).Google(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Twofactory_Google_FullMethodName,
+		FullMethod: Twofactor_Google_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TwofactoryServer).Google(ctx, req.(*GoogleRequest))
+		return srv.(TwofactorServer).Google(ctx, req.(*GoogleRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Twofactory_ServiceDesc is the grpc.ServiceDesc for Twofactory service.
+// Twofactor_ServiceDesc is the grpc.ServiceDesc for Twofactor service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Twofactory_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "twofactorproto.Twofactory",
-	HandlerType: (*TwofactoryServer)(nil),
+var Twofactor_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "twofactorproto.Twofactor",
+	HandlerType: (*TwofactorServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Email",
-			Handler:    _Twofactory_Email_Handler,
+			Handler:    _Twofactor_Email_Handler,
 		},
 		{
 			MethodName: "Google",
-			Handler:    _Twofactory_Google_Handler,
+			Handler:    _Twofactor_Google_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -7,6 +7,7 @@
 package accountproto
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -605,7 +606,7 @@ var File_internal_domain_account_account_proto protoreflect.FileDescriptor
 
 const file_internal_domain_account_account_proto_rawDesc = "" +
 	"\n" +
-	"%internal/domain/account/account.proto\x12\faccountproto\"6\n" +
+	"%internal/domain/account/account.proto\x12\faccountproto\x1a\x1cgoogle/api/annotations.proto\"6\n" +
 	"\x0eCreateResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\"\xed\x01\n" +
@@ -652,12 +653,13 @@ const file_internal_domain_account_account_proto_rawDesc = "" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\x12&\n" +
 	"\x04Data\x18\x03 \x01(\v2\x12.accountproto.UserR\x04Data\"\x1d\n" +
 	"\vReadRequest\x12\x0e\n" +
-	"\x02id\x18\b \x01(\x05R\x02id2\x97\x02\n" +
-	"\aAccount\x12C\n" +
-	"\x06Create\x12\x1b.accountproto.CreateRequest\x1a\x1c.accountproto.CreateResponse\x12C\n" +
-	"\x06Update\x12\x1b.accountproto.UpdateRequest\x1a\x1c.accountproto.UpdateResponse\x12C\n" +
-	"\x06Delete\x12\x1b.accountproto.DeleteRequest\x1a\x1c.accountproto.DeleteResponse\x12=\n" +
-	"\x04Read\x12\x19.accountproto.ReadRequest\x1a\x1a.accountproto.ReadResponseB'Z%/internal/domain/account/accountprotob\x06proto3"
+	"\x02id\x18\b \x01(\x05R\x02id2\xf1\x02\n" +
+	"\aAccount\x12U\n" +
+	"\x06Create\x12\x1b.accountproto.CreateRequest\x1a\x1c.accountproto.CreateResponse\"\x10\x82\xd3\xe4\x93\x02\n" +
+	"\"\b/account\x12]\n" +
+	"\x06Update\x12\x1b.accountproto.UpdateRequest\x1a\x1c.accountproto.UpdateResponse\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\x1a\r/account/{id}\x12Z\n" +
+	"\x06Delete\x12\x1b.accountproto.DeleteRequest\x1a\x1c.accountproto.DeleteResponse\"\x15\x82\xd3\xe4\x93\x02\x0f*\r/account/{id}\x12T\n" +
+	"\x04Read\x12\x19.accountproto.ReadRequest\x1a\x1a.accountproto.ReadResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/account/{id}B'Z%/internal/domain/account/accountprotob\x06proto3"
 
 var (
 	file_internal_domain_account_account_proto_rawDescOnce sync.Once

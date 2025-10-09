@@ -1,5 +1,5 @@
 {
-  "pb": "/etc/envoy/group.pb",
+  "pb": "/etc/envoy/services.pb",
   "routes": [
     {
       "prefix": "groupproto.Group",

@@ -7,6 +7,7 @@
 package groupproto
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -322,7 +323,7 @@ var File_internal_domain_group_group_proto protoreflect.FileDescriptor
 const file_internal_domain_group_group_proto_rawDesc = "" +
 	"\n" +
 	"!internal/domain/group/group.proto\x12\n" +
-	"groupproto\"0\n" +
+	"groupproto\x1a\x1cgoogle/api/annotations.proto\"0\n" +
 	"\bResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\"!\n" +
@@ -338,11 +339,11 @@ const file_internal_domain_group_group_proto_rawDesc = "" +
 	"\rDeleteRequest\x12\x18\n" +
 	"\asubject\x18\x01 \x01(\tR\asubject\x12\x14\n" +
 	"\x05Group\x18\x02 \x01(\tR\x05Group\"\x0f\n" +
-	"\rGetAllRequest2\xbe\x01\n" +
-	"\x05Group\x129\n" +
-	"\x06Create\x12\x19.groupproto.CreateRequest\x1a\x14.groupproto.Response\x129\n" +
-	"\x06Delete\x12\x19.groupproto.DeleteRequest\x1a\x14.groupproto.Response\x12?\n" +
-	"\x06GetAll\x12\x19.groupproto.GetAllRequest\x1a\x1a.groupproto.GetAllResponseB#Z!/internal/domain/group/groupprotob\x06proto3"
+	"\rGetAllRequest2\xf6\x01\n" +
+	"\x05Group\x12L\n" +
+	"\x06Create\x12\x19.groupproto.CreateRequest\x1a\x14.groupproto.Response\"\x11\x82\xd3\xe4\x93\x02\v:\x01*\"\x06/group\x12N\n" +
+	"\x06Delete\x12\x19.groupproto.DeleteRequest\x1a\x14.groupproto.Response\"\x13\x82\xd3\xe4\x93\x02\r*\v/group/{id}\x12O\n" +
+	"\x06GetAll\x12\x19.groupproto.GetAllRequest\x1a\x1a.groupproto.GetAllResponse\"\x0e\x82\xd3\xe4\x93\x02\b\x12\x06/groupB#Z!/internal/domain/group/groupprotob\x06proto3"
 
 var (
 	file_internal_domain_group_group_proto_rawDescOnce sync.Once

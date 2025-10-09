@@ -7,6 +7,7 @@
 package policyproto
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -337,7 +338,7 @@ var File_internal_domain_policy_policy_proto protoreflect.FileDescriptor
 
 const file_internal_domain_policy_policy_proto_rawDesc = "" +
 	"\n" +
-	"#internal/domain/policy/policy.proto\x12\vpolicyproto\"0\n" +
+	"#internal/domain/policy/policy.proto\x12\vpolicyproto\x1a\x1cgoogle/api/annotations.proto\"0\n" +
 	"\bResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\"$\n" +
@@ -356,11 +357,11 @@ const file_internal_domain_policy_policy_proto_rawDesc = "" +
 	"\asubject\x18\x01 \x01(\tR\asubject\x12\x16\n" +
 	"\x06object\x18\x02 \x01(\tR\x06object\x12\x16\n" +
 	"\x06action\x18\x03 \x01(\tR\x06action\"\x0f\n" +
-	"\rGetAllRequest2\xc5\x01\n" +
-	"\x06Policy\x12;\n" +
-	"\x06Create\x12\x1a.policyproto.CreateRequest\x1a\x15.policyproto.Response\x12;\n" +
-	"\x06Delete\x12\x1a.policyproto.DeleteRequest\x1a\x15.policyproto.Response\x12A\n" +
-	"\x06GetAll\x12\x1a.policyproto.GetAllRequest\x1a\x1b.policyproto.GetAllResponseB%Z#/internal/domain/policy/policyprotob\x06proto3"
+	"\rGetAllRequest2\xfe\x01\n" +
+	"\x06Policy\x12O\n" +
+	"\x06Create\x12\x1a.policyproto.CreateRequest\x1a\x15.policyproto.Response\"\x12\x82\xd3\xe4\x93\x02\f:\x01*\"\a/policy\x12O\n" +
+	"\x06Delete\x12\x1a.policyproto.DeleteRequest\x1a\x15.policyproto.Response\"\x12\x82\xd3\xe4\x93\x02\f:\x01**\a/policy\x12R\n" +
+	"\x06GetAll\x12\x1a.policyproto.GetAllRequest\x1a\x1b.policyproto.GetAllResponse\"\x0f\x82\xd3\xe4\x93\x02\t\x12\a/policyB%Z#/internal/domain/policy/policyprotob\x06proto3"
 
 var (
 	file_internal_domain_policy_policy_proto_rawDescOnce sync.Once

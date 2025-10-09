@@ -11,7 +11,7 @@ import (
 )
 
 type TwoFactorHdlr struct {
-	twofactorproto.UnimplementedTwofactoryServer
+	twofactorproto.UnimplementedTwofactorServer
 	Service    twofactor.TwoFactorService
 	Validation validation.Validation
 }

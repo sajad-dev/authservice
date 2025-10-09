@@ -27,19 +27,29 @@ service Group {
   }
 }
 
-
 message Response {
   int32 code = 1;
   string msg = 2;
 }
-message PolicyList {
-    repeated string policy = 1;
+message GroupList {
+    repeated string group = 1;
 }
 message GetAllResponse {
   int32 code = 1;
   string msg = 2;
-  repeated PolicyList data = 3 ;
+  repeated GroupList data = 3 ;
 }
 
 message CreateRequest {
+      string subject = 1;
+      string Group = 2;
+}
+
+message DeleteRequest {
+      string subject = 1;
+      string Group = 2;
+}
+
+message GetAllRequest {
+}
 

@@ -7,6 +7,7 @@
 package twofactorproto
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -273,7 +274,7 @@ var File_internal_domain_twofactor_twofactor_proto protoreflect.FileDescriptor
 
 const file_internal_domain_twofactor_twofactor_proto_rawDesc = "" +
 	"\n" +
-	")internal/domain/twofactor/twofactor.proto\x12\x0etwofactorproto\"\xa3\x01\n" +
+	")internal/domain/twofactor/twofactor.proto\x12\x0etwofactorproto\x1a\x1cgoogle/api/annotations.proto\"\xa3\x01\n" +
 	"\x04User\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1d\n" +
@@ -292,11 +293,10 @@ const file_internal_domain_twofactor_twofactor_proto_rawDesc = "" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\"9\n" +
 	"\rGoogleRequest\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x12\n" +
-	"\x04code\x18\x02 \x01(\x05R\x04code2\xa2\x01\n" +
-	"\n" +
-	"Twofactory\x12H\n" +
-	"\x05Email\x12\x1c.twofactorproto.EmailRequest\x1a!.twofactorproto.TwoFactorResponse\x12J\n" +
-	"\x06Google\x12\x1d.twofactorproto.GoogleRequest\x1a!.twofactorproto.TwoFactorResponseB+Z)/internal/domain/twofactor/twofactorprotob\x06proto3"
+	"\x04code\x18\x02 \x01(\x05R\x04code2\xdc\x01\n" +
+	"\tTwofactor\x12e\n" +
+	"\x05Email\x12\x1c.twofactorproto.EmailRequest\x1a!.twofactorproto.TwoFactorResponse\"\x1b\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/twofactor/email\x12h\n" +
+	"\x06Google\x12\x1d.twofactorproto.GoogleRequest\x1a!.twofactorproto.TwoFactorResponse\"\x1c\x82\xd3\xe4\x93\x02\x16:\x01*\"\x11/twofactor/googleB+Z)/internal/domain/twofactor/twofactorprotob\x06proto3"
 
 var (
 	file_internal_domain_twofactor_twofactor_proto_rawDescOnce sync.Once
@@ -319,10 +319,10 @@ var file_internal_domain_twofactor_twofactor_proto_goTypes = []any{
 }
 var file_internal_domain_twofactor_twofactor_proto_depIdxs = []int32{
 	0, // 0: twofactorproto.TwoFactorResponse.data:type_name -> twofactorproto.User
-	2, // 1: twofactorproto.Twofactory.Email:input_type -> twofactorproto.EmailRequest
-	3, // 2: twofactorproto.Twofactory.Google:input_type -> twofactorproto.GoogleRequest
-	1, // 3: twofactorproto.Twofactory.Email:output_type -> twofactorproto.TwoFactorResponse
-	1, // 4: twofactorproto.Twofactory.Google:output_type -> twofactorproto.TwoFactorResponse
+	2, // 1: twofactorproto.Twofactor.Email:input_type -> twofactorproto.EmailRequest
+	3, // 2: twofactorproto.Twofactor.Google:input_type -> twofactorproto.GoogleRequest
+	1, // 3: twofactorproto.Twofactor.Email:output_type -> twofactorproto.TwoFactorResponse
+	1, // 4: twofactorproto.Twofactor.Google:output_type -> twofactorproto.TwoFactorResponse
 	3, // [3:5] is the sub-list for method output_type
 	1, // [1:3] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

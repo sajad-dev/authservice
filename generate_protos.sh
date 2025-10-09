@@ -1,19 +1,42 @@
 #!/bin/bash
-set -e
 
-PROTO_DIR="internal/domain"
+AUTHENTICATION="$(pwd)/authentication"
+AUTHORIZATION="$(pwd)/authorization"
+OUTPUT="./getway/services.pb"
 
-PROTO_FILES=$(find $PROTO_DIR -name "*.proto")
+generate_protos() {
+    local DIR="$1"
+    find "$DIR" -type f -name "*.proto" | while read file; do
+        echo "Found: $file"
+        protoc -I="$DIR" -I="$GOOGLEAPIS_DIR" \
+            --go_out="$DIR" \
+            --go-grpc_out="$DIR" \
+            "$file"
+    done
+}
 
-for f in $PROTO_FILES; do
-  echo "Processing $f ..."
+generate_protos "$AUTHENTICATION"
+generate_protos "$AUTHORIZATION"
 
-  protoc -I=$GOOGLEAPIS_DIR -I=. \
-    --go_out=. --go_opt=paths=source_relative \
-    --go-grpc_out=. --go-grpc_opt=paths=source_relative \
-    --grpc-gateway_out=. --grpc-gateway_opt=paths=source_relative \
-    $f
-done
 
-echo "✅ All proto files processed!"
+
+FILES_PROTO=""
+
+generate_descriptor() {
+    local DIR="$1"
+    while IFS= read -r file; do
+        echo "Processing: $file"
+        FILES_PROTO="$FILES_PROTO $file"
+    done < <(find "$DIR" -type f -name "*.proto")
+}
+
+generate_descriptor "$AUTHENTICATION"
+generate_descriptor "$AUTHORIZATION"
+
+protoc -I="$AUTHENTICATION" -I="$AUTHORIZATION" -I="$GOOGLEAPIS_DIR" \
+    --include_imports --include_source_info \
+    --descriptor_set_out="$OUTPUT" \
+    $FILES_PROTO
+
+echo "Generated descriptor set: $OUTPUT"
 

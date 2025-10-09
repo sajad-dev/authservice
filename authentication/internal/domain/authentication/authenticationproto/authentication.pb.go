@@ -7,6 +7,7 @@
 package authenticationproto
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -389,7 +390,7 @@ var File_internal_domain_authentication_authentication_proto protoreflect.FileDe
 
 const file_internal_domain_authentication_authentication_proto_rawDesc = "" +
 	"\n" +
-	"3internal/domain/authentication/authentication.proto\x12\x13authenticationproto\"\xa3\x01\n" +
+	"3internal/domain/authentication/authentication.proto\x12\x13authenticationproto\x1a\x1cgoogle/api/annotations.proto\"\xa3\x01\n" +
 	"\x04User\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1d\n" +
@@ -420,10 +421,10 @@ const file_internal_domain_authentication_authentication_proto_rawDesc = "" +
 	"\x05email\x18\x04 \x01(\tR\x05email\x12\x1a\n" +
 	"\bpassword\x18\x05 \x01(\tR\bpassword\x123\n" +
 	"\x15password_confirmation\x18\x06 \x01(\tR\x14passwordConfirmation\x12\x1a\n" +
-	"\bremember\x18\a \x01(\tR\bremember2\xb7\x01\n" +
-	"\fAuthentication\x12N\n" +
-	"\x05Login\x12!.authenticationproto.LoginRequest\x1a\".authenticationproto.LoginResponse\x12W\n" +
-	"\bRegister\x12$.authenticationproto.RegisterRequest\x1a%.authenticationproto.RegisterResponseB5Z3/internal/domain/authentication/authenticationprotob\x06proto3"
+	"\bremember\x18\a \x01(\tR\bremember2\xe2\x01\n" +
+	"\x0eAuthentication\x12a\n" +
+	"\x05Login\x12!.authenticationproto.LoginRequest\x1a\".authenticationproto.LoginResponse\"\x11\x82\xd3\xe4\x93\x02\v:\x01*\"\x06/login\x12m\n" +
+	"\bRegister\x12$.authenticationproto.RegisterRequest\x1a%.authenticationproto.RegisterResponse\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/registerB5Z3/internal/domain/authentication/authenticationprotob\x06proto3"
 
 var (
 	file_internal_domain_authentication_authentication_proto_rawDescOnce sync.Once

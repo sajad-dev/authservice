@@ -70,7 +70,7 @@ services:
       - "8081:8081"
     volumes:
       - ./getway/envoy.yaml:/etc/envoy/envoy.yaml:ro
-      - ./getway/group.pb:/etc/envoy/group.pb:ro
+      - ./getway/services.pb:/etc/envoy/services.pb:ro
     depends_on:
       - authorization
       - authentication

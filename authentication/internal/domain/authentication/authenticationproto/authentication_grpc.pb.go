@@ -31,15 +31,15 @@ type AuthenticationClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 }
 
-type AuthenticationClient struct {
+type authenticationClient struct {
 	cc grpc.ClientConnInterface
 }
 
 func NewAuthenticationClient(cc grpc.ClientConnInterface) AuthenticationClient {
-	return &AuthenticationClient{cc}
+	return &authenticationClient{cc}
 }
 
-func (c *AuthenticationClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+func (c *authenticationClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(LoginResponse)
 	err := c.cc.Invoke(ctx, Authentication_Login_FullMethodName, in, out, cOpts...)
@@ -49,7 +49,7 @@ func (c *AuthenticationClient) Login(ctx context.Context, in *LoginRequest, opts
 	return out, nil
 }
 
-func (c *AuthenticationClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
+func (c *authenticationClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(RegisterResponse)
 	err := c.cc.Invoke(ctx, Authentication_Register_FullMethodName, in, out, cOpts...)
@@ -82,7 +82,7 @@ func (UnimplementedAuthenticationServer) Register(context.Context, *RegisterRequ
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
 func (UnimplementedAuthenticationServer) mustEmbedUnimplementedAuthenticationServer() {}
-func (UnimplementedAuthenticationServer) testEmbeddedByValue()                      {}
+func (UnimplementedAuthenticationServer) testEmbeddedByValue()                        {}
 
 // UnsafeAuthenticationServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to AuthenticationServer will
