@@ -24,7 +24,7 @@ type ForgetPasswordSvc struct {
 	Job     job.Worker
 }
 
-func NewForgetPasswordSvc(repo forgetpassword.ForgetPasswordRepository, hashing hashing.Hashing, cry crypto.Crypto,jb job.Worker) *ForgetPasswordSvc {
+func NewForgetPasswordSvc(repo forgetpassword.ForgetPasswordRepository,cry crypto.Crypto, hashing hashing.Hashing ,jb job.Worker) *ForgetPasswordSvc {
 	return &ForgetPasswordSvc{
 		Repo:    repo,
 		Crypto:  cry,
