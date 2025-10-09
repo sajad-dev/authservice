@@ -5,7 +5,6 @@ import (
 
 	gormadapter "github.com/casbin/gorm-adapter/v2"
 	authz "github.com/envoyproxy/go-control-plane/envoy/service/auth/v3"
-	"github.com/go-playground/validator/v10"
 	"github.com/sajad-dev/authservice/authorization/internal/config"
 
 	authorizehdlr "github.com/sajad-dev/authservice/authorization/internal/domain/authorize/handler"
@@ -27,9 +26,8 @@ import (
 	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/crypto/hs256"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/setupdb"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/adaptor/setupdb/postgres"
-	"github.com/sajad-dev/authservice/authorization/internal/shared/validation"
-	"github.com/sajad-dev/authservice/authorization/internal/shared/validation"
 	"github.com/sajad-dev/authservice/authorization/internal/shared/errors/errs"
+	"github.com/sajad-dev/authservice/authorization/internal/shared/validation"
 
 	"google.golang.org/grpc"
 )
@@ -96,7 +94,7 @@ func (b *Bootstrap) Boot(gc *grpc.Server) error {
 		return errs.Err(err)
 	}
 
-	vld := validate.NewValidate(validator.New())
+	vld := validation.NewValidator()
 
 	b._registerGrpc(gc, en, vld)
 

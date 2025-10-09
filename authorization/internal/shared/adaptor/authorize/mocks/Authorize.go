@@ -189,6 +189,36 @@ func (_m *Authorize) RemovePolicy(policy ...interface{}) (bool, error) {
 	return r0, r1
 }
 
+// Verify provides a mock function with given fields: policy
+func (_m *Authorize) Verify(policy ...interface{}) (bool, error) {
+	var _ca []interface{}
+	_ca = append(_ca, policy...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for Verify")
+	}
+
+	var r0 bool
+	var r1 error
+	if rf, ok := ret.Get(0).(func(...interface{}) (bool, error)); ok {
+		return rf(policy...)
+	}
+	if rf, ok := ret.Get(0).(func(...interface{}) bool); ok {
+		r0 = rf(policy...)
+	} else {
+		r0 = ret.Get(0).(bool)
+	}
+
+	if rf, ok := ret.Get(1).(func(...interface{}) error); ok {
+		r1 = rf(policy...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // NewAuthorize creates a new instance of Authorize. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
 // The first argument is typically a *testing.T value.
 func NewAuthorize(t interface {

@@ -8,7 +8,6 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/dto/gen/response"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/handler"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/mocks"
-	mockdb "github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb/mocks"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
 
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/messages"

@@ -4,9 +4,8 @@ server:
 database:
   user: "root"
   password: "root"
-  dbname : "authorize"
+  dbname : "authentication"
   port : 5432
   host : "127.0.0.1"
 
 debug : true
-confug_model : "casbin/model.conf"

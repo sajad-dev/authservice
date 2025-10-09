@@ -11,8 +11,7 @@ import (
 var instanse *casbin.Enforcer
 var once sync.Once
 
-func _newInstanse(adapter *gormadapter.Adapter,model string) (*casbin.Enforcer, error) {
-
+func _newInstanse(adapter *gormadapter.Adapter, model string) (*casbin.Enforcer, error) {
 
 	enforcer, err := casbin.NewEnforcer(model, adapter)
 	if err != nil {
@@ -23,10 +22,10 @@ func _newInstanse(adapter *gormadapter.Adapter,model string) (*casbin.Enforcer, 
 
 }
 
-func CreateInstanse(adapter *gormadapter.Adapter,model string) (*casbin.Enforcer, error) {
+func CreateInstanse(adapter *gormadapter.Adapter, model string) (*casbin.Enforcer, error) {
 	var err error
 	once.Do(func() {
-		instanse, err = _newInstanse(adapter,model)
+		instanse, err = _newInstanse(adapter, model)
 	})
 
 	return instanse, err

@@ -9,4 +9,4 @@ database:
   host : "127.0.0.1"
 
 debug : true
-confug_model : "casbin/model.conf"
+config_model : "casbin/model.conf"
