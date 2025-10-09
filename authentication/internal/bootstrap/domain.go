@@ -10,6 +10,7 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/job"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/models/seeder"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/accountproto"
@@ -59,9 +60,22 @@ func (b *Bootstrap) _setupDB() setupdb.SetupDB[*gorm.DB] {
 	)
 }
 
-func (b *Bootstrap) _registerGrpc(gc *grpc.Server) error {
+func (b *Bootstrap) _dbConnection() (*gorm.DB, error) {
 
 	postgresDb, err := b._setupDB().Connection()
+	if err != nil {
+		return nil, errs.Err(err)
+	}
+	err = models.Migration(postgresDb)
+	if err != nil {
+		return nil, errs.Err(err)
+	}
+
+	return postgresDb,nil
+}
+
+func (b *Bootstrap) _registerGrpc(gc *grpc.Server) error {
+	postgresDb, err := b._dbConnection()
 	if err != nil {
 		return errs.Err(err)
 	}
@@ -77,6 +91,11 @@ func (b *Bootstrap) _registerGrpc(gc *grpc.Server) error {
 	crp := hs256.NewJWT([]byte(b.Config.SecretKey))
 
 	jb := job.NewJobs()
+
+	err = seeder.AccountSeeder(db, hashing)
+	if err != nil {
+		return errs.Err(err)
+	}
 
 	accountproto.RegisterAccountServer(gc, accounthdlr.NewAccountHdlr(
 		accountsvc.NewAccountSvc(
@@ -125,6 +144,8 @@ func (b *Bootstrap) _registerGrpc(gc *grpc.Server) error {
 	return nil
 
 }
+
+func _gormMigration() {}
 
 func (b *Bootstrap) Boot(gc *grpc.Server) error {
 

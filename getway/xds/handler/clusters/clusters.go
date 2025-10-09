@@ -1,6 +1,9 @@
 package clusters
 
 import (
+	"encoding/json"
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/sajad-dev/authservice/getway/xds/handler"
 )
@@ -67,6 +70,15 @@ type Service struct {
 	Endpoints []Address `json"endpoints"`
 }
 
+func deepCopy[T any](src T) (T, error) {
+	var dst T
+	data, err := json.Marshal(src)
+	if err != nil {
+		return dst, err
+	}
+	err = json.Unmarshal(data, &dst)
+	return dst, err
+}
 func Clusters(ctx *gin.Context) {
 	cls, err := handler.GetJson[Cluster]("json/cls_static.json")
 	if err != nil {
@@ -85,7 +97,14 @@ func Clusters(ctx *gin.Context) {
 	}
 	var clsArray []Cluster
 	for _, svc := range svcArray {
-		clsIns := cls
+		clsIns, err := deepCopy(cls)
+		if err != nil {
+			ctx.JSON(500, gin.H{"error discovery": err.Error()})
+			return
+		}
+
+		log.Println(clsIns.LoadAssignment.Endpoints[0])
+
 		clsIns.Name = svc.Name
 		clsIns.LoadAssignment.ClusterName = svc.Name
 

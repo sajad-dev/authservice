@@ -18,6 +18,9 @@ func _newInstanse(adapter *gormadapter.Adapter, model string) (*casbin.Enforcer,
 		return nil, errs.Err(err)
 	}
 
+	enforcer.AddPolicy("superuser", "*", "*")
+	enforcer.AddGroupingPolicy("1", "superuser")
+
 	return enforcer, nil
 
 }

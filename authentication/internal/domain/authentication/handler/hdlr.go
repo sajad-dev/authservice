@@ -2,12 +2,13 @@ package handler
 
 import (
 	"context"
+	"log"
 
 	"github.com/sajad-dev/authservice/authentication/internal/domain/authentication"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/authentication/authenticationproto"
 	"github.com/sajad-dev/authservice/authentication/internal/domain/authentication/dto/gen/request"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/errors/errs/globalerr"
+	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"
 )
 
 type AuthenticationHdlr struct {
@@ -25,6 +26,7 @@ func NewAuthenticationHdlr(svc authentication.AuthenticatorService, vld validati
 }
 
 func (a *AuthenticationHdlr) Login(ctx context.Context, req *authenticationproto.LoginRequest) (*authenticationproto.LoginResponse, error) {
+	log.Println("req")
 
 	reqValidation := request.ToRequestLogin(req)
 
