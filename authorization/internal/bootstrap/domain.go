@@ -65,6 +65,7 @@ func (b *Bootstrap) _registerGrpc(gc *grpc.Server, repoDB authorize.Authorize, v
 		authorizesvc.NewAuthorizeSvc(
 			authorizerepo.NewAuthorizeRepo(repoDB),
 			hs256.NewJWT([]byte(b.Config.SecretKey)),
+			b.Config.Guest,
 		),
 	))
 

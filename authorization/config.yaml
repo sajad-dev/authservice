@@ -10,3 +10,4 @@ database:
 
 debug : true
 config_model : "casbin/model.conf"
+guest : "casbin/guest.json"

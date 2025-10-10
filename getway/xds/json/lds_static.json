@@ -40,18 +40,6 @@
                 },
                 "http_filters": [
                   {
-                    "name": "envoy.filters.http.ext_authz",
-                    "typed_config": {
-                      "@type": "type.googleapis.com/envoy.extensions.filters.http.ext_authz.v3.ExtAuthz",
-                      "grpc_service": {
-                        "envoy_grpc": {
-                          "cluster_name": "authorization_service"
-                        },
-                        "timeout": "1s"
-                      }
-                    }
-                  },
-                  {
                     "name": "envoy.filters.http.grpc_json_transcoder",
                     "typed_config": {
                       "@type": "type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder",
@@ -64,6 +52,18 @@
                         "preserve_proto_field_names": false
                       },
                       "convert_grpc_status": true
+                    }
+                  },
+                  {
+                    "name": "envoy.filters.http.ext_authz",
+                    "typed_config": {
+                      "@type": "type.googleapis.com/envoy.extensions.filters.http.ext_authz.v3.ExtAuthz",
+                      "grpc_service": {
+                        "envoy_grpc": {
+                          "cluster_name": "authorization_service"
+                        },
+                        "timeout": "1s"
+                      }
                     }
                   },
                   {

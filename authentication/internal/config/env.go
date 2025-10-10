@@ -1,7 +1,6 @@
 package config
 
 import (
-	"log"
 	"strings"
 	"sync"
 
@@ -28,8 +27,8 @@ type Config struct {
 		Password string `mapstructure:"password"`
 	} `mapstructure:"mail"`
 
-	Debug       bool   `mapstructure:"debug"`
-	SecretKey   string `mapstructure:"secret_key"`
+	Debug     bool   `mapstructure:"debug"`
+	SecretKey string `mapstructure:"secret_key"`
 }
 
 var Cfg = Config{}
@@ -53,7 +52,6 @@ func _setConfigs() error {
 	}
 
 	Cfg = cfg
-	log.Println(cfg)
 
 	return nil
 }

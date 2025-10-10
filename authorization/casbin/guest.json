@@ -1,0 +1,10 @@
+[
+  "/authenticationproto.Authentication/Login",
+  "/authenticationproto.Authentication/Register",
+  "/forgetpasswordproto.ForgetPassword/Forget",
+  "/forgetpasswordproto.ForgetPassword/Reset",
+  "/twofactorproto.Twofactor/Email",
+  "/twofactorproto.Twofactor/Google",
+  "/twofactornotifierproto.TwofactorNotifier/NotifierEmail",
+  "ALL"
+]

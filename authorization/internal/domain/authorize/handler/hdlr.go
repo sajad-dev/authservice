@@ -3,7 +3,6 @@ package handler
 import (
 	"context"
 	"errors"
-	"log"
 
 	authz "github.com/envoyproxy/go-control-plane/envoy/service/auth/v3"
 	"github.com/sajad-dev/authservice/authorization/internal/domain/authorize"
@@ -23,7 +22,6 @@ func NewAuthorizeHdlr(svc authorize.AuthorizeService) *AuthorizeHdlr {
 }
 
 func (a *AuthorizeHdlr) Check(ctx context.Context, req *authz.CheckRequest) (*authz.CheckResponse, error) {
-	log.Println("I get that hahaha")
 	httpReq := req.GetAttributes().GetRequest().GetHttp()
 	if httpReq == nil {
 		return nil, globalerr.ServerErr(errors.New("missing http request in envoy check request"))
@@ -59,9 +57,12 @@ func (a *AuthorizeHdlr) Check(ctx context.Context, req *authz.CheckRequest) (*au
 	}
 
 	return &authz.CheckResponse{
-		Status: &status.Status{
-			Code: int32(code.Code_PERMISSION_DENIED),
+		HttpResponse: &authz.CheckResponse_DeniedResponse{
+			DeniedResponse: &authz.DeniedHttpResponse{
+				Body: "Denied",
+			},
 		},
+		Status: &status.Status{Code: int32(code.Code_PERMISSION_DENIED)},
 	}, nil
 }
 

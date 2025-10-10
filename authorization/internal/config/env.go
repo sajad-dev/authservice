@@ -24,6 +24,7 @@ type Config struct {
 	Debug bool `mapstructure:"debug"`
 	ConfigModel string `mapstructure:"config_model"`
 	SecretKey string `mapstructure:"secret_key"`
+	Guest string `mapstructure:"guest"`
 }
 
 var Cfg = Config{}

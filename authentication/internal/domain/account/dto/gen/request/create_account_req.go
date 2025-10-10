@@ -9,7 +9,7 @@ type CreateRequest struct {
 	LastName string `json:"last_name" validate:"required,max=64"`
 	Email string `json:"email" validate:"required,max=256,unique=accounts"`
 	Username string `json:"username" validate:"required,max=256,unique=accounts"`
-	TwoFactor []string `json:"two_factor" validate:"required,max=3,dive"`
+	TwoFactor []string `json:"two_factor" validate:"max=3,dive"`
 	Password string `json:"password" validate:"required,min=8"`
 	PasswordConfirmation string `json:"password_confirmation" validate:"required,eqfield=Password"`
 } 

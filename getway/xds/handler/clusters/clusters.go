@@ -2,7 +2,6 @@ package clusters
 
 import (
 	"encoding/json"
-	"log"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sajad-dev/authservice/getway/xds/handler"
@@ -102,8 +101,6 @@ func Clusters(ctx *gin.Context) {
 			ctx.JSON(500, gin.H{"error discovery": err.Error()})
 			return
 		}
-
-		log.Println(clsIns.LoadAssignment.Endpoints[0])
 
 		clsIns.Name = svc.Name
 		clsIns.LoadAssignment.ClusterName = svc.Name

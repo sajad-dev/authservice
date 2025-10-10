@@ -22,6 +22,7 @@ func NewAccountHdlr(svc account.AccountCURDService, vld validation.Validation) *
 }
 
 func (a *AccountHdlr) Create(ctx context.Context, req *accountproto.CreateRequest) (*accountproto.CreateResponse, error) {
+	log.Println(req)
 
 	reqValidation := request.ToRequestCreate(req)
 
