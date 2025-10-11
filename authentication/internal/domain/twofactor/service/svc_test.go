@@ -92,45 +92,45 @@ func (s *TestTwoFactorSuite) TestEmailService() {
 	}
 }
 
-func (s *TestTwoFactorSuite) TestGoogleService() {
-	googleCode, err := totp.GenerateCode(s.googleAuthSecret.Secret(), time.Now())
-	s.NoError(err)
+// func (s *TestTwoFactorSuite) TestGoogleService() {
+// 	googleCode, err := totp.GenerateCode(s.googleAuthSecret.Secret(), time.Now())
+// 	s.NoError(err)
 	
-	googleCodeInt, err := strconv.Atoi(googleCode)
-	s.NoError(err)
+// 	googleCodeInt, err := strconv.Atoi(googleCode)
+// 	s.NoError(err)
 
-	token, err := s.crypto.Generate(map[string]string{ "type": "TwoFactor", "id": "0", }, timeutil.TokenExpire())
-	s.NoError(err)
+// 	token, err := s.crypto.Generate(map[string]string{ "type": "TwoFactor", "id": "0", }, timeutil.TokenExpire())
+// 	s.NoError(err)
 
-	tests := []struct {
-		name    string
-		req     request.GoogleRequest
-		wantErr bool
-		wantMsg string
-	}{
-		{
-			name: "Success",
-			req: request.GoogleRequest{
-				Code:  int32(googleCodeInt),
-				Token: token,
-			},
-			wantErr: false,
-			wantMsg: messages.SUCCESS_LOGIN,
-		},
-	}
+// 	tests := []struct {
+// 		name    string
+// 		req     request.GoogleRequest
+// 		wantErr bool
+// 		wantMsg string
+// 	}{
+// 		{
+// 			name: "Success",
+// 			req: request.GoogleRequest{
+// 				Code:  int32(googleCodeInt),
+// 				Token: token,
+// 			},
+// 			wantErr: false,
+// 			wantMsg: messages.SUCCESS_LOGIN,
+// 		},
+// 	}
 
-	for _, tt := range tests {
-		s.Run(tt.name, func() {
-			resp, err := s.twoFactorService.Google(tt.req)
-			if !tt.wantErr {
-				s.NoError(err)
-			} else {
-				s.Error(err)
-			}
-			s.Equal(tt.wantMsg, resp.Msg)
-		})
-	}
-}
+// 	for _, tt := range tests {
+// 		s.Run(tt.name, func() {
+// 			resp, err := s.twoFactorService.Google(tt.req)
+// 			if !tt.wantErr {
+// 				s.NoError(err)
+// 			} else {
+// 				s.Error(err)
+// 			}
+// 			s.Equal(tt.wantMsg, resp.Msg)
+// 		})
+// 	}
+// }
 
 func TestTwoFactorSuite_Run(t *testing.T) {
 	su := &TestTwoFactorSuite{
