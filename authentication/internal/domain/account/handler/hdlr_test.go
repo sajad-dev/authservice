@@ -10,6 +10,7 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/domain/account/mocks"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
 
+	mockdb "github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/sqldb/mocks"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/messages"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/statuscode"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/validation"

@@ -28,10 +28,10 @@ func (s *TestForgetPasswordHandlerSuite) SetupSuite() {
 	mocksSVC := new(mocks.ForgetPasswordService)
 	s.mocksSVC = mocksSVC
 
-	mockDB := &mockdb.SqlDBGlobal{}
+	mockDatabase := &mockdb.SqlDBGlobal{}
 
 
-	s.handler = handler.NewForgetPasswordHdlr(mocksSVC, validation.NewValidator(mockDB))
+	s.handler = handler.NewForgetPasswordHdlr(mocksSVC, validation.NewValidator(mockDatabase))
 }
 
 func (s *TestForgetPasswordHandlerSuite) TestForget() {

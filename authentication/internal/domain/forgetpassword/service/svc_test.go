@@ -44,8 +44,8 @@ func (s *TestForgetPasswordSuite) SetupSuite() {
 
 	s.service = service.NewForgetPasswordSvc(
 		s.repoMock,
-		s.hash,
 		s.crypto,
+		s.hash,
 		job.NewJobs(),
 	)
 }
