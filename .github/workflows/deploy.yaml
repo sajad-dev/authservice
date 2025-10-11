@@ -25,7 +25,7 @@ jobs:
       run: cd authentication && go test -v ./...
 
     - name: Build authorization
-      run: cd authorization && go build -o ./build/authservice ./cmd/authorization
+      run: cd authorization && go build -o ./build/authservice ./cmd/authorize
      
     - name: Test authorization
       run: cd authorization && go test -v ./...
@@ -33,6 +33,6 @@ jobs:
     - name: Build XDS
       run: cd getway/xds && go build -o ./build/authservice ./
                
-    - name: Test authorization
+    - name: Test XDS
       run: cd getway/xds && go test -v ./...
 
