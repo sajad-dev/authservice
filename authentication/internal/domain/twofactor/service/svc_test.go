@@ -1,9 +1,7 @@
 package service_test
 
 import (
-	"strconv"
 	"testing"
-	"time"
 
 	"github.com/pquerna/otp"
 	"github.com/pquerna/otp/totp"
@@ -17,7 +15,6 @@ import (
 	"github.com/sajad-dev/authservice/authentication/internal/shared/adaptor/hashing/sha256"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/constants/messages"
-	"github.com/sajad-dev/authservice/authentication/internal/shared/helpers/timeutil"
 	"github.com/sajad-dev/authservice/authentication/internal/shared/models"
 	"github.com/stretchr/testify/suite"
 )
@@ -78,7 +75,7 @@ func (s *TestTwoFactorSuite) TestEmailService() {
 			account := models.NewAccounts(models.WithEmail("test@email.com"), models.WithUsername("test"))
 
 			twoFactorCode := models.NewTwoFactorCode(models.WithCode(1111), models.WithType(string(constants.EMAIL_TWO_FACTOR_CODE)), models.WithAccount(*account))
-			
+
 			s.repoMock.On("FindByCode", 1111, string(constants.EMAIL_TWO_FACTOR_CODE)).Return([]*models.TwoFactorCode{twoFactorCode}, nil)
 
 			resp, err := s.twoFactorService.Email(tt.req)
@@ -95,7 +92,7 @@ func (s *TestTwoFactorSuite) TestEmailService() {
 // func (s *TestTwoFactorSuite) TestGoogleService() {
 // 	googleCode, err := totp.GenerateCode(s.googleAuthSecret.Secret(), time.Now())
 // 	s.NoError(err)
-	
+
 // 	googleCodeInt, err := strconv.Atoi(googleCode)
 // 	s.NoError(err)
 
