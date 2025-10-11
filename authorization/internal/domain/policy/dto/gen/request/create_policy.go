@@ -5,9 +5,9 @@ import (
 )
 
 type CreateRequest struct {
-	Subject string `json:"subject" validate:""`
-	Object string `json:"object" validate:""`
-	Action string `json:"action" validate:""`
+	Subject string `json:"subject" validate:"required,max=64"`
+	Object string `json:"object" validate:"required,max=64"`
+	Action string `json:"action" validate:"required,max=64"`
 } 
 
 func ToRequestCreate(pd *policyproto.CreateRequest) *CreateRequest {

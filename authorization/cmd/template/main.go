@@ -91,7 +91,8 @@ func requestGenCode(path string, tmpl *template.Template) {
 
 	conf, err := os.ReadFile(confPath)
 	if err != nil {
-		panic(err)
+		// log.Println(err)
+		return
 	}
 
 	var jsonFormat JsonFormatReq
@@ -129,7 +130,8 @@ func responseGenCode(path string, tmpl *template.Template) {
 
 	conf, err := os.ReadFile(confPath)
 	if err != nil {
-		panic(err)
+		// log.Println(err)
+		return
 	}
 
 	var jsonFormat JsonFormatRes

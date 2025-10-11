@@ -5,8 +5,8 @@ import (
 )
 
 type CreateRequest struct {
-	Subject string `json:"subject" validate:""`
-	Group string `json:"group" validate:""`
+	Subject string `json:"subject" validate:"required,max=64"`
+	Group string `json:"group" validate:"required,max=64"`
 } 
 
 func ToRequestCreate(pd *groupproto.CreateRequest) *CreateRequest {
