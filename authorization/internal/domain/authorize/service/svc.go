@@ -1,9 +1,6 @@
 package service
 
 import (
-	"encoding/json"
-	"log"
-	"os"
 	"slices"
 	"strings"
 
@@ -19,15 +16,10 @@ import (
 type AuthorizeSvc struct {
 	Repo   authorize.AuthorizeRepository
 	Crypto crypto.Crypto
-	Guest  string
+	Guest  []string
 }
 
-type guest struct {
-	Path   string `json:"path"`
-	Action string `json:"action"`
-}
-
-func NewAuthorizeSvc(repo authorize.AuthorizeRepository, crp crypto.Crypto, gst string) *AuthorizeSvc {
+func NewAuthorizeSvc(repo authorize.AuthorizeRepository, crp crypto.Crypto, gst []string) *AuthorizeSvc {
 	return &AuthorizeSvc{
 		Repo:   repo,
 		Crypto: crp,
@@ -39,29 +31,8 @@ func (a AuthorizeSvc) _verifyJWT(token string) (crypto.DataClaims, error) {
 	return a.Crypto.Validate(token)
 }
 
-func _readJson(gst string) ([]string, error) {
-	file, err := os.Open(gst)
-	if err != nil {
-		return []string{}, errs.Err(err)
-	}
-	defer file.Close()
-
-	var gstJson []string
-	decoder := json.NewDecoder(file)
-	err = decoder.Decode(&gstJson)
-	if err != nil {
-		return []string{}, errs.Err(err)
-	}
-	return gstJson, nil
-}
-
 func (a *AuthorizeSvc) Check(req request.AuthorizeRequest) (response.AuthorizeResponse, error) {
-	gst, err := _readJson(a.Guest)
-	if err != nil {
-		return response.AuthorizeResponse{}, err
-	}
-
-	ok := slices.Contains(gst, req.Path)
+	ok := slices.Contains(a.Guest, req.Path)
 	if ok {
 		return response.AuthorizeResponse{
 			Code: statuscode.SUCCESSFUL,
@@ -70,7 +41,6 @@ func (a *AuthorizeSvc) Check(req request.AuthorizeRequest) (response.AuthorizeRe
 	}
 
 	authorization, ok := req.Headers["authorization"]
-	log.Println(authorization,req.Headers)
 	if !ok {
 		return response.AuthorizeResponse{
 			Code: statuscode.PERMISSION_DENIED,

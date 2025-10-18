@@ -1,7 +1,9 @@
 package bootstrap
 
 import (
+	"encoding/json"
 	"log"
+	"os"
 
 	gormadapter "github.com/casbin/gorm-adapter/v2"
 	authz "github.com/envoyproxy/go-control-plane/envoy/service/auth/v3"
@@ -60,12 +62,28 @@ func (b *Bootstrap) _setupDB() setupdb.SetupDB[*gormadapter.Adapter] {
 	)
 }
 
-func (b *Bootstrap) _registerGrpc(gc *grpc.Server, repoDB authorize.Authorize, vld validation.Validation) {
+func _readJson(gst string) ([]string, error) {
+	file, err := os.Open(gst)
+	if err != nil {
+		return []string{}, errs.Err(err)
+	}
+	defer file.Close()
+
+	var gstJson []string
+	decoder := json.NewDecoder(file)
+	err = decoder.Decode(&gstJson)
+	if err != nil {
+		return []string{}, errs.Err(err)
+	}
+	return gstJson, nil
+}
+
+func (b *Bootstrap) _registerGrpc(gc *grpc.Server, repoDB authorize.Authorize, vld validation.Validation, gst []string) {
 	authz.RegisterAuthorizationServer(gc, authorizehdlr.NewAuthorizeHdlr(
 		authorizesvc.NewAuthorizeSvc(
 			authorizerepo.NewAuthorizeRepo(repoDB),
 			hs256.NewJWT([]byte(b.Config.SecretKey)),
-			b.Config.Guest,
+			gst,
 		),
 	))
 
@@ -95,9 +113,14 @@ func (b *Bootstrap) Boot(gc *grpc.Server) error {
 		return errs.Err(err)
 	}
 
+	gst, err := _readJson(b.Config.Guest)
+	if err != nil {
+		return errs.Err(err)
+	}
+
 	vld := validation.NewValidator()
 
-	b._registerGrpc(gc, en, vld)
+	b._registerGrpc(gc, en, vld, gst)
 
 	return nil
 }
